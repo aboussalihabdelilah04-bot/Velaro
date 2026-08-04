@@ -34,7 +34,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Manuelle",
         seats: 5,
-        pricePerDay: 250,
+        pricePerDay: 300,
         category: "Économique",
         image: "images/cars/dacia-logan/main.png",
         images: [
@@ -150,7 +150,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Manuelle",
         seats: 5,
-        pricePerDay: 400,
+        pricePerDay: 300,
         category: "Economique",
         image: "images/cars/dacia-sandero-stepway/main.png",
         images: [
@@ -165,29 +165,7 @@ const CARS = [
         rating: 4.9,
         reviews: 67
     },
-    {
-        id: "car-007",
-        name: "Audi A4",
-        brand: "Audi",
-        year: 2024,
-        fuel: "Diesel",
-        transmission: "Automatique",
-        seats: 5,
-        pricePerDay: 850,
-        category: "Premium",
-        image: "images/cars/audi-a4/main.png",
-        images: [
-            "images/cars/audi-a4/main.png",
-            "images/cars/audi-a4/1.png",
-            "images/cars/audi-a4/2.png",
-            "images/cars/audi-a4/3.png",
-            "images/cars/audi-a4/4.png"
-        ],
-        features: ["Climatisation", "Cuir", "GPS", "Virtual Cockpit", "Toit panoramique"],
-        available: true,
-        rating: 4.8,
-        reviews: 45
-    },
+    
     {
         id: "car-008",
         name: "Range Rover Evoque",
@@ -220,7 +198,7 @@ const CARS = [
         fuel: "Essence",
         transmission: "Automatique",
         seats: 5,
-        pricePerDay:750 ,
+        pricePerDay:350 ,
         category: "Economique",
         image: "images/cars/hyundai-accent/main.png",
         images: [
@@ -313,7 +291,7 @@ const CARS = [
         fuel: "Essence",
         transmission: "Manuelle",
         seats: 4,
-        pricePerDay: 200,
+        pricePerDay: 400,
         category: "Économique",
         image: "images/cars/fiat-500/main.png",
         images: [
@@ -359,7 +337,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Manuelle",
         seats: 5,
-        pricePerDay: 250,
+        pricePerDay: 300,
         category: "Économique",
         image: "images/cars/dacia-sandero/main.png",
         images: [
@@ -382,7 +360,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Automatique",
         seats: 9,
-        pricePerDay:1500 ,
+        pricePerDay:1200 ,
         category: " Van",
         image: "images/cars/hyundai-staria/main.png",
         images: [
@@ -451,7 +429,7 @@ const CARS = [
         fuel: "Hybride",
         transmission: "Automatique",
         seats: 5,
-        pricePerDay: 300,
+        pricePerDay: 500,
         category: "Économique",
         image: "images/cars/renault-arkana/main.png",
         images: [
@@ -474,7 +452,7 @@ const CARS = [
         fuel: "Essence",
         transmission: "Automatique",
         seats: 5,
-        pricePerDay: 500,
+        pricePerDay: 700,
         category: "Économique",
         image: "images/cars/renault-clio5-alpine/main.png",
         images: [
@@ -535,29 +513,7 @@ const CARS = [
         rating: 4.5,
         reviews: 254
     },
-     {
-        id: "car-0024",
-        name: "Kia Stonic ",
-        brand: "Kia",
-        year: 2025,
-        fuel: "Essence",
-        transmission: "Automatique",
-        seats: 5,
-        pricePerDay: 700,
-        category: "Économique",
-        image: "images/cars/kia-stonic/main.png",
-        images: [
-            "images/cars/kia-stonic/main.png",
-            "images/cars/kia-stonic/1.png",
-            "images/cars/kia-stonic/2.png",
-            "images/cars/kia-stonic/3.png ",
-            "images/cars/kia-stonic/4.png "
-        ],
-        features: ["Climatisation", "Bluetooth", "Caméra recul"],
-        available: true,
-        rating: 4.6,
-        reviews: 154
-    },
+     
     {
         id: "car-0025",
         name: "Volkswagen Golf 8",
@@ -589,7 +545,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Automatique",
         seats: 5,
-        pricePerDay: 1000,
+        pricePerDay: 2600,
         category: "SUV Premium",
         image: "images/cars/toyota-prado/main.png",
         images: [
@@ -612,7 +568,7 @@ const CARS = [
         fuel: "Diesel",
         transmission: "Manuelle",
         seats: 7,
-        pricePerDay: 1000,
+        pricePerDay: 1800,
         category: "SUV Premium",
         image: "images/cars/toyota-TX/main.png",
         images: [
@@ -627,29 +583,7 @@ const CARS = [
         rating: 4.7,
         reviews: 321
     },
-    {
-        id: "car-0028",
-        name: "Cupra Formentor",
-        brand: "Cupra",
-        year: 2025,
-        fuel: "Essence",
-        transmission: "Automatique",
-        seats: 5,
-        pricePerDay: 500,
-        category: "SUV Premium",
-        image: "images/cars/cupra-formentor/main.png",
-        images: [
-            "images/cars/cupra-formentor/main.png",
-            "images/cars/cupra-formentor/1.png",
-            "images/cars/cupra-formentor/2.png",
-            "images/cars/cupra-formentor/3.png  ",
-            "images/cars/cupra-formentor/4.png"
-        ],
-        features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
-        available: true,
-        rating: 4.7,
-        reviews: 321
-    },
+    
     {
         id: "car-0029",
         name: "Audi A3 S line",
@@ -719,29 +653,7 @@ const CARS = [
         rating: 5,
         reviews: 511
     },
-    {
-        id: "car-0032",
-        name: "Porsche Cayenne",
-        brand: "Porsche",
-        year: 2025,
-        fuel: "Essence",
-        transmission: "Automatique",
-        seats: 5,
-        pricePerDay: 1500,
-        category: " SUV Premium",
-        image: "images/cars/porsche/cayenne.png",
-        images: [
-            "images/cars/porsche/cayenne.png",
-            "images/cars/porsche/1.png",
-            "images/cars/porsche/2.png",
-            "images/cars/porsche/3.png  ",
-            "images/cars/porsche/4.png"
-        ],
-        features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
-        available: true,
-        rating: 5,
-        reviews: 511
-    },
+    
     
 
 
