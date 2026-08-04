@@ -170,78 +170,13 @@
 const MOTOS = [
     
     {
-        id: "moto-001",
-        name: "Yamaha MT-07",
-        brand: "Yamaha",
-        year: 2024,
-        engine: "689cc",
-        type: "Roadster",
-        pricePerDay: 280,
-        image: "images/motos/yamaha-mt07/main.png",
-        images: [
-            "images/motos/yamaha-mt07/main.png",
-            "images/motos/yamaha-mt07/1.png",
-            "images/motos/yamaha-mt07/2.png",
-            "images/motos/yamaha-mt07/3.png",
-            "images/motos/yamaha-mt07/4.png"
-        ],
-        features: ["ABS", "Traction Control", "Bluetooth"],
-        available: true,
-        rating: 4.8,
-        reviews: 34
-    },
-    
-    {
-        id: "moto-002",
-        name: "Kawasaki Z900",
-        brand: "Kawasaki",
-        year: 2023,
-        engine: "948cc",
-        type: "Roadster",
-        pricePerDay: 350,
-        image: "images/motos/kawasaki-z900/main.png",
-        images: [
-            "images/motos/kawasaki-z900/main.png",
-            "images/motos/kawasaki-z900/1.png",
-            "images/motos/kawasaki-z900/2.png",
-            "images/motos/kawasaki-z900/3.png",
-            "images/motos/kawasaki-z900/4.png"
-        ],
-        features: ["ABS", "Traction Control", "Bluetooth", "Mode conduite"],
-        available: true,
-        rating: 4.8,
-        reviews: 26
-    },
-    
-    {
-        id: "moto-003",
-        name: "Vespa Primavera 150",
-        brand: "Vespa",
-        year: 2024,
-        engine: "150cc",
-        type: "Scooter",
-        pricePerDay: 150,
-        image: "images/motos/vespa-primavera/main.png",
-        images: [
-            "images/motos/vespa-primavera/main.png",
-            "images/motos/vespa-primavera/1.png",
-            "images/motos/vespa-primavera/2.png",
-            "images/motos/vespa-primavera/3.png",
-            "images/motos/vespa-primavera/4.png"
-        ],
-        features: ["Bluetooth", "USB", "Stockage sous-selle"],
-        available: true,
-        rating: 4.6,
-        reviews: 41
-    },
-    {
         id: "moto-004",
         name: "Honda X-ADV",
         brand: "Honda",
-        year: 20242025,
+        year: 2025,
         engine: "689cc",
         type: "Trail",
-        pricePerDay: 1000,
+        pricePerDay: 800,
         image: "images/motos/honda-x-adv/main.png",
         images: [
             "images/motos/honda-x-adv/main.png",
@@ -253,17 +188,17 @@ const MOTOS = [
         features: ["ABS", "GPS", "USB", "Crochet sacoches"],
         available: true,
         rating: 4.8,
-        reviews: 17
+        reviews: 270
     },
     
     {
         id: "moto-005",
-        name: "Yamaha Timax",
+        name: "Yamaha T-max",
         brand: "Yamaha",
-        year: 20242025,
+        year: 2025,
         engine: "1868cc",
         type: "trail",
-        pricePerDay: 600,
+        pricePerDay: 800,
         image: "images/motos/yamaha-timax-560/main.png",
         images: [
             "images/motos/yamaha-timax-560/main.png",
@@ -275,16 +210,16 @@ const MOTOS = [
         features: ["ABS", "GPS", "Son premium", "Cruise Control", "Top case"],
         available: true,
         rating: 5.0,
-        reviews: 40
+        reviews: 400
     },
     {
         id: "moto-006",
-        name: "Honda sh",
+        name: "Honda SH",
         brand: "Honda",
         year: 2025,
         engine: "SH350i",
         type: "trail",
-        pricePerDay: 500,
+        pricePerDay: 400,
         image: "images/motos/honda-sh-350/main.png",
         images: [
             "images/motos/honda-sh-350/main.png",
@@ -296,7 +231,7 @@ const MOTOS = [
         features: ["ABS", "GPS", "Son premium", "Cruise Control", "Top case"],
         available: true,
         rating: 4.9,
-        reviews: 33
+        reviews: 330
     }
 ];
 

@@ -1019,9 +1019,9 @@ const EXCURSIONS = [
         durationHours: 4,
         price: 500,
         difficulty: "Modéré",
-        image: "images/excursions/essaouira-quad/main.jpg",
+        image: "images/excursions/essaouira-quad/main.jpeg",
         images: [
-            "images/excursions/essaouira-quad/main.jpg",
+            "images/excursions/essaouira-quad/main.jpeg",
             "images/excursions/essaouira-quad/1.jpg",
             "images/excursions/essaouira-quad/2.jpg",
             "images/excursions/essaouira-quad/3.jpg",
@@ -1471,13 +1471,13 @@ const EXCURSIONS = [
         durationHours: 11,
         price: 700,
         difficulty: "Facile",
-        image: "images/excursions/al-hoceima/main.jpg",
+        image: "images/excursions/al-hoceima/main.webp",
         images: [
-            "images/excursions/al-hoceima/main.jpg",
-            "images/excursions/al-hoceima/1.jpg",
-            "images/excursions/al-hoceima/2.jpg",
-            "images/excursions/al-hoceima/3.jpg",
-            "images/excursions/al-hoceima/4.jpg"
+            "images/excursions/al-hoceima/main.webp",
+            "images/excursions/al-hoceima/1.webp",
+            "images/excursions/al-hoceima/2.webp",
+            "images/excursions/al-hoceima/3.webp",
+            "images/excursions/al-hoceima/4.webp"
         ],
         description: "Découvrez la Méditerranée marocaine. Plages cristallines, Parc National du Cap des Trois Fourches.",
         program: [
