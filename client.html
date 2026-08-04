@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mon espace VelaroCar - Gérez vos réservations, favoris et profil.">
+    <title>Mon Espace Client | VelaroCar</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .dash-layout { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; min-height: calc(100vh - 200px); padding-top: 100px; }
+        .dash-sidebar { background: var(--white); border-radius: var(--radius-2xl); border: 1px solid var(--gray-100); padding: 1.5rem; height: fit-content; position: sticky; top: 100px; }
+        .dash-sidebar-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-400); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--gray-100); }
+        .dash-tab-btn { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.75rem 1rem; border-radius: var(--radius-lg); font-size: 0.9rem; font-weight: 500; color: var(--gray-600); background: transparent; transition: all var(--transition-base); border: none; cursor: pointer; text-align: left; margin-bottom: 0.25rem; }
+        .dash-tab-btn:hover { background: var(--gray-50); color: var(--primary); }
+        .dash-tab-btn.active { background: var(--accent); color: var(--white); }
+        .dash-tab-btn i { width: 20px; text-align: center; }
+        .dash-user { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; margin-bottom: 1rem; background: var(--gray-50); border-radius: var(--radius-lg); }
+        .dash-user-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
+        .dash-user-name { font-weight: 600; font-size: 0.9rem; }
+        .dash-user-email { font-size: 0.75rem; color: var(--gray-500); }
+        .dash-tab-panel { display: none; }
+        .dash-panel-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .dash-panel-subtitle { color: var(--gray-500); font-size: 0.9rem; margin-bottom: 1.5rem; }
+        @media (max-width: 768px) {
+            .dash-layout { grid-template-columns: 1fr; padding-top: 80px; }
+            .dash-sidebar { position: static; }
+            .dash-tab-btn { font-size: 0.85rem; padding: 0.6rem 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-overlay"><div class="loader-logo">Velaro<span>Car</span></div><div class="loader-spinner"></div></div>
+    <div class="toast-container"></div>
+    <div class="search-overlay">
+        <div class="search-container">
+            <button class="search-close"><i class="fas fa-times"></i></button>
+            <div class="search-input-wrapper"><i class="fas fa-search"></i><input type="text" class="search-input" placeholder="Rechercher une voiture, moto, maison ou excursion..."></div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">Velaro<span>Car</span></a>
+            <ul class="navbar-nav">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="cars.html">Voitures</a></li>
+                <li><a href="motos.html">Motos</a></li>
+                <li><a href="houses.html">Maisons</a></li>
+                <li><a href="excursions.html">Excursions</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-search-btn search-trigger" aria-label="Rechercher"><i class="fas fa-search"></i></button>
+                <a href="client.html" class="navbar-fav-btn" style="background:rgba(255,255,255,0.2);"><i class="fas fa-heart"></i><span class="fav-count">0</span></a>
+                <a href="cars.html" class="btn-reserve-nav">Réserver</a>
+                <button class="navbar-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dash-layout">
+            <!-- SIDEBAR -->
+            <aside class="dash-sidebar">
+                <div class="dash-user">
+                    <div class="dash-user-avatar">VC</div>
+                    <div>
+                        <div class="dash-user-name">Mon Espace</div>
+                        <div class="dash-user-email">VelaroCar Client</div>
+                    </div>
+                </div>
+                <div class="dash-sidebar-title">Navigation</div>
+                <button class="dash-tab-btn active" data-tab="reservations"><i class="fas fa-calendar-alt"></i> Mes réservations</button>
+                <button class="dash-tab-btn" data-tab="favorites"><i class="fas fa-heart"></i> Mes favoris</button>
+                <button class="dash-tab-btn" data-tab="profile"><i class="fas fa-user-cog"></i> Mon profil</button>
+                <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--gray-100);">
+                    <a href="index.html" class="dash-tab-btn" style="color:var(--gray-400);"><i class="fas fa-home"></i> Retour au site</a>
+                </div>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main>
+                <!-- Reservations Tab -->
+                <div class="dash-tab-panel" id="tab-reservations" style="display:block;">
+                    <h2 class="dash-panel-title">Mes Réservations</h2>
+                    <p class="dash-panel-subtitle">Consultez et gérez toutes vos réservations.</p>
+                    <div id="reservations-list"></div>
+                </div>
+
+                <!-- Favorites Tab -->
+                <div class="dash-tab-panel" id="tab-favorites">
+                    <h2 class="dash-panel-title">Mes Favoris</h2>
+                    <p class="dash-panel-subtitle">Retrouvez tous les produits que vous avez ajoutés à vos favoris.</p>
+                    <div id="favorites-list"></div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div class="dash-tab-panel" id="tab-profile">
+                    <h2 class="dash-panel-title">Mon Profil</h2>
+                    <p class="dash-panel-subtitle">Gérez vos informations personnelles.</p>
+                    <div id="profile-stats"></div>
+                    <form id="profile-form" style="background:var(--white);border:1px solid var(--gray-100);border-radius:var(--radius-2xl);padding:1.5rem;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nom complet</label>
+                                <input type="text" id="profile-name" name="name" class="form-control" placeholder="Votre nom">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="profile-email" name="email" class="form-control" placeholder="votre@email.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" id="profile-phone" name="phone" class="form-control" placeholder="+212 681 11 71 95">
+                            </div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input type="text" id="profile-address" name="address" class="form-control" placeholder="Votre adresse">
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:1rem;margin-top:0.5rem;">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Enregistrer</button>
+                            <button type="button" id="clear-profile-btn" class="btn btn-sm" style="background:rgba(239,68,68,0.1);color:var(--danger);"><i class="fas fa-trash"></i> Supprimer mes données</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom"><p>&copy; 2026 VelaroCar. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/client.js"></script>
+</body>
+</html>

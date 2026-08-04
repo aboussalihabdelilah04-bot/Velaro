@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Administration VelaroCar - Gestion des réservations, produits et statistiques.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Administration | VelaroCar</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .admin-login-wrap { min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--gray-50);padding:2rem; }
+        .admin-login-card { background:white;border-radius:var(--radius-2xl);padding:3rem;max-width:420px;width:100%;box-shadow:var(--shadow-xl);text-align:center; }
+        .admin-login-card h2 { margin-bottom:0.5rem; }
+        .admin-login-card p { color:var(--gray-500);margin-bottom:2rem;font-size:0.9rem; }
+        .admin-login-card .logo { font-size:2rem;font-weight:800;margin-bottom:1.5rem; }
+        .admin-login-card .logo span { color:var(--gold); }
+        .dash-layout { display:grid;grid-template-columns:260px 1fr;gap:2rem;min-height:calc(100vh - 80px);padding:100px 0 2rem; }
+        .dash-sidebar { background:white;border-radius:var(--radius-2xl);border:1px solid var(--gray-100);padding:1.5rem;height:fit-content;position:sticky;top:100px; }
+        .dash-sidebar-title { font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--gray-100); }
+        .dash-tab-btn { display:flex;align-items:center;gap:0.75rem;width:100%;padding:0.75rem 1rem;border-radius:var(--radius-lg);font-size:0.9rem;font-weight:500;color:var(--gray-600);background:transparent;transition:all var(--transition-base);border:none;cursor:pointer;text-align:left;margin-bottom:0.25rem; }
+        .dash-tab-btn:hover { background:var(--gray-50);color:var(--primary); }
+        .dash-tab-btn.active { background:var(--accent);color:white; }
+        .dash-tab-btn i { width:20px;text-align:center; }
+        .dash-tab-panel { display:none; }
+        .dash-panel-title { font-size:1.5rem;font-weight:700;margin-bottom:0.25rem; }
+        .dash-panel-subtitle { color:var(--gray-500);font-size:0.9rem;margin-bottom:1.5rem; }
+        .stat-cards { display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem; }
+        .stat-card { background:white;border:1px solid var(--gray-100);border-radius:var(--radius-xl);padding:1.25rem; }
+        .stat-card-label { font-size:0.8rem;color:var(--gray-500);text-transform:uppercase;margin-bottom:0.5rem; }
+        .stat-value { font-size:1.75rem;font-weight:800;color:var(--accent); }
+        @media (max-width:768px) {
+            .dash-layout { grid-template-columns:1fr;padding-top:80px; }
+            .dash-sidebar { position:static; }
+            .stat-cards { grid-template-columns:repeat(2,1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-overlay"><div class="loader-logo">Velaro<span>Car</span></div><div class="loader-spinner"></div></div>
+    <div class="toast-container"></div>
+
+    <!-- LOGIN PANEL -->
+    <div id="login-panel" class="admin-login-wrap">
+        <div class="admin-login-card">
+            <div class="logo">Velaro<span>Car</span></div>
+            <h2>Administration</h2>
+            <p>Connectez-vous pour accéder au panneau d'administration.</p>
+            <form id="admin-login-form">
+                <div class="form-group" style="text-align:left;">
+                    <label>Email</label>
+                    <input type="email" id="login-email" class="form-control" value="admin@velarocar.com" required>
+                </div>
+                <div class="form-group" style="text-align:left;">
+                    <label>Mot de passe</label>
+                    <input type="password" id="login-password" class="form-control" value="admin123" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:0.5rem;">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+            </form>
+            <p style="margin-top:1.5rem;font-size:0.8rem;color:var(--gray-400);">
+                Demo: admin@velarocar.com / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PANEL -->
+    <div id="dashboard-panel" style="display:none;">
+        <nav class="navbar" style="position:fixed;top:0;left:0;width:100%;z-index:300;background:var(--primary);padding:0.75rem 0;">
+            <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+                <a href="index.html" class="navbar-brand" style="font-size:1.25rem;">Velaro<span>Car</span> <span style="font-size:0.7rem;background:var(--gold);color:var(--primary);padding:2px 8px;border-radius:12px;margin-left:0.5rem;font-weight:600;">ADMIN</span></a>
+                <div style="display:flex;gap:1rem;align-items:center;">
+                    <a href="index.html" style="color:rgba(255,255,255,0.7);font-size:0.85rem;"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+                    <button id="admin-logout-btn" class="btn btn-sm" style="background:rgba(255,255,255,0.1);color:white;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="dash-layout">
+                <aside class="dash-sidebar">
+                    <div class="dash-sidebar-title">Gestion</div>
+                    <button class="dash-tab-btn active" data-tab="stats"><i class="fas fa-chart-bar"></i> Statistiques</button>
+                    <button class="dash-tab-btn" data-tab="reservations"><i class="fas fa-calendar-alt"></i> Réservations</button>
+                    <button class="dash-tab-btn" data-tab="products"><i class="fas fa-box"></i> Produits</button>
+                    <button class="dash-tab-btn" data-tab="contacts"><i class="fas fa-envelope"></i> Messages</button>
+                    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--gray-100);">
+                        <a href="index.html" class="dash-tab-btn" style="color:var(--gray-400);"><i class="fas fa-home"></i> Accueil</a>
+                    </div>
+                </aside>
+
+                <main>
+                    <!-- Stats Tab -->
+                    <div class="dash-tab-panel" id="tab-stats" style="display:block;">
+                        <h2 class="dash-panel-title">Tableau de bord</h2>
+                        <p class="dash-panel-subtitle">Vue d'ensemble de votre activité.</p>
+                        <div class="stat-cards">
+                            <div class="stat-card"><div class="stat-card-label">Total Réservations</div><div class="stat-value">0</div></div>
+                            <div class="stat-card"><div class="stat-card-label">En attente</div><div class="stat-value" style="color:var(--warning);">0</div></div>
+                            <div class="stat-card"><div class="stat-card-label">Confirmées</div><div class="stat-value" style="color:var(--success);">0</div></div>
+                            <div class="stat-card"><div class="stat-card-label">Revenu total</div><div class="stat-value" style="color:var(--primary);">0 MAD</div></div>
+                        </div>
+                        <div id="stats-content"></div>
+                    </div>
+
+                    <!-- Reservations Tab -->
+                    <div class="dash-tab-panel" id="tab-reservations">
+                        <h2 class="dash-panel-title">Gestion des Réservations</h2>
+                        <p class="dash-panel-subtitle">Confirmez, annulez ou consultez les réservations.</p>
+                        <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+                            <select id="admin-status-filter" class="form-control" style="max-width:200px;">
+                                <option value="">Tous les statuts</option>
+                                <option value="pending">En attente</option>
+                                <option value="confirmed">Confirmée</option>
+                                <option value="cancelled">Annulée</option>
+                            </select>
+                            <select id="admin-type-filter" class="form-control" style="max-width:200px;">
+                                <option value="">Tous les types</option>
+                                <option value="voiture">Voiture</option>
+                                <option value="moto">Moto</option>
+                                <option value="maison">Maison</option>
+                                <option value="excursion">Excursion</option>
+                            </select>
+                        </div>
+                        <div id="admin-res-list"></div>
+                    </div>
+
+                    <!-- Products Tab -->
+                    <div class="dash-tab-panel" id="tab-products">
+                        <h2 class="dash-panel-title">Gestion des Produits</h2>
+                        <p class="dash-panel-subtitle">Consultez et gérez votre catalogue.</p>
+                        <div style="margin-bottom:1.5rem;">
+                            <select id="admin-product-type" class="form-control" style="max-width:200px;">
+                                <option value="cars">Voitures</option>
+                                <option value="motos">Motos</option>
+                                <option value="houses">Maisons</option>
+                                <option value="excursions">Excursions</option>
+                            </select>
+                        </div>
+                        <div style="background:white;border:1px solid var(--gray-100);border-radius:var(--radius-xl);overflow:hidden;" id="admin-products-list"></div>
+                    </div>
+
+                    <!-- Contacts Tab -->
+                    <div class="dash-tab-panel" id="tab-contacts">
+                        <h2 class="dash-panel-title">Messages de Contact</h2>
+                        <p class="dash-panel-subtitle">Consultez les messages reçus via le formulaire de contact.</p>
+                        <div style="background:white;border:1px solid var(--gray-100);border-radius:var(--radius-xl);overflow:hidden;" id="admin-contacts-list"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

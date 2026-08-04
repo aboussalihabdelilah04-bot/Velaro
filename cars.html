@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Location de voitures à Marrakech - VelaroCar. Large choix de véhicules économiques et premium. Prix à partir de 200 MAD/jour.">
+    <title>Location Voitures à Marrakech | VelaroCar</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div class="loader-overlay">
+        <div class="loader-logo">Velaro<span>Car</span></div>
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container"></div>
+
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay">
+        <div class="search-container">
+            <button class="search-close"><i class="fas fa-times"></i></button>
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Rechercher une voiture, moto, maison ou excursion...">
+            </div>
+            <div class="search-results"></div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand">Velaro<span>Car</span></a>
+            <ul class="navbar-nav">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="cars.html" class="active">Voitures</a></li>
+                <li><a href="motos.html">Motos</a></li>
+                <li><a href="houses.html">Maisons</a></li>
+                <li><a href="excursions.html">Excursions</a></li>
+                <li><a href="index.html#about">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-search-btn search-trigger" aria-label="Rechercher"><i class="fas fa-search"></i></button>
+                <a href="client.html" class="navbar-fav-btn" aria-label="Favoris">
+                    <i class="fas fa-heart"></i>
+                    <span class="fav-count">0</span>
+                </a>
+                <a href="cars.html" class="btn-reserve-nav">Réserver</a>
+                <button class="navbar-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <div class="page-header-bg">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80" alt="Location voitures Marrakech" loading="eager">
+        </div>
+        <div class="page-header-overlay"></div>
+        <div class="container">
+            <div class="page-header-content">
+                <h1>Location de Voitures</h1>
+                <p>Large choix de véhicules économiques et premium pour explorer Marrakech et le Maroc</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Accueil</a>
+                    <span class="separator">/</span>
+                    <span>Voitures</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="section">
+        <div class="container">
+
+            <!-- RESULTS COUNT -->
+            <div class="flex-between mb-6 reveal">
+                <p style="color: var(--gray-500); font-size: 0.9rem;">
+                    <strong id="cars-count">0</strong> voiture(s) disponible(s)
+                </p>
+            </div>
+
+            <!-- CARS GRID -->
+            <div class="products-grid stagger" id="cars-grid">
+                <!-- Filled by cars.js -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-bg">
+            <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1920&q=80" alt="Marrakech" loading="lazy">
+        </div>
+        <div class="cta-overlay"></div>
+        <div class="container">
+            <div class="cta-content reveal">
+                <h2>Besoin d'un véhicule spécifique ?</h2>
+                <p>Contactez-nous pour un devis personnalisé. Nous avons toujours la voiture qu'il vous faut.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-gold btn-lg"><i class="fas fa-phone-alt"></i> Nous contacter</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAR DETAIL MODAL -->
+    <div class="modal-overlay" id="car-detail-modal">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="detail-name">Détails</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <img class="detail-image" src="" alt="" style="width:100%;height:300px;object-fit:cover;border-radius:12px;margin-bottom:1rem;">
+                <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
+                    <div class="detail-location" style="color:var(--gray-500);font-size:0.9rem;"></div>
+                    <div class="detail-category" style="color:var(--accent);font-size:0.9rem;font-weight:600;"></div>
+                </div>
+                <div class="detail-price" style="font-size:1.5rem;font-weight:800;color:var(--accent);margin-bottom:1rem;"></div>
+                <h4 style="margin-bottom:0.5rem;">Caractéristiques</h4>
+                <div class="detail-features" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;"></div>
+                <h4 style="margin-bottom:0.5rem;">Équipements</h4>
+                <div class="detail-equipment" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;"></div>
+                <button class="btn btn-primary btn-lg detail-reserve-btn" style="width:100%;margin-top:0.5rem;" data-id="">
+                    <i class="fas fa-calendar-check"></i> Réserver maintenant
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESERVATION MODAL -->
+    <div class="modal-overlay" id="reservation-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Réserver ce véhicule</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
+                    <img class="modal-product-image" src="" alt="" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">
+                    <div>
+                        <h4 class="modal-product-name" style="font-size: 1.1rem;"></h4>
+                        <p class="modal-product-price" style="color: var(--accent); font-weight: 700; font-size: 1.2rem;"></p>
+                    </div>
+                </div>
+                <form id="reservation-form">
+                    <input type="hidden" class="modal-product-type" name="productType" value="">
+                    <input type="hidden" class="modal-product-id" name="productId" value="">
+                    <input type="hidden" class="modal-product-name-input" name="productName" value="">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prénom *</label>
+                            <input type="text" name="firstName" class="form-control" required placeholder="Votre prénom">
+                        </div>
+                        <div class="form-group">
+                            <label>Nom *</label>
+                            <input type="text" name="lastName" class="form-control" required placeholder="Votre nom">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Téléphone *</label>
+                            <input type="tel" name="phone" class="form-control" required placeholder="+212 681 11 71 95">
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" name="email" class="form-control" required placeholder="votre@email.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date de début *</label>
+                            <input type="date" name="startDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date de fin *</label>
+                            <input type="date" name="endDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Message (optionnel)</label>
+                        <textarea name="message" class="form-control" rows="3" placeholder="Demandes spéciales..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                        <i class="fas fa-check-circle"></i> Confirmer la réservation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">Velaro<span>Car</span></div>
+                    <p class="footer-desc">Votre partenaire de confiance pour la location de voitures, motos, maisons et les excursions touristiques à Marrakech.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Liens rapides</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="cars.html"><i class="fas fa-chevron-right"></i> Voitures</a></li>
+                        <li><a href="motos.html"><i class="fas fa-chevron-right"></i> Motos</a></li>
+                        <li><a href="houses.html"><i class="fas fa-chevron-right"></i> Maisons</a></li>
+                        <li><a href="excursions.html"><i class="fas fa-chevron-right"></i> Excursions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="cars.html"><i class="fas fa-chevron-right"></i> Voitures premium</a></li>
+                        <li><a href="motos.html"><i class="fas fa-chevron-right"></i> Motos modernes</a></li>
+                        <li><a href="houses.html"><i class="fas fa-chevron-right"></i> Villas luxe</a></li>
+                        <li><a href="excursions.html"><i class="fas fa-chevron-right"></i> Excursions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i><span>Avenue Al Mhamid, Marrakech 40000</span></li>
+                        <li><i class="fas fa-phone-alt"></i><span>+212 681 11 71 95</span></li>
+                        <li><i class="fas fa-envelope"></i><span>velarocars26@gmail.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 VelaroCar. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/reservation.js"></script>
+    <script src="js/emailjs-service.js"></script>
+    <script src="js/cars.js"></script>
+</body>
+</html>
