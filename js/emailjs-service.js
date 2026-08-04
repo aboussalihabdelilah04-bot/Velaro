@@ -220,13 +220,13 @@ const MOTOS = [
         engine: "SH350i",
         type: "trail",
         pricePerDay: 400,
-        image: "images/motos/honda-sh-350/main.png",
+        image: "images/motos/Honda-sh-350/main.png",
         images: [
-            "images/motos/honda-sh-350/main.png",
-            "images/motos/honda-sh-350/1.png",
-            "images/motos/honda-sh-350/2.png",
-            "images/motos/honda-sh-350/3.png",
-            "images/motos/honda-sh-350/4.png"
+            "images/motos/Honda-sh-350/main.png",
+            "images/motos/Honda-sh-350/1.png",
+            "images/motos/Honda-sh-350/2.png",
+            "images/motos/Honda-sh-350/3.png",
+            "images/motos/Honda-sh-350/4.png"
         ],
         features: ["ABS", "GPS", "Son premium", "Cruise Control", "Top case"],
         available: true,
