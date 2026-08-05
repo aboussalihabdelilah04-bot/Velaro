@@ -149,7 +149,7 @@
 
         var statusClass = { pending: 'warning', confirmed: 'success', cancelled: 'danger' };
         var statusLabel = { pending: 'En attente', confirmed: 'Confirmée', cancelled: 'Annulée' };
-        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain' };
+        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain', transfer: 'fa-van-shuttle', chauffeur: 'fa-car-side', pack: 'fa-gem' };
 
         list.innerHTML = filtered.map(function(r) {
             var days = calculateDays(r.startDate, r.endDate);
@@ -220,6 +220,7 @@
         else if (type === 'motos') items = MOTOS;
         else if (type === 'houses') items = HOUSES;
         else if (type === 'excursions') items = EXCURSIONS;
+        else if (type === 'transfers') items = (typeof TRANSFERS !== 'undefined') ? TRANSFERS : [];
 
         list.innerHTML = items.map(function(item) {
             var price = item.pricePerDay || item.pricePerNight || item.price;

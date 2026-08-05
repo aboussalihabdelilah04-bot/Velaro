@@ -69,7 +69,7 @@
         }
         sending.reservation = true;
 
-        var typeLabels = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion' };
+        var typeLabels = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion', transfer: 'Transfert', chauffeur: 'Chauffeur Privé', pack: 'Pack Exclusif' };
         var days = calculateDays(reservation.startDate, reservation.endDate);
         var total = reservation.pricePerDay * days;
 

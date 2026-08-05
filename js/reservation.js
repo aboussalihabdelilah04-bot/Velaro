@@ -12,7 +12,7 @@
         if (!modal) return;
 
         var price = item.pricePerDay || item.pricePerNight || item.price;
-        var priceUnit = type === 'maison' ? '/ nuit' : (type === 'excursion' ? '/ personne' : '/ jour');
+        var priceUnit = type === 'maison' ? '/ nuit' : (type === 'excursion' ? '/ personne' : (type === 'transfer' ? '/ transfert' : (type === 'chauffeur' ? '/ forfait' : (type === 'pack' ? '/ pack' : '/ jour'))));
 
         modal.querySelector('.modal-product-name').textContent = item.name;
         modal.querySelector('.modal-product-image').src = item.image;

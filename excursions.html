@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Excursions touristiques au Maroc - VelaroCar. Désert, Atlas, médinas, plages. +80 excursions dans 15 villes.">
-    <title>Excursions Touristiques au Maroc | VelaroCar</title>
+    <meta name="description" content="Excursions et transferts privés au Maroc - VelaroCar. Désert, Atlas, médinas, plages. +80 excursions dans 15 villes et transferts en Mercedes Vito.">
+    <title>Excursions / Transferts au Maroc | VelaroCar</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,9 @@
                 <li><a href="cars.html">Voitures</a></li>
                 <li><a href="motos.html">Motos</a></li>
                 <li><a href="houses.html">Maisons</a></li>
-                <li><a href="excursions.html" class="active">Excursions</a></li>
+                <li><a href="excursions.html" class="active">Excursions / Transferts</a></li>
+                <li><a href="chauffeur.html">Chauffeur Privé</a></li>
+                <li><a href="packs.html">Packs</a></li>
                 <li><a href="index.html#about">À propos</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -49,14 +51,14 @@
 
     <section class="page-header">
         <div class="page-header-bg">
-            <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1920&q=80" alt="Excursions Maroc" loading="eager" fetchpriority="high" decoding="async">
+            <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1920&q=80" alt="Excursions et transferts Maroc" loading="eager" fetchpriority="high" decoding="async">
         </div>
         <div class="page-header-overlay"></div>
         <div class="container">
             <div class="page-header-content">
-                <h1>Excursions Touristiques</h1>
-                <p>+80 excursions dans 15 villes du Maroc — désert, montagnes, médinas et plages</p>
-                <div class="breadcrumb"><a href="index.html">Accueil</a><span class="separator">/</span><span>Excursions</span></div>
+                <h1>Excursions / Transferts</h1>
+                <p>+80 excursions dans 15 villes du Maroc — désert, montagnes, médinas et plages. Transferts privés en Mercedes Vito.</p>
+                <div class="breadcrumb"><a href="index.html">Accueil</a><span class="separator">/</span><span>Excursions / Transferts</span></div>
             </div>
         </div>
     </section>
@@ -69,6 +71,21 @@
             </div>
 
             <div class="products-grid stagger" id="excursions-grid"></div>
+        </div>
+    </section>
+
+    <!-- TRANSFERTS PRIVÉS SECTION -->
+    <section class="section section-gray" id="transfers-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-badge"><i class="fas fa-van-shuttle"></i> Transferts Privés</span>
+                <h2>Transferts Privés en Mercedes Vito</h2>
+                <p>Aéroports, villes et destinations touristiques : déplacements privés, confortables et ponctuels dans tout le Maroc.</p>
+            </div>
+            <div class="flex-between mb-6 reveal">
+                <p style="color:var(--gray-500);font-size:0.9rem;"><strong id="transfers-count">0</strong> transfert(s) privé(s) disponible(s)</p>
+            </div>
+            <div class="products-grid stagger" id="transfers-grid"></div>
         </div>
     </section>
 
@@ -117,7 +134,7 @@
     <div class="modal-overlay" id="reservation-modal">
         <div class="modal">
             <div class="modal-header">
-                <h3>Réserver cette excursion</h3>
+                <h3 class="reservation-modal-title">Réserver cette excursion</h3>
                 <button class="modal-close"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
@@ -152,7 +169,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div><div class="footer-brand">Velaro<span>Car</span></div><p class="footer-desc">Votre partenaire de confiance pour les excursions au Maroc.</p><div class="footer-social"><a href="https://www.facebook.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="https://www.instagram.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="https://twitter.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="https://www.youtube.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a><a href="https://www.tiktok.com/velarocar" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a></div></div>
-                <div><h4 class="footer-title">Liens rapides</h4><ul class="footer-links"><li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li><li><a href="cars.html"><i class="fas fa-chevron-right"></i> Voitures</a></li><li><a href="motos.html"><i class="fas fa-chevron-right"></i> Motos</a></li><li><a href="houses.html"><i class="fas fa-chevron-right"></i> Maisons</a></li><li><a href="excursions.html"><i class="fas fa-chevron-right"></i> Excursions</a></li></ul></div>
+                <div><h4 class="footer-title">Liens rapides</h4><ul class="footer-links"><li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li><li><a href="cars.html"><i class="fas fa-chevron-right"></i> Voitures</a></li><li><a href="motos.html"><i class="fas fa-chevron-right"></i> Motos</a></li><li><a href="houses.html"><i class="fas fa-chevron-right"></i> Maisons</a></li><li><a href="excursions.html"><i class="fas fa-chevron-right"></i> Excursions / Transferts</a></li><li><a href="chauffeur.html"><i class="fas fa-chevron-right"></i> Chauffeur Privé</a></li><li><a href="packs.html"><i class="fas fa-chevron-right"></i> Packs</a></li></ul></div>
                 <div><h4 class="footer-title">Contact</h4><ul class="footer-contact"><li><i class="fas fa-map-marker-alt"></i><span>Avenue Al Mhamid, Marrakech</span></li><li><i class="fas fa-phone-alt"></i><span>+212 681 11 71 95</span></li><li><i class="fas fa-envelope"></i><span>velarocars26@gmail.com</span></li></ul></div>
             </div>
             <div class="footer-bottom"><p>&copy; 2026 VelaroCar. Tous droits réservés.</p></div>

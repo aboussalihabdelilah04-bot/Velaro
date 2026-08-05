@@ -45,8 +45,8 @@
 
         var statusClass = { pending: 'warning', confirmed: 'success', cancelled: 'danger' };
         var statusLabel = { pending: 'En attente', confirmed: 'Confirmée', cancelled: 'Annulée' };
-        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain' };
-        var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion' };
+        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain', transfer: 'fa-van-shuttle', chauffeur: 'fa-car-side', pack: 'fa-gem' };
+        var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion', transfer: 'Transfert', chauffeur: 'Chauffeur Privé', pack: 'Pack' };
 
         list.innerHTML = reservations.map(function(r) {
             var days = calculateDays(r.startDate, r.endDate);
@@ -118,13 +118,16 @@
         MOTOS.forEach(function(m) { if (favs.indexOf(m.id) > -1) allItems.push({ item: m, type: 'moto', page: 'motos.html' }); });
         HOUSES.forEach(function(h) { if (favs.indexOf(h.id) > -1) allItems.push({ item: h, type: 'maison', page: 'houses.html' }); });
         EXCURSIONS.forEach(function(e) { if (favs.indexOf(e.id) > -1) allItems.push({ item: e, type: 'excursion', page: 'excursions.html' }); });
+        if (typeof TRANSFERS !== 'undefined') {
+            TRANSFERS.forEach(function(t) { if (favs.indexOf(t.id) > -1) allItems.push({ item: t, type: 'transfer', page: 'excursions.html' }); });
+        }
 
-        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain' };
-        var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion' };
+        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain', transfer: 'fa-van-shuttle', chauffeur: 'fa-car-side', pack: 'fa-gem' };
+        var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion', transfer: 'Transfert', chauffeur: 'Chauffeur Privé', pack: 'Pack' };
 
         list.innerHTML = allItems.map(function(entry) {
             var price = entry.item.pricePerDay || entry.item.pricePerNight || entry.item.price;
-            var priceLabel = entry.type === 'maison' ? '/ nuit' : (entry.type === 'excursion' ? '/ pers.' : '/ jour');
+            var priceLabel = entry.type === 'maison' ? '/ nuit' : (entry.type === 'excursion' ? '/ pers.' : (entry.type === 'transfer' ? '/ transfert' : (entry.type === 'chauffeur' ? '/ forfait' : (entry.type === 'pack' ? '/ pack' : '/ jour'))));
             return '<div class="product-card" style="margin-bottom:1rem;">' +
                 '<div class="product-card-body" style="display:flex;gap:1rem;align-items:center;">' +
                     '<img src="' + entry.item.image + '" alt="' + entry.item.name + '" style="width:70px;height:70px;border-radius:12px;object-fit:cover;flex-shrink:0;">' +

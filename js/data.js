@@ -793,73 +793,13 @@ const EXCURSIONS = [
         ],
         included: ["Transport ", "Guide francophone", "Dromadaire", "Thé"],
         notIncluded: ["Déjeuner", "Quad (optionnel +200 DH )", "Boissons"],
-        rating: 4.7,
-        reviews: 128,
+        rating: 4.9,
+        reviews: 428,
         available: true
     },
+    
     {
         id: "exc-002",
-        name: "Vallée de l'Ourika",
-        city: "Marrakech",
-        duration: "Journée complète",
-        durationHours: 8,
-        price: 450,
-        difficulty: "Modéré",
-        image: "images/excursions/vallee-ourika/main.webp",
-        images: [
-            "images/excursions/vallee-ourika/main.webp",
-            "images/excursions/vallee-ourika/1.jpg",
-            "images/excursions/vallee-ourika/2.jpg",
-            "images/excursions/vallee-ourika/3.jpg",
-            "images/excursions/vallee-ourika/4.jpg"
-        ],
-        description: "Escapade dans la magnifique vallée de l'Ourika, nichée dans l'Atlas. Visite de villages berbères, cascades et marchés traditionnels.",
-        program: [
-            { time: "08:00", activity: "Départ de Marrakech" },
-            { time: "09:30", activity: "Arrivée au village d'Ourika" },
-            { time: "10:00", activity: "Randonnée vers les cascades" },
-            { time: "12:00", activity: "Déjeuner au bord de l'oued" },
-            { time: "14:00", activity: "Visite d'un village berbère et musée des saveurs" },
-            { time: "16:00", activity: "Temps libre au souk" },
-            { time: "17:00", activity: "Retour à Marrakech" }
-        ],
-        included: ["Transport ", "Guide", "Randonnée"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.6,
-        reviews: 95,
-        available: true
-    },
-    {
-        id: "exc-003",
-        name: "Jardin Majorelle & Palais Bahia",
-        city: "Marrakech",
-        duration: "Demi-journée",
-        durationHours: 4,
-        price: 250,
-        difficulty: "Facile",
-        image: "images/excursions/jardin-majorelle/main.webp",
-        images: [
-            "images/excursions/jardin-majorelle/main.webp",
-            "images/excursions/jardin-majorelle/1.jpg",
-            "images/excursions/jardin-majorelle/2.jpg",
-            "images/excursions/jardin-majorelle/3.jpg",
-            "images/excursions/jardin-majorelle/4.jpg"
-        ],
-        description: "Visitez le mythique Jardin Majorelle et le magnifique Palais Bahia, deux joyaux architecturaux de Marrakech.",
-        program: [
-            { time: "09:00", activity: "Visite du Jardin Majorelle et Musée Yves Saint Laurent" },
-            { time: "11:00", activity: "Traversée de la médina" },
-            { time: "11:30", activity: "Visite du Palais Bahia" },
-            { time: "13:00", activity: "Fin de la visite" }
-        ],
-        included: ["Transport","Guide", "Entrées"],
-        notIncluded: [ "Déjeuner"],
-        rating: 4.8,
-        reviews: 210,
-        available: true
-    },
-    {
-        id: "exc-004",
         name: "Atlas & Cascades d'Ouzoud",
         city: "Marrakech",
         duration: "Journée complète",
@@ -886,525 +826,371 @@ const EXCURSIONS = [
         ],
         included: ["Transport ", "Guide", "Randonnée"],
         notIncluded: ["Déjeuner"],
-        rating: 4.7,
-        reviews: 87,
+        rating: 4.9,
+        reviews: 459,
         available: true
     },
-    /* --- ESSAOUIRA --- */
+    
+];
+
+/* ============================================
+   TRANSFERTS PRIVÉS (Mercedes Vito)
+   Même structure que les excursions
+   ============================================ */
+const TRANSFERS = [
+    /* --- MARRAKECH : AÉROPORT --- */
     {
-        id: "exc-005",
-        name: "Essaouira - Port & Médina",
-        city: "Essaouira",
-        duration: "Journée complète",
-        durationHours: 10,
-        price: 600,
-        difficulty: "Facile",
-        image: "images/excursions/essaouira-port/main.webp",
-        images: [
-            "images/excursions/essaouira-port/main.webp",
-            "images/excursions/essaouira-port/1.jpg",
-            "images/excursions/essaouira-port/2.jpg",
-            "images/excursions/essaouira-port/3.jpg",
-            "images/excursions/essaouira-port/4.jpg"
-        ],
-        description: "Excursion à Essaouira, la perle de l'Atlantique. Découvrez sa médina classée UNESCO, son port de pêche coloré et ses plages de sable.",
-        program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Arrivée à Essaouira" },
-            { time: "10:30", activity: "Visite de la médina et ramparts" },
-            { time: "12:30", activity: "Déjeuner de fruits de mer au port" },
-            { time: "14:00", activity: "Balade sur la plage et temps libre" },
-            { time: "16:00", activity: "Visite des ateliers d'artisans" },
-            { time: "17:00", activity: "Retour à Marrakech" }
-        ],
-        included: ["Transport ", "Guide"],
-        notIncluded: ["Déjeuner", ],
-        rating: 4.8,
-        reviews: 156,
-        available: true
-    },
-    {
-        id: "exc-006",
-        name: "Essaouira - Balade en Quad",
-        city: "Essaouira",
-        duration: "Demi-journée",
-        durationHours: 4,
+        id: "trf-001",
+        name: "Aéroport Menara → Hôtel / Riad / Villa",
+        city: "Marrakech",
+        duration: "≈ 30 min",
+        durationHours: 1,
         price: 500,
-        difficulty: "Modéré",
-        image: "images/excursions/essaouira-quad/main.webp",
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/airport-arrival/main.png",
         images: [
-            "images/excursions/essaouira-quad/main.webp",
-            "images/excursions/essaouira-quad/1.jpg",
-            "images/excursions/essaouira-quad/2.jpg",
-            "images/excursions/essaouira-quad/3.jpg",
-            "images/excursions/essaouira-quad/4.jpg"
+            "images/transfers/airport-arrival/main.png",
+            
         ],
-        description: "Aventure en quad sur les dunes et pistes côtières autour d'Essaouira. Adrénaline garantie !",
+        description: "Transfert privé en Mercedes Vito depuis l'aéroport Marrakech Menara vers votre hôtel, riad ou villa à Marrakech. Accueil avec pancarte et prise en charge immédiate.",
         program: [
-            { time: "09:00", activity: "Briefing sécurité et prise en main du quad" },
-            { time: "09:30", activity: "Départ en piste vers les dunes" },
-            { time: "11:00", activity: "Pause au bord de la mer" },
-            { time: "12:00", activity: "Retour et fin de l'activité" }
+            { time: "00:00", activity: "Accueil à l'aéroport Marrakech Menara avec pancarte" },
+            { time: "00:10", activity: "Installation des bagages à bord de la Mercedes Vito" },
+            { time: "00:15", activity: "Départ vers votre hôtel, riad ou villa" },
+            { time: "00:45", activity: "Arrivée et dépose à votre hébergement à Marrakech" }
         ],
-        included: ["Transport","Quad", "Casque", "Guide", "Assurance"],
-        notIncluded: [],
-        rating: 4.6,
-        reviews: 64,
-        available: true
-    },
-    {
-        id: "exc-007",
-        name: "Essaouira - Balade à Cheval",
-        city: "Essaouira",
-        duration: "Demi-journée",
-        durationHours: 3,
-        price: 400,
-        difficulty: "Facile",
-        image: "images/excursions/essaouira-cheval/main.webp",
-        images: [
-            "images/excursions/essaouira-cheval/main.webp",
-            "images/excursions/essaouira-cheval/1.jpg",
-            "images/excursions/essaouira-cheval/2.jpg",
-            "images/excursions/essaouira-cheval/3.jpg",
-            "images/excursions/essaouira-cheval/4.jpg"
-        ],
-        description: "Promenade à cheval sur la plage d'Essaouira au coucher du soleil. Une expérience magique et romantique.",
-        program: [
-            { time: "16:00", activity: "Accueil et choix du cheval" },
-            { time: "16:30", activity: "Départ sur la plage" },
-            { time: "17:30", activity: "Promenade le long de l'océan" },
-            { time: "18:30", activity: "Coucher de soleil et retour" }
-        ],
-        included: ["Cheval","Transport", "Guide", "Casque"],
-        notIncluded: [],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Pancarte à l'aéroport"],
+        notIncluded: ["Péages", "Attente supplémentaire"],
         rating: 4.9,
-        reviews: 78,
-        available: true
-    },
-    /* --- OUARZAZATE --- */
-    {
-        id: "exc-008",
-        name: "Ouarzazate & Aït Ben Haddou",
-        city: "Ouarzazate",
-        duration: "Journée complète",
-        durationHours: 12,
-        price: 700,
-        difficulty: "Facile",
-        image: "images/excursions/ouarzazate-ait-ben-haddou/main.webp",
-        images: [
-            "images/excursions/ouarzazate-ait-ben-haddou/main.webp",
-            "images/excursions/ouarzazate-ait-ben-haddou/1.jpg",
-            "images/excursions/ouarzazate-ait-ben-haddou/2.jpg",
-            "images/excursions/ouarzazate-ait-ben-haddou/3.jpg",
-            "images/excursions/ouarzazate-ait-ben-haddou/4.jpg"
-        ],
-        description: "Excursion aux portes du Sahara. Visite de la kasbah d'Aït Ben Haddou (UNESCO) et des studios de cinéma d'Ouarzazate.",
-        program: [
-            { time: "06:00", activity: "Départ de Marrakech" },
-            { time: "09:00", activity: "Traversée du col du Tizi n'Tichka (2260m)" },
-            { time: "11:00", activity: "Visite d'Aït Ben Haddou" },
-            { time: "13:00", activity: "Déjeuner" },
-            { time: "14:30", activity: "Visite des Studios Atlas (Game of Thrones)" },
-            { time: "16:00", activity: "Visite de la Kasbah de Taourirt" },
-            { time: "17:00", activity: "Retour à Marrakech" }
-        ],
-        included: ["Transport ", "Guide", "Entrées"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.8,
-        reviews: 112,
-        available: true
-    },
-    /* --- AGADIR --- */
-    {
-        id: "exc-009",
-        name: "Agadir - Crocoparc & Marina",
-        city: "Agadir",
-        duration: "Journée complète",
-        durationHours: 10,
-        price: 650,
-        difficulty: "Facile",
-        image: "images/excursions/agadir-crocoparc/main.jpg",
-        images: [
-            "images/excursions/agadir-crocoparc/main.jpg",
-            "images/excursions/agadir-crocoparc/1.jpg",
-            "images/excursions/agadir-crocoparc/2.jpg",
-            "images/excursions/agadir-crocoparc/3.jpg",
-            "images/excursions/agadir-crocoparc/4.jpg"
-        ],
-        description: "Découvrez Agadir : Crocoparc, Marina, Corniche et vue panoramique depuis le Kasbah.",
-        program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Arrivée à Agadir - Visite du Crocoparc" },
-            { time: "12:00", activity: "Balade à la Marina" },
-            { time: "13:00", activity: "Déjeuner sur la Corniche" },
-            { time: "14:30", activity: "Montée à la Kasbah - Vue panoramique" },
-            { time: "16:00", activity: "Plage libre" },
-            { time: "17:30", activity: "Retour à Marrakech" }
-        ],
-        included: ["Transport", "Guide", "Entrée Crocoparc"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.5,
-        reviews: 73,
+        reviews: 412,
         available: true
     },
     {
-        id: "exc-010",
-        name: "Paradise Valley & Agadir",
-        city: "Agadir",
-        duration: "Journée complète",
-        durationHours: 10,
-        price: 550,
-        difficulty: "Modéré",
-        image: "images/excursions/paradise-valley/main.webp",
+        id: "trf-002",
+        name: "Hôtel / Riad / Villa → Aéroport Menara",
+        city: "Marrakech",
+        duration: "≈ 30 min",
+        durationHours: 1,
+        price: 500,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/airport-departure/main.png",
         images: [
-            "images/excursions/paradise-valley/main.webp",
-            "images/excursions/paradise-valley/1.jpg",
-            "images/excursions/paradise-valley/2.jpg",
-            "images/excursions/paradise-valley/3.jpg",
-            "images/excursions/paradise-valley/4.jpg"
+            "images/transfers/airport-departure/main.png",
+           
         ],
-        description: "Randonnée dans le paradis secret de l'Atlas marocain. Piscines naturelles, cascades et paysages verdoyants.",
+        description: "Transfert privé en Mercedes Vito depuis votre hôtel, riad ou villa à Marrakech vers l'aéroport Marrakech Menara. Ponctualité garantie pour votre vol.",
         program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "09:30", activity: "Traversée de l'Anti-Atlas" },
-            { time: "11:00", activity: "Début de la randonnée" },
-            { time: "12:30", activity: "Baignade dans les piscines naturelles" },
-            { time: "13:30", activity: "Déjeuner pique-nique" },
-            { time: "15:00", activity: "Suite de la randonnée" },
-            { time: "17:00", activity: "Retour à Marrakech" }
+            { time: "00:00", activity: "Prise en charge à votre hôtel, riad ou villa" },
+            { time: "00:10", activity: "Installation des bagages à bord de la Mercedes Vito" },
+            { time: "00:15", activity: "Départ vers l'aéroport Marrakech Menara" },
+            { time: "00:45", activity: "Arrivée et dépose au terminal de l'aéroport" }
         ],
-        included: ["Transport ", "Guide randonnée", "Déjeuner picnic"],
-        notIncluded: ["Boissons"],
-        rating: 4.7,
-        reviews: 58,
-        available: true
-    },
-    /* --- MERZOUGA --- */
-    {
-        id: "exc-011",
-        name: "Dunes de Merzouga - Nuit en Bivouac",
-        city: "Merzouga",
-        duration: "2 jours / 1 nuit",
-        durationHours: 36,
-        price: 1800,
-        difficulty: "Modéré",
-        image: "images/excursions/dunes-merzouga/main.webp",
-        images: [
-            "images/excursions/dunes-merzouga/main.webp",
-            "images/excursions/dunes-merzouga/1.jpg",
-            "images/excursions/dunes-merzouga/2.jpg",
-            "images/excursions/dunes-merzouga/3.jpg",
-            "images/excursions/dunes-merzouga/4.jpg"
-        ],
-        description: "Aventure totale dans les dunes de l'Erg Chebbi. Balade en dromadaire, nuit en bivouac sous les étoiles et lever de soleil magique.",
-        program: [
-            { time: "J1 06:00", activity: "Départ de Marrakech" },
-            { time: "J1 12:00", activity: "Arrivée à Erfoud - déjeuner" },
-            { time: "J1 15:00", activity: "Visite des ksour et fossiles" },
-            { time: "J1 16:30", activity: "Balade en dromadaire vers les dunes" },
-            { time: "J1 18:00", activity: "Coucher de soleil sur les dunes" },
-            { time: "J1 20:00", activity: "Dîner et soirée musicale au bivouac" },
-            { time: "J2 05:30", activity: "Lever de soleil sur les dunes" },
-            { time: "J2 08:00", activity: "Petit-déjeuner et retour" }
-        ],
-        included: ["Transport", "Dromadaire", "Bivouac","Boissons", "Dîner + Petit-déj", "Guide"],
-        notIncluded: ["Déjeuner J1"],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Ponctualité garantie"],
+        notIncluded: ["Péages", "Attente supplémentaire"],
         rating: 4.9,
-        reviews: 203,
+        reviews: 389,
         available: true
     },
+
+    /* --- MARRAKECH → CASABLANCA --- */
     {
-        id: "exc-012",
-        name: "Merzouga - Quad dans les Dunes",
-        city: "Merzouga",
-        duration: "Demi-journée",
-        durationHours: 3,
-        price: 600,
-        difficulty: "Modéré",
-        image: "images/excursions/merzouga-quad/main.webp",
-        images: [
-            "images/excursions/merzouga-quad/main.webp",
-            "images/excursions/merzouga-quad/1.jpg",
-            "images/excursions/merzouga-quad/2.jpg",
-            "images/excursions/merzouga-quad/3.jpg",
-            "images/excursions/merzouga-quad/4.jpg"
-        ],
-        description: "Conduisez un quad à travers les dunes dorées de l'Erg Chebbi. Une aventure palpitante au cœur du Sahara.",
-        program: [
-            { time: "08:00", activity: "Briefing et prise en main du quad" },
-            { time: "08:30", activity: "Départ en piste vers les dunes" },
-            { time: "10:00", activity: "Pause au milieu des dunes" },
-            { time: "11:00", activity: "Retour" }
-        ],
-        included: ["Transport", "Quad", "Casque", "Guide", "Assurance"],
-        notIncluded: [""],
-        rating: 4.7,
-        reviews: 45,
-        available: true
-    },
-    /* --- CHEFCHAOUEN --- */
-    {
-        id: "exc-013",
-        name: "Chefchaouen - La Ville Bleue",
-        city: "Chefchaouen",
-        duration: "Journée complète",
-        durationHours: 12,
-        price: 800,
-        difficulty: "Facile",
-        image: "images/excursions/chefchaouen/main.webp",
-        images: [
-            "images/excursions/chefchaouen/main.webp",
-            "images/excursions/chefchaouen/1.jpg",
-            "images/excursions/chefchaouen/2.jpg",
-            "images/excursions/chefchaouen/3.jpg",
-            "images/excursions/chefchaouen/4.jpg"
-        ],
-        description: "Explorez Chefchaouen, la perle bleue du Maroc. Ruelle fleuries, artisans et panoramas exceptionnels.",
-        program: [
-            { time: "06:00", activity: "Départ de Marrakech" },
-            { time: "11:00", activity: "Arrivée à Chefchaouen" },
-            { time: "11:30", activity: "Visite de la médina bleue" },
-            { time: "13:00", activity: "Déjeuner local" },
-            { time: "14:30", activity: "Randonnée vers le Ras El Maa" },
-            { time: "16:00", activity: "Place Outa el Hammam et mosquée" },
-            { time: "17:30", activity: "Retour" }
-        ],
-        included: ["Transport", "Guide"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.8,
-        reviews: 89,
-        available: true
-    },
-    /* --- FÈS --- */
-    {
-        id: "exc-014",
-        name: "Fès - Médina & Tanneries",
-        city: "Fès",
-        duration: "Journée complète",
-        durationHours: 12,
-        price: 850,
-        difficulty: "Modéré",
-        image: "images/excursions/fes-medina/main.webp",
-        images: [
-            "images/excursions/fes-medina/main.webp",
-            "images/excursions/fes-medina/1.jpg",
-            "images/excursions/fes-medina/2.jpg",
-            "images/excursions/fes-medina/3.jpg",
-            "images/excursions/fes-medina/4.jpg"
-        ],
-        description: "Découvrez Fès el Bali, la plus grande zone piétonne au monde. Tanneries, fondouks, mosquées et artisanat d'exception.",
-        program: [
-            { time: "06:00", activity: "Départ de Marrakech" },
-            { time: "11:00", activity: "Arrivée à Fès" },
-            { time: "11:30", activity: "Visite de la médersa Bou Inania" },
-            { time: "12:30", activity: "Balade dans les ruelles de la médina" },
-            { time: "13:30", activity: "Déjeuner traditionnel" },
-            { time: "15:00", activity: "Visite des Tanneries Chouara" },
-            { time: "16:30", activity: "Université Al Quaraouiyine" },
-            { time: "17:30", activity: "Retour" }
-        ],
-        included: ["Transport ", "Guide"],
-        notIncluded: ["Déjeuner", ],
-        rating: 4.8,
-        reviews: 134,
-        available: true
-    },
-    /* --- TANGER --- */
-    {
-        id: "exc-015",
-        name: "Tanger - Cap Spartel & Hercules",
-        city: "Tanger",
-        duration: "Journée complète",
-        durationHours: 12,
-        price: 750,
-        difficulty: "Facile",
-        image: "images/excursions/tanger/main.webp",
-        images: [
-            "images/excursions/tanger/main.webp",
-            "images/excursions/tanger/1.jpg",
-            "images/excursions/tanger/2.jpg",
-            "images/excursions/tanger/3.jpg",
-            "images/excursions/tanger/4.jpg"
-        ],
-        description: "Excursion à Tanger, porte de l'Afrique. Cap Spartel, Grottes d'Hercule, médina et views spectaculaires.",
-        program: [
-            { time: "06:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Arrivée à Tanger" },
-            { time: "10:30", activity: "Cap Spartel - jonction Atlantique/Méditerranée" },
-            { time: "12:00", activity: "Grottes d'Hercule" },
-            { time: "13:00", activity: "Déjeuner avec vue sur le détroit" },
-            { time: "14:30", activity: "Visite de la médina et souk" },
-            { time: "16:00", activity: "Palais du Dar el-Makhzen" },
-            { time: "17:00", activity: "Retour" }
-        ],
-        included: ["Transport", "Guide"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.6,
-        reviews: 67,
-        available: true
-    },
-    /* --- CASABLANCA --- */
-    {
-        id: "exc-016",
-        name: "Casablanca - Mosquée Hassan II",
+        id: "trf-003",
+        name: "Marrakech → Casablanca Centre-ville",
         city: "Casablanca",
-        duration: "Journée complète",
-        durationHours: 10,
-        price: 700,
-        difficulty: "Facile",
-        image: "images/excursions/casablanca/main.webp",
+        duration: "≈ 3h",
+        durationHours: 3,
+        price: 2500,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/casablanca/main.png",
         images: [
-            "images/excursions/casablanca/main.webp",
-            "images/excursions/casablanca/1.jpg",
-            "images/excursions/casablanca/2.jpg",
-            "images/excursions/casablanca/3.jpg",
-            "images/excursions/casablanca/4.jpg"
+            "images/transfers/casablanca/main.png",
+            
         ],
-        description: "Visitez la plus grande mosquée du Maroc, chef-d'architecture moderne. Corniche Ain Diab et centre-ville Art Déco.",
+        description: "Transfert privé en Mercedes Vito de Marrakech vers le centre-ville de Casablanca. Confort et discrétion sur la route, trajet direct sans escale.",
         program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Arrivée à Casablanca" },
-            { time: "10:30", activity: "Visite de la Mosquée Hassan II" },
-            { time: "12:30", activity: "Déjeuner à la Corniche" },
-            { time: "14:00", activity: "Place Mohammed V et centre-ville" },
-            { time: "15:30", activity: "Quartier Art Déco" },
-            { time: "17:00", activity: "Retour" }
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Sortie de Marrakech vers l'autoroute A3" },
+            { time: "02:30", activity: "Traversée des plaines de la Chaouia" },
+            { time: "03:00", activity: "Arrivée au centre-ville de Casablanca" }
         ],
-        included: ["Transport ", "Guide", "Entrée Mosquée"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.7,
-        reviews: 98,
-        available: true
-    },
-    /* --- RABAT --- */
-    {
-        id: "exc-017",
-        name: "Rabat - Capitale Royale",
-        city: "Rabat",
-        duration: "Journée complète",
-        durationHours: 11,
-        price: 750,
-        difficulty: "Facile",
-        image: "images/excursions/rabat/main.webp",
-        images: [
-            "images/excursions/rabat/main.webp",
-            "images/excursions/rabat/1.jpg",
-            "images/excursions/rabat/2.jpg",
-            "images/excursions/rabat/3.jpg",
-            "images/excursions/rabat/4.jpg"
-        ],
-        description: "Découvrez la capitale du Maroc : Kasbah des Oudayas, Tour Hassan, Mausolée Mohammed V et Chellah.",
-        program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "10:30", activity: "Arrivée à Rabat" },
-            { time: "11:00", activity: "Kasbah des Oudayas" },
-            { time: "12:30", activity: "Déjeuner" },
-            { time: "14:00", activity: "Tour Hassan et Mausolée Mohammed V" },
-            { time: "15:30", activity: "Ruines de la Chellah" },
-            { time: "17:00", activity: "Retour" }
-        ],
-        included: ["Transport", "Guide"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.6,
-        reviews: 54,
-        available: true
-    },
-    /* --- IFRANE --- */
-    {
-        id: "exc-018",
-        name: "Ifrane & Forêt des Cèdres",
-        city: "Ifrane",
-        duration: "Journée complète",
-        durationHours: 11,
-        price: 650,
-        difficulty: "Facile",
-        image: "images/excursions/ifrane/main.webp",
-        images: [
-            "images/excursions/ifrane/main.webp",
-            "images/excursions/ifrane/1.jpg",
-            "images/excursions/ifrane/2.jpg",
-            "images/excursions/ifrane/3.jpg",
-            "images/excursions/ifrane/4.jpg"
-        ],
-        description: "Échappée au « petit Suisse » du Maroc. Forêt de cèdres, singes de l'Atlas et air pur de montagne.",
-        program: [
-            { time: "07:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Traversée du Moyen Atlas" },
-            { time: "11:30", activity: "Forêt des Cèdres - observation des singes" },
-            { time: "13:00", activity: "Déjeuner" },
-            { time: "14:30", activity: "Visite d'Ifrane" },
-            { time: "16:00", activity: "Lac Dayet Aoughem" },
-            { time: "17:30", activity: "Retour" }
-        ],
-        included: ["Transport ", "Guide"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.7,
-        reviews: 42,
-        available: true
-    },
-    /* --- DAKHLA --- */
-    {
-        id: "exc-019",
-        name: "Dakhla - Kitesurf & Lagune",
-        city: "Dakhla",
-        duration: "2 jours / 1 nuit",
-        durationHours: 36,
-        price: 2200,
-        difficulty: "Modéré",
-        image: "images/excursions/dakhla/main.webp",
-        images: [
-            "images/excursions/dakhla/main.webp",
-            "images/excursions/dakhla/1.jpg",
-            "images/excursions/dakhla/2.jpg",
-            "images/excursions/dakhla/3.jpg",
-            "images/excursions/dakhla/4.jpg"
-        ],
-        description: "Séjour à Dakhla, capitale mondiale du kitesurf. Lagune turquoise, sports nautiques et couchers de soleil exceptionnels.",
-        program: [
-            { time: "J1 07:00", activity: "Vol Marrakech-Dakhla" },
-            { time: "J1 11:00", activity: "Installation hôtel" },
-            { time: "J1 14:00", activity: "Cours de kitesurf ou balade lagune" },
-            { time: "J1 18:00", activity: "Coucher de soleil sur la lagune" },
-            { time: "J2 08:00", activity: "Session kitesurf" },
-            { time: "J2 12:00", activity: "Déjeuner et retour" }
-        ],
-        included: ["Vol A/R", "Guide","Hébergement", "Cours kitesurf", "Transferts" , "Repas", "Assurance voyage"],
-        notIncluded: [],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
         rating: 4.8,
-        reviews: 36,
+        reviews: 276,
         available: true
     },
-    /* --- AL HOCEIMA --- */
     {
-        id: "exc-020",
-        name: "Al Hoceïma - Méditerranée Marocaine",
-        city: "Al Hoceïma",
-        duration: "Journée complète",
-        durationHours: 11,
-        price: 700,
-        difficulty: "Facile",
-        image: "images/excursions/al-hoceima/main.webp",
+        id: "trf-004",
+        name: "Marrakech → Aéroport Mohammed V",
+        city: "Casablanca",
+        duration: "≈ 3h",
+        durationHours: 3,
+        price: 2000,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/casablanca-airport/main.png",
         images: [
-            "images/excursions/al-hoceima/main.webp",
-            "images/excursions/al-hoceima/1.webp",
-            "images/excursions/al-hoceima/2.webp",
-            "images/excursions/al-hoceima/3.webp",
-            "images/excursions/al-hoceima/4.webp"
+            "images/transfers/casablanca-airport/main.png",
+            
         ],
-        description: "Découvrez la Méditerranée marocaine. Plages cristallines, Parc National du Cap des Trois Fourches.",
+        description: "Transfert privé en Mercedes Vito de Marrakech vers l'aéroport international Mohammed V de Casablanca. Départ à l'heure convenue, sans aucun stress.",
         program: [
-            { time: "06:00", activity: "Départ de Marrakech" },
-            { time: "10:00", activity: "Arrivée à Al Hoceïma" },
-            { time: "10:30", activity: "Plage de Quemado" },
-            { time: "12:30", activity: "Déjeuner de poisson frais" },
-            { time: "14:00", activity: "Parc National du Cap des Trois Fourches" },
-            { time: "16:00", activity: "Balade côtière" },
-            { time: "17:00", activity: "Retour" }
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute A3" },
+            { time: "02:30", activity: "Approche de l'aéroport Mohammed V" },
+            { time: "03:00", activity: "Dépose au terminal de départ" }
         ],
-        included: ["Transport A/R", "Guide", "Transport", "Entrée Parc National"],
-        notIncluded: ["Déjeuner"],
-        rating: 4.5,
-        reviews: 31,
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Ponctualité garantie"],
+        notIncluded: ["Péages", "Attente supplémentaire"],
+        rating: 4.8,
+        reviews: 244,
+        available: true
+    },
+
+    /* --- MARRAKECH → VILLES --- */
+    {
+        id: "trf-005",
+        name: "Marrakech → Rabat",
+        city: "Rabat",
+        duration: "≈ 3h30",
+        durationHours: 4,
+        price: 3500,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/rabat/main.png",
+        images: [
+            "images/transfers/rabat/main.png",
+           
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers la capitale Rabat. Confort optimal pour un trajet long, avec chauffeur expérimenté.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute A3 vers Casablanca" },
+            { time: "02:30", activity: "Contournement de Casablanca" },
+            { time: "03:30", activity: "Arrivée à Rabat, dépose à votre destination" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.8,
+        reviews: 198,
+        available: true
+    },
+    {
+        id: "trf-006",
+        name: "Marrakech → Essaouira",
+        city: "Essaouira",
+        duration: "≈ 2h30",
+        durationHours: 3,
+        price: 1500,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/essaouira/main.png",
+        images: [
+            "images/transfers/essaouira/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers la cité des alizés, Essaouira. Traversée de la forêt d'arganiers dans un confort absolu.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Traversée de la plaine du Haouz" },
+            { time: "01:30", activity: "Forêt d'arganiers et villages berbères" },
+            { time: "02:30", activity: "Arrivée à Essaouira" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.9,
+        reviews: 331,
+        available: true
+    },
+    {
+        id: "trf-007",
+        name: "Marrakech → Ouarzazate",
+        city: "Ouarzazate",
+        duration: "≈ 4h",
+        durationHours: 4,
+        price: 2500,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/ouarzazate/main.png",
+        images: [
+            "images/transfers/ouarzazate/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers Ouarzazate, porte du désert. Route spectaculaire du Tizi n'Tichka dans un confort premium.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Montée vers le col du Tizi n'Tichka" },
+            { time: "02:00", activity: "Paysages du Haut Atlas" },
+            { time: "04:00", activity: "Arrivée à Ouarzazate" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.8,
+        reviews: 215,
+        available: true
+    },
+    {
+        id: "trf-008",
+        name: "Marrakech → Imlil (Atlas)",
+        city: "Atlas / Imlil",
+        duration: "≈ 1h30",
+        durationHours: 2,
+        price: 800,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/imlil/main.png",
+        images: [
+            "images/transfers/imlil/main.png",
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers Imlil, au cœur du Haut Atlas. Vallées verdoyantes et villages de montagne en toute sérénité.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:20", activity: "Départ vers le Haut Atlas" },
+            { time: "01:00", activity: "Traversée des villages berbères" },
+            { time: "01:30", activity: "Arrivée à Imlil" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.9,
+        reviews: 287,
+        available: true
+    },
+    {
+        id: "trf-009",
+        name: "Marrakech → Désert d'Agafay",
+        city: "Agafay",
+        duration: "≈ 1h",
+        durationHours: 1,
+        price: 700,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/agafay/main.png",
+        images: [
+            "images/transfers/agafay/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers le désert d'Agafay. Paysages lunaires et montagnes de l'Atlas à seulement une heure de route.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:15", activity: "Départ vers les collines d'Agafay" },
+            { time: "00:45", activity: "Entrée dans le désert d'Agafay" },
+            { time: "01:00", activity: "Arrivée à votre campement ou lodge" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.9,
+        reviews: 356,
+        available: true
+    },
+    {
+        id: "trf-010",
+        name: "Marrakech → Agadir",
+        city: "Agadir",
+        duration: "≈ 5h",
+        durationHours: 5,
+        price: 3000,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/agadir/main.png",
+        images: [
+            "images/transfers/agadir/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers Agadir et sa baie. Long trajet confortable avec un chauffeur professionnel aux petits soins.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute A7" },
+            { time: "03:00", activity: "Traversée de l'Anti-Atlas et d'Essaouira" },
+            { time: "05:00", activity: "Arrivée à Agadir" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.8,
+        reviews: 173,
+        available: true
+    },
+    {
+        id: "trf-011",
+        name: "Marrakech → Fès",
+        city: "Fès",
+        duration: "≈ 6h",
+        durationHours: 6,
+        price: 5000,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/fes/main.png",
+        images: [
+            "images/transfers/fes/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers la cité spirituelle de Fès. Confort premium pour l'un des plus beaux trajets du Maroc.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute vers Casablanca" },
+            { time: "03:00", activity: "Contournement de Casablanca puis Rabat" },
+            { time: "06:00", activity: "Arrivée à Fès" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.9,
+        reviews: 302,
+        available: true
+    },
+    {
+        id: "trf-012",
+        name: "Marrakech → El Jadida",
+        city: "El Jadida",
+        duration: "≈ 3h",
+        durationHours: 3,
+        price: 2800,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/el-jadida/main.png",
+        images: [
+            "images/transfers/el-jadida/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers El Jadida, cité fortifiée de la côte atlantique. Route directe et confort exceptionnel.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute A3" },
+            { time: "02:30", activity: "Traversée des plaines côtières" },
+            { time: "03:00", activity: "Arrivée à El Jadida" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.8,
+        reviews: 154,
+        available: true
+    },
+    {
+        id: "trf-013",
+        name: "Marrakech → Oualidia",
+        city: "Oualidia",
+        duration: "≈ 3h",
+        durationHours: 3,
+        price: 2800,
+        difficulty: "Confort",
+        vehicle: "Mercedes Vito",
+        image: "images/transfers/oualidia/main.png",
+        images: [
+            "images/transfers/oualidia/main.png",
+            
+        ],
+        description: "Transfert privé en Mercedes Vito de Marrakech vers Oualidia, la lagune aux huîtres. Une heure trente de quiétude avant la côte atlantique.",
+        program: [
+            { time: "00:00", activity: "Prise en charge à votre adresse à Marrakech" },
+            { time: "00:30", activity: "Départ sur l'autoroute vers le littoral" },
+            { time: "02:30", activity: "Traversée des plaines côtières" },
+            { time: "03:00", activity: "Arrivée à Oualidia" }
+        ],
+        included: ["Chauffeur professionnel", "Mercedes Vito 7 places", "Carburant", "Assurance", "Trajet direct"],
+        notIncluded: ["Péages", "Attente sur place"],
+        rating: 4.8,
+        reviews: 141,
         available: true
     }
 ];

@@ -243,6 +243,18 @@
                     });
                 });
             }
+            if (typeof TRANSFERS !== 'undefined') {
+                TRANSFERS.forEach(function(item) {
+                    allItems.push({
+                        type: 'Transfert',
+                        page: 'excursions.html',
+                        name: item.name,
+                        detail: item.city + ' · ' + item.duration + ' · ' + formatPrice(item.price),
+                        image: item.image,
+                        price: formatPrice(item.price)
+                    });
+                });
+            }
 
             var results = allItems.filter(function(item) {
                 return item.name.toLowerCase().includes(query) ||

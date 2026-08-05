@@ -31,7 +31,10 @@
         voiture: 'Location de Voiture',
         moto: 'Location de Moto',
         maison: 'Location d\'Hébergement',
-        excursion: 'Excursion Touristique'
+        excursion: 'Excursion Touristique',
+        transfer: 'Transfert Privé',
+        chauffeur: 'Chauffeur Privé',
+        pack: 'Pack Exclusif'
     };
 
     /* --- Status --- */
