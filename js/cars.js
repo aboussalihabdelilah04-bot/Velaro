@@ -11,16 +11,23 @@
 
     var allCars = CARS.slice().sort(function(a, b) { return b.rating - a.rating; });
 
+    var detailImage = detailModal ? detailModal.querySelector('.detail-image') : null;
+    var resImage = document.getElementById('reservation-modal');
+    resImage = resImage ? resImage.querySelector('.modal-product-image') : null;
+    if (detailImage) detailImage.decoding = 'async';
+    if (resImage) resImage.decoding = 'async';
+
     function renderCars() {
         if (!grid) return;
         if (countEl) countEl.textContent = allCars.length;
 
         var favs = getFavorites();
-        grid.innerHTML = allCars.map(function(car) {
+        grid.innerHTML = allCars.map(function(car, index) {
             var isFav = favs.indexOf(car.id) > -1;
+            var imgAttrs = 'loading="lazy" decoding="async"' + (index < 3 ? ' fetchpriority="high"' : '');
             return '<div class="product-card" data-id="' + car.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" loading="lazy">' +
+                    '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" ' + imgAttrs + '>' +
                     '<span class="product-card-badge">' + car.category + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + car.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +
@@ -44,17 +51,21 @@
             '</div>';
         }).join('');
 
-        initFavButtons();
-        initReserveButtons();
-        initDetailButtons();
+        initGridEvents();
+        initModalReserveButton();
     }
 
-    function initFavButtons() {
-        document.querySelectorAll('.product-card-fav').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+    function initGridEvents() {
+        if (!grid || grid.__gridEventsBound) return;
+        grid.__gridEventsBound = true;
+        grid.addEventListener('click', function(e) {
+            var target = e.target;
+            if (!target || !target.closest) return;
+            var favBtn = target.closest('.product-card-fav');
+            if (favBtn) {
                 e.preventDefault();
                 e.stopPropagation();
-                var id = this.dataset.id;
+                var id = favBtn.dataset.id;
                 var favs = getFavorites();
                 var idx = favs.indexOf(id);
                 if (idx > -1) favs.splice(idx, 1); else favs.push(id);
@@ -68,37 +79,34 @@
                     b.classList.toggle('active', isFav);
                     b.innerHTML = isFav ? '❤️' : '🤍';
                 });
-            });
+                return;
+            }
+            var detailBtn = target.closest('.detail-btn');
+            if (detailBtn) {
+                e.preventDefault();
+                var car = CARS.find(function(c) { return c.id === detailBtn.dataset.id; });
+                if (car) showCarDetail(car);
+                return;
+            }
+            var reserveBtn = target.closest('.reserve-btn');
+            if (reserveBtn) {
+                e.preventDefault();
+                var item = CARS.find(function(c) { return c.id === reserveBtn.dataset.id; });
+                if (item) openReservationModal(item, 'voiture');
+            }
         });
     }
 
-    function initReserveButtons() {
-        document.querySelectorAll('.reserve-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var id = this.dataset.id;
-                var car = CARS.find(function(c) { return c.id === id; });
-                if (car) openReservationModal(car, 'voiture');
-            });
-        });
+    function initModalReserveButton() {
         var detailReserve = detailModal ? detailModal.querySelector('.detail-reserve-btn') : null;
-        if (detailReserve) {
+        if (detailReserve && !detailReserve.__reserveBound) {
+            detailReserve.__reserveBound = true;
             detailReserve.addEventListener('click', function() {
                 detailModal.classList.remove('active');
                 var car = CARS.find(function(c) { return c.id === this.dataset.id; });
                 if (car) openReservationModal(car, 'voiture');
             });
         }
-    }
-
-    function initDetailButtons() {
-        document.querySelectorAll('.detail-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var car = CARS.find(function(c) { return c.id === btn.dataset.id; });
-                if (car) showCarDetail(car);
-            });
-        });
     }
 
     function showCarDetail(car) {
@@ -151,7 +159,8 @@
                 });
                 gal.appendChild(thumb);
             });
-            body.insertBefore(gal, body.querySelector('.detail-location'));
+            var locEl = body.querySelector('.detail-location');
+            body.insertBefore(gal, locEl ? locEl.parentNode : body.firstChild);
         }
 
         detailModal.querySelector('.detail-reserve-btn').dataset.id = car.id;
@@ -181,20 +190,6 @@
             m.addEventListener('click', function(e) { if (e.target === m) { m.classList.remove('active'); document.body.classList.remove('no-scroll'); } });
         }
     });
-
-    var modal = document.getElementById('reservation-modal');
-    if (modal) {
-        modal.querySelector('.modal-close').addEventListener('click', function() {
-            modal.classList.remove('active');
-            document.body.classList.remove('no-scroll');
-        });
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            }
-        });
-    }
 
     var resForm = document.getElementById('reservation-form');
     if (resForm) {
@@ -251,7 +246,7 @@
 
             VelaroCarEmail.sendReservation(reservation, function() {}, function() {});
 
-            modal.classList.remove('active');
+            document.getElementById('reservation-modal').classList.remove('active');
             document.body.classList.remove('no-scroll');
 
             VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');

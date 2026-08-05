@@ -8,8 +8,10 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -64,7 +66,7 @@
     <!-- PAGE HEADER -->
     <section class="page-header">
         <div class="page-header-bg">
-            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80" alt="Location voitures Marrakech" loading="eager">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80" alt="Location voitures Marrakech" loading="eager" fetchpriority="high" decoding="async">
         </div>
         <div class="page-header-overlay"></div>
         <div class="container">
@@ -102,7 +104,7 @@
     <!-- CTA -->
     <section class="cta-section">
         <div class="cta-bg">
-            <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1920&q=80" alt="Marrakech" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1920&q=80" alt="Marrakech" loading="lazy" decoding="async">
         </div>
         <div class="cta-overlay"></div>
         <div class="container">
@@ -124,7 +126,7 @@
                 <button class="modal-close"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <img class="detail-image" src="" alt="" style="width:100%;height:300px;object-fit:cover;border-radius:12px;margin-bottom:1rem;">
+                <img class="detail-image" src="" alt="" decoding="async" style="width:100%;height:300px;object-fit:cover;border-radius:12px;margin-bottom:1rem;">
                 <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
                     <div class="detail-location" style="color:var(--gray-500);font-size:0.9rem;"></div>
                     <div class="detail-category" style="color:var(--accent);font-size:0.9rem;font-weight:600;"></div>
@@ -150,7 +152,7 @@
             </div>
             <div class="modal-body">
                 <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
-                    <img class="modal-product-image" src="" alt="" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">
+                    <img class="modal-product-image" src="" alt="" decoding="async" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">
                     <div>
                         <h4 class="modal-product-name" style="font-size: 1.1rem;"></h4>
                         <p class="modal-product-price" style="color: var(--accent); font-weight: 700; font-size: 1.2rem;"></p>
@@ -250,7 +252,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
     <script src="js/reservation.js"></script>

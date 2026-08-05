@@ -11,16 +11,23 @@
 
     var allExcursions = EXCURSIONS.slice().sort(function(a, b) { return b.rating - a.rating; });
 
+    var detailImage = detailModal ? detailModal.querySelector('.detail-image') : null;
+    var resImage = document.getElementById('reservation-modal');
+    resImage = resImage ? resImage.querySelector('.modal-product-image') : null;
+    if (detailImage) detailImage.decoding = 'async';
+    if (resImage) resImage.decoding = 'async';
+
     function renderExcursions() {
         if (!grid) return;
         if (countEl) countEl.textContent = allExcursions.length;
 
         var favs = getFavorites();
-        grid.innerHTML = allExcursions.map(function(exc) {
+        grid.innerHTML = allExcursions.map(function(exc, index) {
             var isFav = favs.indexOf(exc.id) > -1;
+            var imgAttrs = 'loading="lazy" decoding="async"' + (index < 3 ? ' fetchpriority="high"' : '');
             return '<div class="product-card" data-id="' + exc.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + exc.image + '" alt="' + exc.name + '" loading="lazy">' +
+                    '<img src="' + exc.image + '" alt="' + exc.name + '" ' + imgAttrs + '>' +
                     '<span class="product-card-badge">' + exc.city + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + exc.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
                 '</div>' +
@@ -44,16 +51,21 @@
             '</div>';
         }).join('');
 
-        initFavButtons();
-        initDetailButtons();
-        initReserveButtons();
+        initGridEvents();
+        initModalReserveButton();
     }
 
-    function initFavButtons() {
-        document.querySelectorAll('.product-card-fav').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
+    function initGridEvents() {
+        if (!grid || grid.__gridEventsBound) return;
+        grid.__gridEventsBound = true;
+        grid.addEventListener('click', function(e) {
+            var target = e.target;
+            if (!target || !target.closest) return;
+            var favBtn = target.closest('.product-card-fav');
+            if (favBtn) {
                 e.preventDefault();
-                var id = this.dataset.id;
+                e.stopPropagation();
+                var id = favBtn.dataset.id;
                 var favs = getFavorites();
                 var idx = favs.indexOf(id);
                 if (idx > -1) favs.splice(idx, 1); else favs.push(id);
@@ -67,18 +79,34 @@
                     b.classList.toggle('active', isF);
                     b.innerHTML = isF ? '\u2764\uFE0F' : '\uD83E\uDD1D';
                 });
-            });
+                return;
+            }
+            var detailBtn = target.closest('.detail-btn');
+            if (detailBtn) {
+                e.preventDefault();
+                var exc = EXCURSIONS.find(function(x) { return x.id === detailBtn.dataset.id; });
+                if (exc) showExcursionDetail(exc);
+                return;
+            }
+            var reserveBtn = target.closest('.reserve-btn');
+            if (reserveBtn) {
+                e.preventDefault();
+                var item = EXCURSIONS.find(function(x) { return x.id === reserveBtn.dataset.id; });
+                if (item) openReservationModal(item);
+            }
         });
     }
 
-    function initDetailButtons() {
-        document.querySelectorAll('.detail-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var exc = EXCURSIONS.find(function(x) { return x.id === btn.dataset.id; });
-                if (exc) showExcursionDetail(exc);
+    function initModalReserveButton() {
+        var detailReserve = detailModal ? detailModal.querySelector('.detail-reserve-btn') : null;
+        if (detailReserve && !detailReserve.__reserveBound) {
+            detailReserve.__reserveBound = true;
+            detailReserve.addEventListener('click', function() {
+                detailModal.classList.remove('active');
+                var exc = EXCURSIONS.find(function(x) { return x.id === this.dataset.id; });
+                if (exc) openReservationModal(exc);
             });
-        });
+        }
     }
 
     function showExcursionDetail(exc) {
@@ -133,24 +161,6 @@
         detailModal.querySelector('.detail-reserve-btn').dataset.id = exc.id;
         detailModal.classList.add('active');
         document.body.classList.add('no-scroll');
-    }
-
-    function initReserveButtons() {
-        document.querySelectorAll('.reserve-btn').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var exc = EXCURSIONS.find(function(x) { return x.id === btn.dataset.id; });
-                if (exc) openReservationModal(exc);
-            });
-        });
-        var detailReserve = detailModal ? detailModal.querySelector('.detail-reserve-btn') : null;
-        if (detailReserve) {
-            detailReserve.addEventListener('click', function() {
-                detailModal.classList.remove('active');
-                var exc = EXCURSIONS.find(function(x) { return x.id === this.dataset.id; });
-                if (exc) openReservationModal(exc);
-            });
-        }
     }
 
     function openReservationModal(exc) {

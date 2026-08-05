@@ -11,13 +11,16 @@
        ============================================ */
     const loader = document.querySelector('.loader-overlay');
     if (loader) {
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                loader.classList.add('hidden');
-                document.body.classList.remove('no-scroll');
-            }, 800);
-        });
         document.body.classList.add('no-scroll');
+        function hideLoader() {
+            loader.classList.add('hidden');
+            document.body.classList.remove('no-scroll');
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', hideLoader);
+        } else {
+            hideLoader();
+        }
     }
 
     /* ============================================
@@ -95,7 +98,15 @@
         });
 
         reveals.forEach(function(el) {
-            observer.observe(el);
+            // Reveal content already inside the initial viewport synchronously.
+            // The observer callback is async, so waiting on it keeps above-the-fold
+            // product cards invisible for an extra frame + full stagger transition.
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('revealed');
+            } else {
+                observer.observe(el);
+            }
         });
     }
     initScrollReveal();
