@@ -174,13 +174,13 @@
     var resForm = document.getElementById('reservation-form');
 
     function cardHtml(p, index) {
-        var imgAttrs = 'loading="lazy" decoding="async"' + (index < 3 ? ' fetchpriority="high"' : '');
+        var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
         var includesHtml = p.includes.map(function(inc) {
             return '<li><i class="fas ' + inc.icon + '"></i><span>' + inc.label + '</span></li>';
         }).join('');
         return '<div class="product-card pack-card" data-id="' + p.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + p.image + '" alt="' + p.name + ' - Marrakech" ' + imgAttrs + '>' +
+                '<img src="' + p.image + '" alt="' + p.name + ' - Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + p.emoji + ' ' + p.badge + '</span>' +
             '</div>' +
             '<div class="product-card-body">' +

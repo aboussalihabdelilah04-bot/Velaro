@@ -53,10 +53,10 @@
     function cardHtml(item, index, priceUnit) {
         var favs = getFavorites();
         var isFav = favs.indexOf(item.id) > -1;
-        var imgAttrs = 'loading="lazy" decoding="async"' + (index < 3 ? ' fetchpriority="high"' : '');
+        var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
         return '<div class="product-card" data-id="' + item.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + item.image + '" alt="' + item.name + '" ' + imgAttrs + '>' +
+                '<img src="' + item.image + '" alt="' + item.name + '" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + item.city + '</span>' +
                 '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + item.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
             '</div>' +

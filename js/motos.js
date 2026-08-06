@@ -16,11 +16,12 @@
         if (countEl) countEl.textContent = allMotos.length;
 
         var favs = getFavorites();
-        grid.innerHTML = allMotos.map(function(m) {
+        grid.innerHTML = allMotos.map(function(m, index) {
             var isFav = favs.indexOf(m.id) > -1;
+            var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
             return '<div class="product-card" data-id="' + m.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + m.image + '" alt="' + m.name + '" loading="lazy">' +
+                    '<img src="' + m.image + '" alt="' + m.name + '" width="800" height="533" ' + imgAttrs + '">' +
                     '<span class="product-card-badge">' + m.type + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + m.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +

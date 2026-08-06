@@ -81,13 +81,13 @@
     }
 
     function cardHtml(p, index) {
-        var imgAttrs = 'loading="lazy" decoding="async"' + (index < 2 ? ' fetchpriority="high"' : '');
+        var imgAttrs = index < 2 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
         var includesHtml = p.includes.map(function(inc) {
             return '<li style="display:flex;align-items:flex-start;gap:0.5rem;"><i class="fas fa-check" style="color:var(--success);margin-top:4px;flex-shrink:0;"></i><span>' + inc + '</span></li>';
         }).join('');
         return '<div class="product-card" data-id="' + p.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + p.image + '" alt="' + p.name + ' - Mercedes Vito Premium" ' + imgAttrs + '>' +
+                '<img src="' + p.image + '" alt="' + p.name + ' - Mercedes Vito Premium" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + p.badge + '</span>' +
             '</div>' +
             '<div class="product-card-body">' +
