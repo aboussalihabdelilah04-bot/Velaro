@@ -128,7 +128,7 @@
             client: reservation.firstName + ' ' + reservation.lastName,
             product: reservation.productName,
             dates: reservation.startDate + ' - ' + reservation.endDate,
-            total: grandTotal + ' MAD'
+            total: formatPrice(grandTotal)
         });
 
         if (typeof QRCode !== 'undefined') {

@@ -85,8 +85,11 @@
             start_date: reservation.startDate,
             end_date: reservation.endDate,
             days: String(days),
-            price_per_day: String(reservation.pricePerDay),
-            total: String(total),
+            price_per_day: String(Math.round(reservation.pricePerDay / 10.2)),
+            total: String(Math.round(total / 10.2)),
+            currency: '€',
+            price_per_day_formatted: formatPrice(reservation.pricePerDay),
+            total_formatted: formatPrice(total),
             message: reservation.message || 'Aucun message',
             created_at: new Date(reservation.createdAt).toLocaleDateString('fr-FR')
         };

@@ -792,7 +792,7 @@ const EXCURSIONS = [
             { time: "13:00", activity: "Retour à Marrakech" }
         ],
         included: ["Transport ", "Guide francophone", "Dromadaire", "Thé"],
-        notIncluded: ["Déjeuner", "Quad (optionnel +200 DH )", "Boissons"],
+        notIncluded: ["Déjeuner", "Quad (optionnel +20 € )", "Boissons"],
         rating: 4.9,
         reviews: 428,
         available: true
@@ -1301,7 +1301,7 @@ const DEFAULT_ADMIN = {
    HELPER FUNCTIONS
    ============================================ */
 function formatPrice(price) {
-    return price.toLocaleString('fr-MA') + ' MAD';
+    return Math.round(price / 10.2).toLocaleString('fr-FR') + ' €';
 }
 
 function generateId() {
