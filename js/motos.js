@@ -21,7 +21,7 @@
             var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
             return '<div class="product-card" data-id="' + m.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + m.image + '" alt="' + m.name + '" width="800" height="533" ' + imgAttrs + '">' +
+                    '<img src="' + m.image + '" alt="' + m.name + '" title="' + m.name + ' - location de moto Marrakech" width="800" height="533" ' + imgAttrs + '">' +
                     '<span class="product-card-badge">' + m.type + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + m.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +
@@ -107,6 +107,7 @@
         detailModal.querySelector('.detail-type').textContent = moto.type;
         detailModal.querySelector('.detail-image').src = moto.image;
         detailModal.querySelector('.detail-image').alt = moto.name;
+        detailModal.querySelector('.detail-image').title = moto.name + ' - location de moto Marrakech';
         detailModal.querySelector('.detail-price').textContent = formatPrice(moto.pricePerDay) + ' / jour';
 
         var featuresHtml = '';
@@ -163,6 +164,7 @@
         modal.querySelector('.modal-product-name').textContent = moto.name;
         modal.querySelector('.modal-product-image').src = moto.image;
         modal.querySelector('.modal-product-image').alt = moto.name;
+        modal.querySelector('.modal-product-image').title = moto.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(moto.pricePerDay);
         modal.querySelector('.modal-product-type').value = 'moto';
         modal.querySelector('.modal-product-id').value = moto.id;

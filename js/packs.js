@@ -180,7 +180,7 @@
         }).join('');
         return '<div class="product-card pack-card" data-id="' + p.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + p.image + '" alt="' + p.name + ' - Marrakech" width="800" height="533" ' + imgAttrs + '>' +
+                '<img src="' + p.image + '" alt="' + p.name + ' - Marrakech" title="' + p.name + ' - pack séjour Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + p.emoji + ' ' + p.badge + '</span>' +
             '</div>' +
             '<div class="product-card-body">' +
@@ -222,6 +222,7 @@
         detailModal.querySelector('.detail-city').innerHTML = '<i class="fas fa-map-marker-alt"></i> Marrakech \u00b7 Pack Exclusif';
         detailModal.querySelector('.detail-image').src = p.image;
         detailModal.querySelector('.detail-image').alt = p.name;
+        detailModal.querySelector('.detail-image').title = p.name + ' - pack séjour Marrakech';
         detailModal.querySelector('.detail-price').textContent = '\u00c0 partir de ' + formatPrice(p.price) + ' / pack';
         detailModal.querySelector('.detail-description').textContent = p.description;
         detailModal.querySelector('.detail-duration').innerHTML = '<i class="fas fa-clock"></i> ' + p.duration;

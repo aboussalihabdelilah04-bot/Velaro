@@ -20,7 +20,7 @@
             var isFav = favs.indexOf(h.id) > -1;
             return '<div class="product-card" data-id="' + h.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + h.image + '" alt="' + h.name + '" loading="eager">' +
+                    '<img src="' + h.image + '" alt="' + h.name + '" title="' + h.name + ' - location villa ou appartement Marrakech" width="800" height="533" loading="eager">' +
                     '<span class="product-card-badge">' + h.location + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + h.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +
@@ -96,6 +96,7 @@
         detailModal.querySelector('.detail-location').innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + house.location;
         detailModal.querySelector('.detail-image').src = house.image;
         detailModal.querySelector('.detail-image').alt = house.name;
+        detailModal.querySelector('.detail-image').title = house.name + ' - location villa Marrakech';
         detailModal.querySelector('.detail-price').textContent = formatPrice(house.pricePerNight) + ' / nuit';
         detailModal.querySelector('.detail-description').textContent = house.description;
 
@@ -197,6 +198,7 @@
         modal.querySelector('.modal-product-name').textContent = house.name;
         modal.querySelector('.modal-product-image').src = house.image;
         modal.querySelector('.modal-product-image').alt = house.name;
+        modal.querySelector('.modal-product-image').title = house.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(house.pricePerNight) + ' / nuit';
         modal.querySelector('.modal-product-type').value = 'maison';
         modal.querySelector('.modal-product-id').value = house.id;

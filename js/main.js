@@ -268,7 +268,7 @@
                 } else {
                     searchResults.innerHTML = results.map(function(item) {
                         return '<a href="' + item.page + '" class="search-result-item">' +
-                            '<img src="' + item.image + '" alt="' + item.name + '" loading="lazy">' +
+                            '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - VelaroCar Marrakech" loading="lazy">' +
                             '<div class="search-result-info">' +
                                 '<h4>' + item.name + '</h4>' +
                                 '<p>' + item.detail + '</p>' +

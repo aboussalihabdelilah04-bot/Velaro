@@ -87,7 +87,7 @@
         }).join('');
         return '<div class="product-card" data-id="' + p.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + p.image + '" alt="' + p.name + ' - Mercedes Vito Premium" width="800" height="533" ' + imgAttrs + '>' +
+                '<img src="' + p.image + '" alt="' + p.name + ' - Mercedes Vito Premium" title="' + p.name + ' - chauffeur privé Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + p.badge + '</span>' +
             '</div>' +
             '<div class="product-card-body">' +

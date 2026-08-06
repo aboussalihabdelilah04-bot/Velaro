@@ -27,7 +27,7 @@
             var imgAttrs = 'loading="lazy" decoding="async"' + (index < 3 ? ' fetchpriority="high"' : '');
             return '<div class="product-card" data-id="' + car.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" ' + imgAttrs + '>' +
+                    '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" title="' + car.name + ' - location de voiture Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                     '<span class="product-card-badge">' + car.category + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + car.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +
@@ -116,6 +116,7 @@
         detailModal.querySelector('.detail-category').textContent = car.category;
         detailModal.querySelector('.detail-image').src = car.image;
         detailModal.querySelector('.detail-image').alt = car.name;
+        detailModal.querySelector('.detail-image').title = car.name + ' - location de voiture Marrakech';
         detailModal.querySelector('.detail-price').textContent = formatPrice(car.pricePerDay) + ' / jour';
 
         var featuresHtml = '';
@@ -174,6 +175,7 @@
         modal.querySelector('.modal-product-name').textContent = item.name;
         modal.querySelector('.modal-product-image').src = item.image;
         modal.querySelector('.modal-product-image').alt = item.name;
+        modal.querySelector('.modal-product-image').title = item.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(type === 'voiture' || type === 'moto' ? item.pricePerDay : item.pricePerNight || item.price);
         modal.querySelector('.modal-product-type').value = type;
         modal.querySelector('.modal-product-id').value = item.id;

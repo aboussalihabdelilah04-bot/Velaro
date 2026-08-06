@@ -56,7 +56,7 @@
         var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
         return '<div class="product-card" data-id="' + item.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + item.image + '" alt="' + item.name + '" width="800" height="533" ' + imgAttrs + '>' +
+                '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - excursion ou transfert Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                 '<span class="product-card-badge">' + item.city + '</span>' +
                 '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + item.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
             '</div>' +
@@ -159,6 +159,7 @@
         detailModal.querySelector('.detail-city').innerHTML = '<i class="fas fa-map-marker-alt"></i> ' + item.city;
         detailModal.querySelector('.detail-image').src = item.image;
         detailModal.querySelector('.detail-image').alt = item.name;
+        detailModal.querySelector('.detail-image').title = item.name + ' - excursion Marrakech';
         detailModal.querySelector('.detail-price').textContent = formatPrice(item.price) + ' ' + cfg.modalUnit;
         detailModal.querySelector('.detail-description').textContent = item.description;
         detailModal.querySelector('.detail-duration').innerHTML = '<i class="fas fa-clock"></i> ' + item.duration;
@@ -215,6 +216,7 @@
         modal.querySelector('.modal-product-name').textContent = item.name;
         modal.querySelector('.modal-product-image').src = item.image;
         modal.querySelector('.modal-product-image').alt = item.name;
+        modal.querySelector('.modal-product-image').title = item.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(item.price) + ' ' + cfg.modalUnit;
         modal.querySelector('.modal-product-type').value = cfg.type;
         modal.querySelector('.modal-product-id').value = item.id;
