@@ -214,6 +214,7 @@
         var cfg = getItemConfig(item.id);
         modal.querySelector('.modal-product-name').textContent = item.name;
         modal.querySelector('.modal-product-image').src = item.image;
+        modal.querySelector('.modal-product-image').alt = item.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(item.price) + ' ' + cfg.modalUnit;
         modal.querySelector('.modal-product-type').value = cfg.type;
         modal.querySelector('.modal-product-id').value = item.id;

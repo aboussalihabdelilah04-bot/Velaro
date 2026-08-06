@@ -162,6 +162,7 @@
         if (!modal) return;
         modal.querySelector('.modal-product-name').textContent = moto.name;
         modal.querySelector('.modal-product-image').src = moto.image;
+        modal.querySelector('.modal-product-image').alt = moto.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(moto.pricePerDay);
         modal.querySelector('.modal-product-type').value = 'moto';
         modal.querySelector('.modal-product-id').value = moto.id;

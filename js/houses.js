@@ -196,6 +196,7 @@
         if (!modal) return;
         modal.querySelector('.modal-product-name').textContent = house.name;
         modal.querySelector('.modal-product-image').src = house.image;
+        modal.querySelector('.modal-product-image').alt = house.name;
         modal.querySelector('.modal-product-price').textContent = formatPrice(house.pricePerNight) + ' / nuit';
         modal.querySelector('.modal-product-type').value = 'maison';
         modal.querySelector('.modal-product-id').value = house.id;
