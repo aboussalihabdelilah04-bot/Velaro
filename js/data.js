@@ -39,10 +39,7 @@ const CARS = [
         image: "images/cars/dacia-logan/main.webp",
         images: [
             "images/cars/dacia-logan/main.webp",
-            "images/cars/dacia-logan/1.png",
-            "images/cars/dacia-logan/2.png",
-            "images/cars/dacia-logan/3.png",
-            "images/cars/dacia-logan/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS"],
         available: true,
@@ -63,10 +60,7 @@ const CARS = [
         image: "images/cars/renault-megan/main.webp",
         images: [
             "images/cars/renault-megan/main.webp",
-            "images/cars/renault-megan/1.png",
-            "images/cars/renault-megan/2.png",
-            "images/cars/renault-megan/3.png ",
-            "images/cars/renault-megan/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -86,10 +80,7 @@ const CARS = [
         image: "images/cars/peugeot-208/main.webp",
         images: [
             "images/cars/peugeot-208/main.webp",
-            "images/cars/peugeot-208/1.png",
-            "images/cars/peugeot-208/2.png",
-            "images/cars/peugeot-208/3.png  ",
-            "images/cars/peugeot-208/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "Écran tactile", "Caméra recul"],
         available: true,
@@ -109,10 +100,7 @@ const CARS = [
         image: "images/cars/volkswagen-golf/main.webp",
         images: [
             "images/cars/volkswagen-golf/main.webp",
-            "images/cars/volkswagen-golf/1.png",
-            "images/cars/volkswagen-golf/2.png",
-            "images/cars/volkswagen-golf/3.png  ",
-            "images/cars/volkswagen-golf/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -132,10 +120,7 @@ const CARS = [
         image: "images/cars/mercedes-classe-c/main.webp",
         images: [
             "images/cars/mercedes-classe-c/main.webp",
-            "images/cars/mercedes-classe-c/1.png",
-            "images/cars/mercedes-classe-c/2.png",
-            "images/cars/mercedes-classe-c/3.png    ",
-            "images/cars/mercedes-classe-c/4.png"
+            
         ],
         features: ["Climatisation", "Cuir", "GPS", "Caméra 360", "Toit panoramique", "Son Harman Kardon"],
         available: true,
@@ -155,10 +140,7 @@ const CARS = [
         image: "images/cars/dacia-sandero-stepway/main.webp",
         images: [
             "images/cars/dacia-sandero-stepway/main.webp",
-            "images/cars/dacia-sandero-stepway /1.png",
-            "images/cars/dacia-sandero-stepway /2.png",
-            "images/cars/dacia-sandero-stepway /3.png",
-            "images/cars/dacia-sandero-stepway /4.png"
+            
         ],
         features: ["Climatisation", "Cuir", "GPS", "Caméra 360", , "Sieges chauffants"],
         available: true,
@@ -179,10 +161,7 @@ const CARS = [
         image: "images/cars/range-rover-evoque/main.webp",
         images: [
             "images/cars/range-rover-evoque/main.webp",
-            "images/cars/range-rover-evoque/1.png",
-            "images/cars/range-rover-evoque/2.png",
-            "images/cars/range-rover-evoque/3.png",
-            "images/cars/range-rover-evoque/4.png"
+           
         ],
         features: ["Climatisation", "Cuir", "GPS", "Caméra 360", "4x4", "Toit panoramique", "Meridian Sound"],
         available: true,
@@ -203,10 +182,7 @@ const CARS = [
         image: "images/cars/hyundai-accent/main.webp",
         images: [
             "images/cars/hyundai-accent/main.webp",
-            "images/cars/hyundai-accent/1.png",
-            "images/cars/hyundai-accent/2.png",
-            "images/cars/hyundai-accent/3.png",
-            "images/cars/hyundai-accent/4.png"
+            
         ],
         features: ["Climatisation", "Cuir", "GPS", "V8", "Mode sport", "Son premium"],
         available: true,
@@ -227,10 +203,7 @@ const CARS = [
         image: "images/cars/hyundai-tucson/main.webp",
         images: [
             "images/cars/hyundai-tucson/main.webp",
-            "images/cars/hyundai-tucson/1.png",
-            "images/cars/hyundai-tucson/2.png",
-            "images/cars/hyundai-tucson/3.png",
-            "images/cars/hyundai-tucson/4.png"
+           
         ],
         features: ["Climatisation", "Bluetooth", "GPS", "Caméra 360", "Toit panoramique"],
         available: true,
@@ -250,10 +223,7 @@ const CARS = [
         image: "images/cars/kia-sportage/main.webp",
         images: [
             "images/cars/kia-sportage/main.webp",
-            "images/cars/kia-sportage/1.png",
-            "images/cars/kia-sportage/2.png",
-            "images/cars/kia-sportage/3.png",
-            "images/cars/kia-sportage/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS", "Sièges chauffants"],
         available: true,
@@ -273,10 +243,7 @@ const CARS = [
         image: "images/cars/volkswagen-t-roc/main.webp",
         images: [
             "images/cars/volkswagen-t-roc/main.webp",
-            "images/cars/volkswagen-t-roc/1.png",
-            "images/cars/volkswagen-t-roc/2.png",
-            "images/cars/volkswagen-t-roc/3.png",
-            "images/cars/volkswagen-t-roc/4.png"
+            
         ],
         features: ["Climatisation", "Cuir", "GPS", "Caméra 360", "4x4", "Toit panoramique", "MBUX"],
         available: true,
@@ -296,10 +263,7 @@ const CARS = [
         image: "images/cars/fiat-500/main.webp",
         images: [
             "images/cars/fiat-500/main.webp",
-            "images/cars/fiat-500/1.png",
-            "images/cars/fiat-500/2.png",
-            "images/cars/fiat-500/3.png",
-            "images/cars/fiat-500/4.png"
+           
         ],
         features: ["Climatisation", "Bluetooth"],
         available: true,
@@ -319,10 +283,7 @@ const CARS = [
         image: "images/cars/dacia-jogger/main.webp",
         images: [
             "images/cars/dacia-jogger/main.webp",
-            "images/cars/dacia-jogger/1.png",
-            "images/cars/dacia-jogger/2.png",
-            "images/cars/dacia-jogger/3.png",
-            "images/cars/dacia-jogger/4.png"
+           
         ],
         features: ["Climatisation", "4x4", "Toit amovible", "GPS", "Bluetooth"],
         available: true,
@@ -342,10 +303,7 @@ const CARS = [
         image: "images/cars/dacia-sandero/main.webp",
         images: [
             "images/cars/dacia-sandero/main.webp",
-            "images/cars/dacia-sandero/1.png",
-            "images/cars/dacia-sandero/2.png",
-            "images/cars/dacia-sandero/3.png",
-            "images/cars/dacia-sandero/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS"],
         available: true,
@@ -365,10 +323,7 @@ const CARS = [
         image: "images/cars/hyundai-staria/main.webp",
         images: [
             "images/cars/hyundai-staria/main.webp",
-            "images/cars/hyundai-staria/1.png",
-            "images/cars/hyundai-staria/2.png",
-            "images/cars/hyundai-staria/3.png",
-            "images/cars/hyundai-staria/4.png"
+    
         ],
         features: ["Climatisation", "Cuir", "GPS", "V8", "Mode sport", "Son premium"],
         available: true,
@@ -388,10 +343,7 @@ const CARS = [
         image: "images/cars/renault-clio5/2024.webp",
         images: [
             "images/cars/renault-clio5/2024.webp",
-            "images/cars/renault-clio5/1.png",
-            "images/cars/renault-clio5/2.png",
-            "images/cars/renault-clio5/3.png ",
-            "images/cars/renault-clio5/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -411,10 +363,7 @@ const CARS = [
         image: "images/cars/renault-clio5/2025.webp",
         images: [
             "images/cars/renault-clio5/2025.webp",
-            "images/cars/renault-clio5/1.png",
-            "images/cars/renault-clio5/2.png",
-            "images/cars/renault-clio5/3.png ",
-            "images/cars/renault-clio5/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -434,10 +383,7 @@ const CARS = [
         image: "images/cars/renault-arkana/main.webp",
         images: [
             "images/cars/renault-arkana/main.webp",
-            "images/cars/renault-arkana/1.png",
-            "images/cars/renault-arkana/2.png",
-            "images/cars/renault-arkana/3.png ",
-            "images/cars/renault-arkana/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -457,10 +403,7 @@ const CARS = [
         image: "images/cars/renault-clio5-alpine/main.webp",
         images: [
             "images/cars/renault-clio5-alpine/main.webp",
-            "images/cars/renault-clio5-alpine/1.png",
-            "images/cars/renault-clio5-alpine/2.png",
-            "images/cars/renault-clio5-alpine/3.png ",
-            "images/cars/renault-clio5-alpine/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -480,10 +423,7 @@ const CARS = [
         image: "images/cars/peugeot-3008/main.webp",
         images: [
             "images/cars/peugeot-3008/main.webp",
-            "images/cars/peugeot-3008/1.png",
-            "images/cars/peugeot-3008/2.png",
-            "images/cars/peugeot-3008/3.png ",
-            "images/cars/peugeot-3008/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -503,10 +443,7 @@ const CARS = [
         image: "images/cars/kia-picanto/main.webp",
         images: [
             "images/cars/kia-picanto/main.webp",
-            "images/cars/kia-picanto/1.png",
-            "images/cars/kia-picanto/2.png",
-            "images/cars/kia-picanto/3.png ",
-            "images/cars/kia-picanto/4.png "
+            
         ],
         features: ["Climatisation", "Bluetooth", "Caméra recul"],
         available: true,
@@ -527,10 +464,7 @@ const CARS = [
         image: "images/cars/volkswagen-golf/8.webp",
         images: [
             "images/cars/volkswagen-golf/8.webp",
-            "images/cars/volkswagen-golf/1.png",
-            "images/cars/volkswagen-golf/2.png",
-            "images/cars/volkswagen-golf/3.png  ",
-            "images/cars/volkswagen-golf/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -550,10 +484,7 @@ const CARS = [
         image: "images/cars/toyota-prado/main.webp",
         images: [
             "images/cars/toyota-prado/main.webp",
-            "images/cars/toyota-prado/1.png",
-            "images/cars/toyota-prado /2.png",
-            "images/cars/toyota-prado/3.png  ",
-            "images/cars/toyota-prado/4.png"
+           
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -573,10 +504,7 @@ const CARS = [
         image: "images/cars/toyota-TX/main.webp",
         images: [
             "images/cars/toyota-TX/main.webp",
-            "images/cars/toyota-TX/1.png",
-            "images/cars/toyota-TX /2.png",
-            "images/cars/toyota-TX/3.png  ",
-            "images/cars/toyota-TX/4.png"
+           
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -597,10 +525,7 @@ const CARS = [
         image: "images/cars/audi-a3/main.webp",
         images: [
             "images/cars/audi-a3/main.webp",
-            "images/cars/audi-a3/1.png",
-            "images/cars/audi-a3/2.png",
-            "images/cars/audi-a3/3.png  ",
-            "images/cars/audi-a3/4.png"
+           
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -620,10 +545,7 @@ const CARS = [
         image: "images/cars/audi-Q3/main.webp",
         images: [
             "images/cars/audi-Q3/main.webp",
-            "images/cars/audi-Q3/1.png",
-            "images/cars/audi-Q3/2.png",
-            "images/cars/audi-Q3/3.png  ",
-            "images/cars/audi-Q3/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
@@ -643,10 +565,7 @@ const CARS = [
         image: "images/cars/porsche/macan.webp",
         images: [
             "images/cars/porsche/macan.webp",
-            "images/cars/porsche/1.png",
-            "images/cars/porsche/2.png",
-            "images/cars/porsche/3.png  ",
-            "images/cars/porsche/4.png"
+            
         ],
         features: ["Climatisation", "Bluetooth", "GPS","toit panoramique" , "Caméra 360", "Son Harman Kardon"],
         available: true,
