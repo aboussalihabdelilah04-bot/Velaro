@@ -848,9 +848,9 @@ const TRANSFERS = [
         price: 500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/airport-arrival/main.png",
+        image: "images/transfers/airport-arrival/main.webp",
         images: [
-            "images/transfers/airport-arrival/main.png",
+            "images/transfers/airport-arrival/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito depuis l'aéroport Marrakech Menara vers votre hôtel, riad ou villa à Marrakech. Accueil avec pancarte et prise en charge immédiate.",
@@ -875,9 +875,9 @@ const TRANSFERS = [
         price: 500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/airport-departure/main.png",
+        image: "images/transfers/airport-departure/main.webp",
         images: [
-            "images/transfers/airport-departure/main.png",
+            "images/transfers/airport-departure/main.webp",
            
         ],
         description: "Transfert privé en Mercedes Vito depuis votre hôtel, riad ou villa à Marrakech vers l'aéroport Marrakech Menara. Ponctualité garantie pour votre vol.",
@@ -904,9 +904,9 @@ const TRANSFERS = [
         price: 2500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/casablanca/main.png",
+        image: "images/transfers/casablanca/main.webp",
         images: [
-            "images/transfers/casablanca/main.png",
+            "images/transfers/casablanca/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers le centre-ville de Casablanca. Confort et discrétion sur la route, trajet direct sans escale.",
@@ -931,9 +931,9 @@ const TRANSFERS = [
         price: 2000,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/casablanca-airport/main.png",
+        image: "images/transfers/casablanca-airport/main.webp",
         images: [
-            "images/transfers/casablanca-airport/main.png",
+            "images/transfers/casablanca-airport/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers l'aéroport international Mohammed V de Casablanca. Départ à l'heure convenue, sans aucun stress.",
@@ -960,9 +960,9 @@ const TRANSFERS = [
         price: 3500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/rabat/main.png",
+        image: "images/transfers/rabat/main.webp",
         images: [
-            "images/transfers/rabat/main.png",
+            "images/transfers/rabat/main.webp",
            
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers la capitale Rabat. Confort optimal pour un trajet long, avec chauffeur expérimenté.",
@@ -987,9 +987,9 @@ const TRANSFERS = [
         price: 1500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/essaouira/main.png",
+        image: "images/transfers/essaouira/main.webp",
         images: [
-            "images/transfers/essaouira/main.png",
+            "images/transfers/essaouira/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers la cité des alizés, Essaouira. Traversée de la forêt d'arganiers dans un confort absolu.",
@@ -1014,9 +1014,9 @@ const TRANSFERS = [
         price: 2500,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/ouarzazate/main.png",
+        image: "images/transfers/ouarzazate/main.webp",
         images: [
-            "images/transfers/ouarzazate/main.png",
+            "images/transfers/ouarzazate/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers Ouarzazate, porte du désert. Route spectaculaire du Tizi n'Tichka dans un confort premium.",
@@ -1041,9 +1041,9 @@ const TRANSFERS = [
         price: 800,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/imlil/main.png",
+        image: "images/transfers/imlil/main.webp",
         images: [
-            "images/transfers/imlil/main.png",
+            "images/transfers/imlil/main.webp",
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers Imlil, au cœur du Haut Atlas. Vallées verdoyantes et villages de montagne en toute sérénité.",
         program: [
@@ -1067,9 +1067,9 @@ const TRANSFERS = [
         price: 700,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/agafay/main.png",
+        image: "images/transfers/agafay/main.webp",
         images: [
-            "images/transfers/agafay/main.png",
+            "images/transfers/agafay/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers le désert d'Agafay. Paysages lunaires et montagnes de l'Atlas à seulement une heure de route.",
@@ -1094,9 +1094,9 @@ const TRANSFERS = [
         price: 3000,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/agadir/main.png",
+        image: "images/transfers/agadir/main.webp",
         images: [
-            "images/transfers/agadir/main.png",
+            "images/transfers/agadir/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers Agadir et sa baie. Long trajet confortable avec un chauffeur professionnel aux petits soins.",
@@ -1121,9 +1121,9 @@ const TRANSFERS = [
         price: 5000,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/fes/main.png",
+        image: "images/transfers/fes/main.webp",
         images: [
-            "images/transfers/fes/main.png",
+            "images/transfers/fes/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers la cité spirituelle de Fès. Confort premium pour l'un des plus beaux trajets du Maroc.",
@@ -1148,9 +1148,9 @@ const TRANSFERS = [
         price: 2800,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/el-jadida/main.png",
+        image: "images/transfers/el-jadida/main.webp",
         images: [
-            "images/transfers/el-jadida/main.png",
+            "images/transfers/el-jadida/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers El Jadida, cité fortifiée de la côte atlantique. Route directe et confort exceptionnel.",
@@ -1175,9 +1175,9 @@ const TRANSFERS = [
         price: 2800,
         difficulty: "Confort",
         vehicle: "Mercedes Vito",
-        image: "images/transfers/oualidia/main.png",
+        image: "images/transfers/oualidia/main.webp",
         images: [
-            "images/transfers/oualidia/main.png",
+            "images/transfers/oualidia/main.webp",
             
         ],
         description: "Transfert privé en Mercedes Vito de Marrakech vers Oualidia, la lagune aux huîtres. Une heure trente de quiétude avant la côte atlantique.",

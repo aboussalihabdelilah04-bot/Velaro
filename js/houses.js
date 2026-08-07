@@ -16,11 +16,12 @@
         if (countEl) countEl.textContent = allHouses.length;
 
         var favs = getFavorites();
-        grid.innerHTML = allHouses.map(function(h) {
+        grid.innerHTML = allHouses.map(function(h, index) {
             var isFav = favs.indexOf(h.id) > -1;
+            var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
             return '<div class="product-card" data-id="' + h.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + h.image + '" alt="' + h.name + '" title="' + h.name + ' - location villa ou appartement Marrakech" width="800" height="533" loading="eager">' +
+                    '<img src="' + h.image + '" alt="' + h.name + '" title="' + h.name + ' - location villa ou appartement Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                     '<span class="product-card-badge">' + h.location + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + h.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +

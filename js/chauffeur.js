@@ -13,7 +13,7 @@
             badge: '4 Heures',
             duration: '4 Heures',
             price: 1200,
-            image: 'images/chauffeur/essential/main.png',
+            image: 'images/chauffeur/essential/main.webp',
             stars: 1,
             includes: [
                 'Mercedes Vito Premium',
@@ -28,7 +28,7 @@
             badge: '8 Heures',
             duration: '8 Heures',
             price: 2000,
-            image: 'images/chauffeur/business/main.png',
+            image: 'images/chauffeur/business/main.webp',
             stars: 2,
             includes: [
                 'Mercedes Vito Premium',
@@ -43,7 +43,7 @@
             badge: '12 Heures',
             duration: '12 Heures',
             price: 2800,
-            image: 'images/chauffeur/executive/main.png',
+            image: 'images/chauffeur/executive/main.webp',
             stars: 3,
             includes: [
                 'V\u00e9hicule haut de gamme',
@@ -58,7 +58,7 @@
             badge: 'Journ\u00e9e compl\u00e8te',
             duration: 'Journ\u00e9e compl\u00e8te',
             price: 3500,
-            image: 'images/chauffeur/premium-day/main.png',
+            image: 'images/chauffeur/premium-day/main.webp',
             stars: 4,
             includes: [
                 'Journ\u00e9e compl\u00e8te avec chauffeur',
