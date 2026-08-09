@@ -50,13 +50,24 @@
         };
     }
 
-    function cardHtml(item, index, priceUnit) {
+    function cardHtml(item, index, priceUnit, isTransfer) {
         var favs = getFavorites();
         var isFav = favs.indexOf(item.id) > -1;
         var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+        var imgHtml;
+        if (isTransfer) {
+            var base = item.image.replace(/\.webp$/, '');
+            imgHtml = '<picture>' +
+                '<source type="image/avif" srcset="' + base + '-480.avif 480w, ' + base + '-800.avif 800w" sizes="(max-width:767px) calc(100vw - 2rem), (max-width:1023px) 50vw, 33vw">' +
+                '<source type="image/webp" srcset="' + base + '-480.webp 480w, ' + base + '.webp 800w" sizes="(max-width:767px) calc(100vw - 2rem), (max-width:1023px) 50vw, 33vw">' +
+                '<img src="' + base + '.jpg" alt="' + item.name + '" title="' + item.name + ' - excursion ou transfert Marrakech" width="800" height="533" ' + imgAttrs + '>' +
+            '</picture>';
+        } else {
+            imgHtml = '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - excursion ou transfert Marrakech" width="800" height="533" ' + imgAttrs + '>';
+        }
         return '<div class="product-card" data-id="' + item.id + '">' +
             '<div class="product-card-image">' +
-                '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - excursion ou transfert Marrakech" width="800" height="533" ' + imgAttrs + '>' +
+                imgHtml +
                 '<span class="product-card-badge">' + item.city + '</span>' +
                 '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + item.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
             '</div>' +
@@ -93,7 +104,7 @@
         if (!transfersGrid) return;
         if (transfersCountEl) transfersCountEl.textContent = allTransfers.length;
         transfersGrid.innerHTML = allTransfers.map(function(trf, index) {
-            return cardHtml(trf, index, '/ transfert');
+            return cardHtml(trf, index, '/ transfert', true);
         }).join('');
         bindGridEvents(transfersGrid);
     }
