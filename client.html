@@ -285,6 +285,19 @@
             .dash-tab-btn { font-size: 0.85rem; padding: 0.6rem 0.75rem; }
         }
     </style>
+    <script>
+    /* Fail-safe: hide loader if main.js never loads (slow or blocked network) */
+    (function() {
+        'use strict';
+        setTimeout(function() {
+            var loader = document.querySelector('.loader-overlay');
+            if (loader && !loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+            }
+        }, 10000);
+    })();
+    </script>
 </head>
 <body>
     <div class="loader-overlay"><div class="loader-logo">Velaro<span>Car</span></div><div class="loader-spinner"></div></div>

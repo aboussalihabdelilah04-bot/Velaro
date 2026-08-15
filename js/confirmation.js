@@ -6,6 +6,11 @@
 (function() {
     'use strict';
 
+    /* --- If data.js failed to load, keep static content instead of throwing --- */
+    if (typeof getReservationData !== 'function' || typeof formatPrice !== 'function' || typeof calculateDays !== 'function') {
+        return;
+    }
+
     var params = new URLSearchParams(window.location.search);
     var reservationId = params.get('id');
     var reservations = getReservationData();

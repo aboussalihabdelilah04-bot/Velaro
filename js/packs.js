@@ -6,6 +6,11 @@
 (function() {
     'use strict';
 
+    /* --- If data.js failed to load, skip rendering instead of throwing --- */
+    if (typeof formatPrice !== 'function' || typeof getReservationData !== 'function') {
+        return;
+    }
+
     var PACKS = [
         {
             id: 'pck-01',

@@ -5,6 +5,11 @@
 (function() {
     'use strict';
 
+    /* --- If data.js failed to load, skip rendering instead of throwing --- */
+    if (typeof EXCURSIONS === 'undefined' || typeof formatPrice !== 'function') {
+        return;
+    }
+
     var grid = document.getElementById('excursions-grid');
     var countEl = document.getElementById('excursions-count');
     var transfersGrid = document.getElementById('transfers-grid');

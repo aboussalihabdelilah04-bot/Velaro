@@ -5,6 +5,11 @@
 (function() {
     'use strict';
 
+    /* --- If data.js failed to load, skip rendering instead of throwing --- */
+    if (typeof CARS === 'undefined' || typeof formatPrice !== 'function') {
+        return;
+    }
+
     var grid = document.getElementById('cars-grid');
     var countEl = document.getElementById('cars-count');
     var detailModal = document.getElementById('car-detail-modal');

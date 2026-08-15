@@ -88,8 +88,8 @@
             price_per_day: String(Math.round(reservation.pricePerDay / 10.2)),
             total: String(Math.round(total / 10.2)),
             currency: '€',
-            price_per_day_formatted: formatPrice(reservation.pricePerDay),
-            total_formatted: formatPrice(total),
+            price_per_day_formatted: typeof formatPrice === 'function' ? formatPrice(reservation.pricePerDay) : String(reservation.pricePerDay),
+            total_formatted: typeof formatPrice === 'function' ? formatPrice(total) : String(total),
             message: reservation.message || 'Aucun message',
             created_at: new Date(reservation.createdAt).toLocaleDateString('fr-FR')
         };

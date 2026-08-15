@@ -21,7 +21,7 @@
             e.preventDefault();
             var email = document.getElementById('login-email').value;
             var password = document.getElementById('login-password').value;
-            if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+            if (typeof DEFAULT_ADMIN !== 'undefined' && email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
                 isLoggedIn = true;
                 loginPanel.style.display = 'none';
                 dashPanel.style.display = 'block';
@@ -77,10 +77,10 @@
         var el = document.getElementById('stats-content');
         if (!el) return;
         var reservations = getReservationData();
-        var carsCount = CARS.length;
-        var motosCount = MOTOS.length;
-        var housesCount = HOUSES.length;
-        var excursionsCount = EXCURSIONS.length;
+        var carsCount = (typeof CARS !== 'undefined') ? CARS.length : 0;
+        var motosCount = (typeof MOTOS !== 'undefined') ? MOTOS.length : 0;
+        var housesCount = (typeof HOUSES !== 'undefined') ? HOUSES.length : 0;
+        var excursionsCount = (typeof EXCURSIONS !== 'undefined') ? EXCURSIONS.length : 0;
 
         var typeCounts = { voiture: 0, moto: 0, maison: 0, excursion: 0 };
         reservations.forEach(function(r) {
@@ -216,10 +216,10 @@
         var type = typeFilter ? typeFilter.value : 'cars';
 
         var items = [];
-        if (type === 'cars') items = CARS;
-        else if (type === 'motos') items = MOTOS;
-        else if (type === 'houses') items = HOUSES;
-        else if (type === 'excursions') items = EXCURSIONS;
+        if (type === 'cars') items = (typeof CARS !== 'undefined') ? CARS : [];
+        else if (type === 'motos') items = (typeof MOTOS !== 'undefined') ? MOTOS : [];
+        else if (type === 'houses') items = (typeof HOUSES !== 'undefined') ? HOUSES : [];
+        else if (type === 'excursions') items = (typeof EXCURSIONS !== 'undefined') ? EXCURSIONS : [];
         else if (type === 'transfers') items = (typeof TRANSFERS !== 'undefined') ? TRANSFERS : [];
 
         list.innerHTML = items.map(function(item) {

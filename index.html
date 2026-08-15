@@ -363,6 +363,19 @@
         ]
     }
     </script>
+    <script>
+    /* Fail-safe: hide loader if main.js never loads (slow or blocked network) */
+    (function() {
+        'use strict';
+        setTimeout(function() {
+            var loader = document.querySelector('.loader-overlay');
+            if (loader && !loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+            }
+        }, 10000);
+    })();
+    </script>
 </head>
 <body>
 
@@ -750,6 +763,12 @@
     <script>
     (function() {
         'use strict';
+
+        /* --- If data.js failed to load, keep static content and skip data rendering --- */
+        if (typeof CARS === 'undefined' || typeof HOUSES === 'undefined' || typeof EXCURSIONS === 'undefined' ||
+            typeof REVIEWS === 'undefined' || typeof FAQ === 'undefined' || typeof formatPrice !== 'function') {
+            return;
+        }
 
         /* --- Popular Cars (top 3 rated) --- */
         var popularCars = CARS.sort(function(a, b) { return b.rating - a.rating; }).slice(0, 3);

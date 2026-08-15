@@ -294,6 +294,7 @@
        FAVORITES
        ============================================ */
     function updateFavCount() {
+        if (typeof getFavorites !== 'function') return;
         var favs = getFavorites();
         var favCounts = document.querySelectorAll('.fav-count');
         favCounts.forEach(function(el) {
@@ -303,6 +304,7 @@
     }
 
     function toggleFavorite(id) {
+        if (typeof getFavorites !== 'function' || typeof saveFavorites !== 'function') return;
         var favs = getFavorites();
         var index = favs.indexOf(id);
         if (index > -1) {

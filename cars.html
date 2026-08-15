@@ -336,6 +336,19 @@
         ]
     }
     </script>
+    <script>
+    /* Fail-safe: hide loader if main.js never loads (slow or blocked network) */
+    (function() {
+        'use strict';
+        setTimeout(function() {
+            var loader = document.querySelector('.loader-overlay');
+            if (loader && !loader.classList.contains('hidden')) {
+                loader.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+            }
+        }, 10000);
+    })();
+    </script>
 </head>
 <body>
 

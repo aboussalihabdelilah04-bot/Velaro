@@ -6,6 +6,11 @@
 (function() {
     'use strict';
 
+    /* --- If data.js failed to load, skip instead of throwing --- */
+    if (typeof getUserData !== 'function' || typeof getReservationData !== 'function' || typeof getFavorites !== 'function' || typeof formatPrice !== 'function') {
+        return;
+    }
+
     var tabBtns = document.querySelectorAll('.dash-tab-btn');
     var tabPanels = document.querySelectorAll('.dash-tab-panel');
     var user = getUserData() || {};
@@ -114,10 +119,18 @@
         }
 
         var allItems = [];
-        CARS.forEach(function(c) { if (favs.indexOf(c.id) > -1) allItems.push({ item: c, type: 'voiture', page: 'cars.html' }); });
-        MOTOS.forEach(function(m) { if (favs.indexOf(m.id) > -1) allItems.push({ item: m, type: 'moto', page: 'motos.html' }); });
-        HOUSES.forEach(function(h) { if (favs.indexOf(h.id) > -1) allItems.push({ item: h, type: 'maison', page: 'houses.html' }); });
-        EXCURSIONS.forEach(function(e) { if (favs.indexOf(e.id) > -1) allItems.push({ item: e, type: 'excursion', page: 'excursions.html' }); });
+        if (typeof CARS !== 'undefined') {
+            CARS.forEach(function(c) { if (favs.indexOf(c.id) > -1) allItems.push({ item: c, type: 'voiture', page: 'cars.html' }); });
+        }
+        if (typeof MOTOS !== 'undefined') {
+            MOTOS.forEach(function(m) { if (favs.indexOf(m.id) > -1) allItems.push({ item: m, type: 'moto', page: 'motos.html' }); });
+        }
+        if (typeof HOUSES !== 'undefined') {
+            HOUSES.forEach(function(h) { if (favs.indexOf(h.id) > -1) allItems.push({ item: h, type: 'maison', page: 'houses.html' }); });
+        }
+        if (typeof EXCURSIONS !== 'undefined') {
+            EXCURSIONS.forEach(function(e) { if (favs.indexOf(e.id) > -1) allItems.push({ item: e, type: 'excursion', page: 'excursions.html' }); });
+        }
         if (typeof TRANSFERS !== 'undefined') {
             TRANSFERS.forEach(function(t) { if (favs.indexOf(t.id) > -1) allItems.push({ item: t, type: 'transfer', page: 'excursions.html' }); });
         }
