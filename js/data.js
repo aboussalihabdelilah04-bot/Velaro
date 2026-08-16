@@ -3,7 +3,61 @@
    Toutes les données du site
    ============================================ */
 
-const SITE_CONFIG = {
+/* --- ES5 compatibility polyfills ---
+   Some devices/WebViews run engines without ES6 methods (Array.prototype.find,
+   String.prototype.includes/repeat, Element.closest, NodeList.forEach).
+   These small ES5 fallbacks keep the site working on those browsers. */
+if (!Array.prototype.find) {
+    Array.prototype.find = function(predicate) {
+        for (var i = 0; i < this.length; i++) {
+            if (predicate(this[i], i, this)) return this[i];
+        }
+        return undefined;
+    };
+}
+
+if (!String.prototype.includes) {
+    String.prototype.includes = function(search, start) {
+        if (typeof start !== 'number') start = 0;
+        return this.indexOf(search, start) !== -1;
+    };
+}
+
+if (!String.prototype.repeat) {
+    String.prototype.repeat = function(count) {
+        if (count < 1) return '';
+        var result = '';
+        for (var i = 0; i < count; i++) result += this;
+        return result;
+    };
+}
+
+if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function(callback, thisArg) {
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
+}
+
+if (window.Element && !Element.prototype.closest) {
+    Element.prototype.closest = function(selector) {
+        var el = this;
+        while (el && el.nodeType === 1) {
+            if (matchesSelector(el, selector)) return el;
+            el = el.parentNode;
+        }
+        return null;
+    };
+}
+
+function matchesSelector(el, selector) {
+    var matches = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+    if (matches) return matches.call(el, selector);
+    return false;
+}
+
+var SITE_CONFIG = {
     name: "VelaroCar",
     tagline: "Location Premium à Marrakech",
     slogan: "Découvrez Marrakech avec Style",
@@ -25,7 +79,7 @@ const SITE_CONFIG = {
 /* ============================================
    VOITURES
    ============================================ */
-const CARS = [
+var CARS = [
     {
         id: "car-001",
         name: "Dacia Logan",
@@ -582,7 +636,7 @@ const CARS = [
 /* ============================================
    MAISONS / VILLAS
    ============================================ */
-const HOUSES = [
+var HOUSES = [
     {
         id: "house-001",
         name: "Villa Prestigia Topaze",
@@ -682,7 +736,7 @@ const HOUSES = [
 /* ============================================
    EXCURSIONS
    ============================================ */
-const EXCURSIONS = [
+var EXCURSIONS = [
     /* --- MARRAKECH --- */
     {
         id: "exc-001",
@@ -756,7 +810,7 @@ const EXCURSIONS = [
    TRANSFERTS PRIVÉS (Mercedes Vito)
    Même structure que les excursions
    ============================================ */
-const TRANSFERS = [
+var TRANSFERS = [
     /* --- MARRAKECH : AÉROPORT --- */
     {
         id: "trf-001",
@@ -1117,7 +1171,7 @@ const TRANSFERS = [
 /* ============================================
    AVIS CLIENTS
    ============================================ */
-const REVIEWS = [
+var REVIEWS = [
     {
         name: "Sophie M.",
         location: "Paris, France",
@@ -1172,7 +1226,7 @@ const REVIEWS = [
 /* ============================================
    FAQ
    ============================================ */
-const FAQ = [
+var FAQ = [
     {
         question: "Quels documents sont nécessaires pour louer un véhicule ?",
         answer: "Vous devez présenter un permis de conduire valide, une pièce d'identité ou un passeport, et une carte bancaire pour la caution."
@@ -1210,7 +1264,7 @@ const FAQ = [
 /* ============================================
    DONNÉES ADMIN (par défaut)
    ============================================ */
-const DEFAULT_ADMIN = {
+var DEFAULT_ADMIN = {
     email: "admin@velarocar.com",
     password: "admin123",
     name: "VelaroCar Admin"
@@ -1228,28 +1282,28 @@ function generateId() {
 }
 
 function getStars(rating) {
-    const full = Math.floor(rating);
-    const half = rating % 1 >= 0.5 ? 1 : 0;
-    const empty = 5 - full - half;
+    var full = Math.floor(rating);
+    var half = rating % 1 >= 0.5 ? 1 : 0;
+    var empty = 5 - full - half;
     return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
 }
 
 function calculateNights(checkIn, checkOut) {
-    const start = new Date(checkIn);
-    const end = new Date(checkOut);
-    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    var start = new Date(checkIn);
+    var end = new Date(checkOut);
+    var diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     return diff > 0 ? diff : 1;
 }
 
 function calculateDays(start, end) {
-    const s = new Date(start);
-    const e = new Date(end);
-    const diff = Math.ceil((e - s) / (1000 * 60 * 60 * 24));
+    var s = new Date(start);
+    var e = new Date(end);
+    var diff = Math.ceil((e - s) / (1000 * 60 * 60 * 24));
     return diff > 0 ? diff : 1;
 }
 
 function getReservationData() {
-    const data = localStorage.getItem('velarocar_reservations');
+    var data = localStorage.getItem('velarocar_reservations');
     return data ? JSON.parse(data) : [];
 }
 
@@ -1258,7 +1312,7 @@ function saveReservationData(data) {
 }
 
 function getFavorites() {
-    const data = localStorage.getItem('velarocar_favorites');
+    var data = localStorage.getItem('velarocar_favorites');
     return data ? JSON.parse(data) : [];
 }
 
@@ -1267,7 +1321,7 @@ function saveFavorites(favs) {
 }
 
 function getUserData() {
-    const data = localStorage.getItem('velarocar_user');
+    var data = localStorage.getItem('velarocar_user');
     return data ? JSON.parse(data) : null;
 }
 

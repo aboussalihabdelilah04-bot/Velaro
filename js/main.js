@@ -9,7 +9,7 @@
     /* ============================================
        LOADER
        ============================================ */
-    const loader = document.querySelector('.loader-overlay');
+    var loader = document.querySelector('.loader-overlay');
     if (loader) {
         document.body.classList.add('no-scroll');
         function hideLoader() {
@@ -26,9 +26,9 @@
     /* ============================================
        NAVBAR
        ============================================ */
-    const navbar = document.querySelector('.navbar');
-    const navbarToggle = document.querySelector('.navbar-toggle');
-    const navbarNav = document.querySelector('.navbar-nav');
+    var navbar = document.querySelector('.navbar');
+    var navbarToggle = document.querySelector('.navbar-toggle');
+    var navbarNav = document.querySelector('.navbar-nav');
 
     // Scroll effect
     if (navbar) {
@@ -84,6 +84,16 @@
     function initScrollReveal() {
         var reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger');
         if (!reveals.length) return;
+
+        // Browsers/WebViews without IntersectionObserver (e.g. Safari < 12.1,
+        // old Android WebViews) would leave every .reveal element at opacity:0.
+        // Fall back to showing everything so content is never permanently hidden.
+        if (typeof IntersectionObserver === 'undefined') {
+            reveals.forEach(function(el) {
+                el.classList.add('revealed');
+            });
+            return;
+        }
 
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
@@ -403,6 +413,15 @@
     function animateCounters() {
         var counters = document.querySelectorAll('[data-count]');
         if (!counters.length) return;
+
+        // Old engines without IntersectionObserver: just set the final value.
+        if (typeof IntersectionObserver === 'undefined') {
+            counters.forEach(function(el) {
+                var target = parseInt(el.dataset.count);
+                el.textContent = (el.dataset.prefix || '') + target + (el.dataset.suffix || '');
+            });
+            return;
+        }
 
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
