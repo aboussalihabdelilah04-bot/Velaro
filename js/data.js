@@ -174,3 +174,66 @@ function getUserData() {
 function saveUserData(data) {
     localStorage.setItem('velarocar_user', JSON.stringify(data));
 }
+
+function submitBooking(reservation, onSuccess, onError) {
+    var typeMap = {
+        voiture: 'car', car: 'car',
+        moto: 'motorcycle', motorcycle: 'motorcycle',
+        maison: 'villa', villa: 'villa',
+        excursion: 'excursion',
+        transfer: 'transfer',
+        chauffeur: 'transfer',
+        pack: 'pack'
+    };
+    var payload = {
+        clientName: reservation.firstName + ' ' + reservation.lastName,
+        clientEmail: reservation.email,
+        clientPhone: reservation.phone,
+        productType: typeMap[reservation.type] || reservation.type,
+        productId: reservation.productId,
+        productName: reservation.productName,
+        productImage: reservation.productImage || '',
+        startDate: reservation.startDate,
+        endDate: reservation.endDate,
+        people: reservation.people || 1,
+        duration: reservation.duration || calculateDays(reservation.startDate, reservation.endDate),
+        pricePerDay: reservation.pricePerDay,
+        totalPrice: (reservation.pricePerDay || 0) * (reservation.duration || calculateDays(reservation.startDate, reservation.endDate)),
+        message: reservation.message || ''
+    };
+
+    fetch('/api/public/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+        if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Erreur serveur'); });
+        return res.json();
+    })
+    .then(function(serverBooking) {
+        var reservations = getReservationData();
+        reservations.push(serverBooking);
+        saveReservationData(reservations);
+
+        var userData = getUserData() || { reservations: [] };
+        if (!userData.reservations) userData.reservations = [];
+        userData.reservations.push(serverBooking);
+        saveUserData(userData);
+
+        if (onSuccess) onSuccess(serverBooking);
+    })
+    .catch(function(err) {
+        console.warn('[VelaroCar] API booking failed, saving locally:', err.message);
+        var reservations = getReservationData();
+        reservations.push(reservation);
+        saveReservationData(reservations);
+
+        var userData = getUserData() || { reservations: [] };
+        if (!userData.reservations) userData.reservations = [];
+        userData.reservations.push(reservation);
+        saveUserData(userData);
+
+        if (onError) onError(err);
+    });
+}

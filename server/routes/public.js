@@ -10,8 +10,129 @@ const Review = require('../models/Review');
 const Settings = require('../models/Settings');
 const Content = require('../models/Content');
 const Language = require('../models/Language');
+const Booking = require('../models/Booking');
+const Message = require('../models/Message');
+const rateLimit = require('express-rate-limit');
 
 const router = express.Router();
+
+const publicBookingLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { error: 'Trop de reservations, veuillez reessayer plus tard.' }
+});
+
+const publicMessageLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { error: 'Trop de messages, veuillez reessayer plus tard.' }
+});
+
+const productModelMap = {
+  car: 'Car',
+  motorcycle: 'Motorcycle',
+  villa: 'Villa',
+  excursion: 'Excursion',
+  transfer: 'Transfer',
+  pack: 'Pack'
+};
+
+function generateReference() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let ref = 'VC-';
+  for (let i = 0; i < 8; i++) ref += chars.charAt(Math.floor(Math.random() * chars.length));
+  return ref;
+}
+
+router.post('/bookings', publicBookingLimiter, async (req, res) => {
+  try {
+    const {
+      clientName, clientEmail, clientPhone,
+      productType, productId, productName, productImage,
+      startDate, endDate, time, people,
+      duration, pricePerDay, totalPrice, message: notes
+    } = req.body;
+
+    if (!clientName || !clientEmail || !clientPhone || !productType || !startDate || !endDate) {
+      return res.status(400).json({ error: 'Champs obligatoires manquants.' });
+    }
+
+    const validTypes = ['car', 'motorcycle', 'villa', 'excursion', 'transfer', 'pack'];
+    if (!validTypes.includes(productType)) {
+      return res.status(400).json({ error: 'Type de produit invalide.' });
+    }
+
+    const booking = await Booking.create({
+      reference: generateReference(),
+      clientName: clientName.trim(),
+      clientEmail: clientEmail.toLowerCase().trim(),
+      clientPhone: clientPhone.trim(),
+      productType,
+      productId: productId || undefined,
+      productModel: productModelMap[productType] || 'Car',
+      productName: productName || '',
+      productImage: productImage || '',
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      time: time || '',
+      people: parseInt(people) || 1,
+      duration: parseInt(duration) || 1,
+      pricePerDay: parseInt(pricePerDay) || 0,
+      totalPrice: parseInt(totalPrice) || parseInt(pricePerDay) || 0,
+      notes: notes || '',
+      status: 'pending',
+      paymentStatus: 'unpaid'
+    });
+
+    const result = booking.toObject();
+    result.id = result._id.toString();
+    res.status(201).json(result);
+  } catch (err) {
+    console.error('Public booking creation error:', err.message);
+    res.status(500).json({ error: 'Erreur lors de la creation de la reservation.' });
+  }
+});
+
+router.get('/bookings/:id', async (req, res) => {
+  try {
+    let booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      booking = await Booking.findOne({ reference: req.params.id });
+    }
+    if (!booking) return res.status(404).json({ error: 'Reservation non trouvee.' });
+    const result = booking.toObject();
+    result.id = result._id.toString();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+});
+
+router.post('/messages', publicMessageLimiter, async (req, res) => {
+  try {
+    const { name, email, phone, subject, message, type } = req.body;
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Nom, email et message requis.' });
+    }
+
+    const msg = await Message.create({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      phone: (phone || '').trim(),
+      subject: (subject || '').trim(),
+      message: message.trim(),
+      type: type || 'contact',
+      read: false
+    });
+
+    const result = msg.toObject();
+    result.id = result._id.toString();
+    res.status(201).json(result);
+  } catch (err) {
+    console.error('Public message creation error:', err.message);
+    res.status(500).json({ error: 'Erreur lors de l\'envoi du message.' });
+  }
+});
 
 function addIdField(items) {
   if (Array.isArray(items)) {

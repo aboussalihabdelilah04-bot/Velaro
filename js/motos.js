@@ -225,13 +225,20 @@
 
             VelaroCarEmail.sendReservation(reservation, function() {}, function() {});
 
-            var reservationModal = document.getElementById('reservation-modal');
-            if (reservationModal) {
-                reservationModal.classList.remove('active');
-            }
-            document.body.classList.remove('no-scroll');
-            VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');
-            setTimeout(function() { window.location.href = 'confirmation.html?id=' + reservation.id; }, 1500);
+            submitBooking(reservation, function(serverBooking) {
+                var displayId = serverBooking.id || serverBooking._id || reservation.id;
+                var reservationModal = document.getElementById('reservation-modal');
+                if (reservationModal) reservationModal.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + displayId + ' a été enregistrée.');
+                setTimeout(function() { window.location.href = 'confirmation.html?id=' + displayId; }, 1500);
+            }, function() {
+                var reservationModal = document.getElementById('reservation-modal');
+                if (reservationModal) reservationModal.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');
+                setTimeout(function() { window.location.href = 'confirmation.html?id=' + reservation.id; }, 1500);
+            });
         });
     }
 

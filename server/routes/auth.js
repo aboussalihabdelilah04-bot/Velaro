@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const AdminUser = require('../models/AdminUser');
 const auth = require('../middleware/auth');
-const { generateTokens, saveRefreshToken, verifyRefreshToken, removeRefreshToken } = require('../utils/tokens');
+const { generateTokens, saveRefreshToken, verifyRefreshToken, removeRefreshToken, removeAllRefreshTokens } = require('../utils/tokens');
 const { logActivity } = require('../utils/activityLogger');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
@@ -107,6 +107,7 @@ router.post('/change-password', auth, async (req, res) => {
     }
     user.password = newPassword;
     await user.save();
+    await removeAllRefreshTokens(req.user._id);
     await logActivity({
       user: user.name,
       userId: user._id,

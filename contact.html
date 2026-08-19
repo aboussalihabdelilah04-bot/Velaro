@@ -619,19 +619,38 @@
                     VelaroCar.showToast('error', 'Erreur', 'Veuillez remplir tous les champs.');
                     return;
                 }
-                var contacts = JSON.parse(localStorage.getItem('velarocar_contacts') || '[]');
-                data.id = generateId();
-                data.createdAt = new Date().toISOString();
-                contacts.push(data);
-                localStorage.setItem('velarocar_contacts', JSON.stringify(contacts));
                 var submitBtn = form.querySelector('button[type="submit"]');
                 if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi...'; }
-                VelaroCarEmail.sendContact(data, function() {
-                    VelaroCar.showToast('success', 'Message envoyé !', 'Merci ' + data.name + ', nous vous répondrons bientôt.');
+
+                fetch('/api/public/messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        phone: data.phone,
+                        subject: data.subject,
+                        message: data.message,
+                        type: 'contact'
+                    })
+                })
+                .then(function(res) {
+                    if (!res.ok) return res.json().then(function(d) { throw new Error(d.error || 'Erreur serveur'); });
+                    return res.json();
+                })
+                .then(function() {
+                    VelaroCarEmail.sendContact(data, function() {}, function() {});
+                    VelaroCar.showToast('success', 'Message envoy\u00e9 !', 'Merci ' + data.name + ', nous vous r\u00e9pondrons bient\u00f4t.');
                     form.reset();
                     if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Envoyer le message'; }
-                }, function() {
-                    VelaroCar.showToast('warning', 'Message enregistré', 'Votre message a été sauvegardé. Nous vous contacterons rapidement.');
+                })
+                .catch(function(err) {
+                    console.warn('[VelaroCar] API message failed, sending email only:', err.message);
+                    VelaroCarEmail.sendContact(data, function() {
+                        VelaroCar.showToast('success', 'Message envoy\u00e9 !', 'Merci ' + data.name + ', nous vous r\u00e9pondrons bient\u00f4t.');
+                    }, function() {
+                        VelaroCar.showToast('warning', 'Message enregistr\u00e9', 'Votre message a \u00e9t\u00e9 sauvegard\u00e9. Nous vous contacterons rapidement.');
+                    });
                     form.reset();
                     if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Envoyer le message'; }
                 });

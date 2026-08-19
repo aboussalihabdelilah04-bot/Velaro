@@ -226,25 +226,24 @@
             var product = allCars.find(function(c) { return c.id === data.productId; });
             if (product) reservation.pricePerDay = product.pricePerDay;
 
-            var reservations = getReservationData();
-            reservations.push(reservation);
-            saveReservationData(reservations);
-
-            var userData = getUserData() || { reservations: [] };
-            if (!userData.reservations) userData.reservations = [];
-            userData.reservations.push(reservation);
-            saveUserData(userData);
-
             VelaroCarEmail.sendReservation(reservation, function() {}, function() {});
 
-            document.getElementById('reservation-modal').classList.remove('active');
-            document.body.classList.remove('no-scroll');
-
-            VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');
-
-            setTimeout(function() {
-                window.location.href = 'confirmation.html?id=' + reservation.id;
-            }, 1500);
+            submitBooking(reservation, function(serverBooking) {
+                var displayId = serverBooking.id || serverBooking._id || reservation.id;
+                document.getElementById('reservation-modal').classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + displayId + ' a été enregistrée.');
+                setTimeout(function() {
+                    window.location.href = 'confirmation.html?id=' + displayId;
+                }, 1500);
+            }, function() {
+                document.getElementById('reservation-modal').classList.remove('active');
+                document.body.classList.remove('no-scroll');
+                VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');
+                setTimeout(function() {
+                    window.location.href = 'confirmation.html?id=' + reservation.id;
+                }, 1500);
+            });
         });
     }
 
