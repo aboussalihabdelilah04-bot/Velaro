@@ -121,4 +121,30 @@ router.post('/change-password', auth, async (req, res) => {
   }
 });
 
+// TEMPORARY: Setup admin user endpoint (will be removed after testing)
+router.post('/setup-admin', async (req, res) => {
+  try {
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@velarocars.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@2024!';
+    const adminName = process.env.ADMIN_NAME || 'VelaroCar Admin';
+    
+    let admin = await AdminUser.findOne({ email: adminEmail.toLowerCase() });
+    if (!admin) {
+      admin = await AdminUser.create({
+        name: adminName,
+        email: adminEmail.toLowerCase(),
+        password: adminPassword,
+        role: 'super_admin'
+      });
+      res.json({ message: 'Admin created', email: admin.email });
+    } else {
+      admin.password = adminPassword;
+      await admin.save();
+      res.json({ message: 'Admin password reset', email: admin.email });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
