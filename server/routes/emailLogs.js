@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const EmailLog = require('../models/EmailLog');
+const { sendMail, testConnection } = require('../services/email');
 
 router.use(auth);
 
@@ -16,6 +17,24 @@ router.get('/', async (req, res) => {
     res.json({ data: logs, total, page: parseInt(page), pages: Math.ceil(total / limit) });
   } catch (err) {
     res.status(500).json({ error: 'Erreur.' });
+  }
+});
+
+router.post('/test', async (req, res) => {
+  try {
+    const smtpCheck = await testConnection();
+    if (!smtpCheck.ok) {
+      return res.json({ smtp: false, error: smtpCheck.error, email: false });
+    }
+    const result = await sendMail({
+      to: req.user.email || process.env.ADMIN_EMAIL,
+      subject: '[VelaroCar] Test email',
+      html: '<h2>Email test</h2><p>Si vous recevez cet email, la configuration SMTP fonctionne correctement.</p>',
+      type: 'test'
+    });
+    res.json({ smtp: true, email: result.sent, messageId: result.messageId, error: result.reason });
+  } catch (err) {
+    res.json({ smtp: false, email: false, error: err.message });
   }
 });
 

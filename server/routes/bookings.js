@@ -209,13 +209,14 @@ router.put('/:id/status', async (req, res) => {
       details: `Reservation ${booking.reference}: ${oldStatus} → ${status}`,
       ip: req.ip
     });
-    res.json(booking);
 
     if (['confirmed', 'cancelled', 'completed'].includes(status)) {
       notifyCustomerBookingStatus(booking, status).catch(err => {
         console.error('[Email] Failed to notify customer of status change:', err.message);
       });
     }
+
+    res.json(booking);
   } catch (err) {
     res.status(500).json({ error: 'Erreur lors de la mise a jour.' });
   }
