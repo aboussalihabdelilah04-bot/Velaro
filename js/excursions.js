@@ -301,15 +301,6 @@
                 pricePerDay: product ? product.price : 0
             };
 
-            var reservations = getReservationData();
-            reservations.push(reservation);
-            saveReservationData(reservations);
-
-            var userData = getUserData() || { reservations: [] };
-            if (!userData.reservations) userData.reservations = [];
-            userData.reservations.push(reservation);
-            saveUserData(userData);
-
             VelaroCarEmail.sendReservation(reservation, function() {}, function() {});
 
             submitBooking(reservation, function(serverBooking) {
@@ -318,11 +309,10 @@
                 document.body.classList.remove('no-scroll');
                 VelaroCar.showToast('success', 'R\u00e9servation envoy\u00e9e !', 'Votre r\u00e9servation #' + displayId + ' a \u00e9t\u00e9 enregistr\u00e9e.');
                 setTimeout(function() { window.location.href = 'confirmation.html?id=' + displayId; }, 1500);
-            }, function() {
+            }, function(err) {
                 document.getElementById('reservation-modal').classList.remove('active');
                 document.body.classList.remove('no-scroll');
-                VelaroCar.showToast('success', 'R\u00e9servation envoy\u00e9e !', 'Votre r\u00e9servation #' + reservation.id + ' a \u00e9t\u00e9 enregistr\u00e9e.');
-                setTimeout(function() { window.location.href = 'confirmation.html?id=' + reservation.id; }, 1500);
+                VelaroCar.showToast('error', 'Erreur', 'Impossible d\'enregistrer la r\u00e9servation. ' + (err && err.message ? err.message : 'Veuillez r\u00e9essayer.'));
             });
         });
     }

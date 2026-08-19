@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Booking = require('../models/Booking');
 const { logActivity } = require('../utils/activityLogger');
+const { notifyCustomerBookingStatus } = require('../services/email');
 
 router.use(auth);
 
@@ -209,6 +210,12 @@ router.put('/:id/status', async (req, res) => {
       ip: req.ip
     });
     res.json(booking);
+
+    if (['confirmed', 'cancelled', 'completed'].includes(status)) {
+      notifyCustomerBookingStatus(booking, status).catch(err => {
+        console.error('[Email] Failed to notify customer of status change:', err.message);
+      });
+    }
   } catch (err) {
     res.status(500).json({ error: 'Erreur lors de la mise a jour.' });
   }

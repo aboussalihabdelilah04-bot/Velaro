@@ -236,13 +236,10 @@
                 setTimeout(function() {
                     window.location.href = 'confirmation.html?id=' + displayId;
                 }, 1500);
-            }, function() {
+            }, function(err) {
                 document.getElementById('reservation-modal').classList.remove('active');
                 document.body.classList.remove('no-scroll');
-                VelaroCar.showToast('success', 'Réservation envoyée !', 'Votre réservation #' + reservation.id + ' a été enregistrée.');
-                setTimeout(function() {
-                    window.location.href = 'confirmation.html?id=' + reservation.id;
-                }, 1500);
+                VelaroCar.showToast('error', 'Erreur', 'Impossible d\'enregistrer la réservation. ' + (err && err.message ? err.message : 'Veuillez réessayer.'));
             });
         });
     }

@@ -13,6 +13,7 @@ const Language = require('../models/Language');
 const Booking = require('../models/Booking');
 const Message = require('../models/Message');
 const rateLimit = require('express-rate-limit');
+const { notifyAdminNewBooking, notifyAdminNewMessage } = require('../services/email');
 
 const router = express.Router();
 
@@ -87,6 +88,10 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
     const result = booking.toObject();
     result.id = result._id.toString();
     res.status(201).json(result);
+
+    notifyAdminNewBooking(booking).catch(err => {
+      console.error('[Email] Failed to notify admin of new booking:', err.message);
+    });
   } catch (err) {
     console.error('Public booking creation error:', err.message);
     res.status(500).json({ error: 'Erreur lors de la creation de la reservation.' });
@@ -133,6 +138,10 @@ router.post('/messages', publicMessageLimiter, async (req, res) => {
     const result = msg.toObject();
     result.id = result._id.toString();
     res.status(201).json(result);
+
+    notifyAdminNewMessage(msg).catch(err => {
+      console.error('[Email] Failed to notify admin of new message:', err.message);
+    });
   } catch (err) {
     console.error('Public message creation error:', err.message);
     res.status(500).json({ error: 'Erreur lors de l\'envoi du message.' });
