@@ -5,16 +5,12 @@
 (function() {
     'use strict';
 
-    /* --- If data.js failed to load, skip rendering instead of throwing --- */
-    if (typeof CARS === 'undefined' || typeof formatPrice !== 'function') {
-        return;
-    }
+    if (typeof formatPrice !== 'function') return;
 
     var grid = document.getElementById('cars-grid');
     var countEl = document.getElementById('cars-count');
     var detailModal = document.getElementById('car-detail-modal');
-
-    var allCars = CARS.slice().sort(function(a, b) { return b.rating - a.rating; });
+    var allCars = [];
 
     var detailImage = detailModal ? detailModal.querySelector('.detail-image') : null;
     var resImage = document.getElementById('reservation-modal');
@@ -89,14 +85,14 @@
             var detailBtn = target.closest('.detail-btn');
             if (detailBtn) {
                 e.preventDefault();
-                var car = CARS.find(function(c) { return c.id === detailBtn.dataset.id; });
+                var car = allCars.find(function(c) { return c.id === detailBtn.dataset.id; });
                 if (car) showCarDetail(car);
                 return;
             }
             var reserveBtn = target.closest('.reserve-btn');
             if (reserveBtn) {
                 e.preventDefault();
-                var item = CARS.find(function(c) { return c.id === reserveBtn.dataset.id; });
+                var item = allCars.find(function(c) { return c.id === reserveBtn.dataset.id; });
                 if (item) openReservationModal(item, 'voiture');
             }
         });
@@ -108,7 +104,7 @@
             detailReserve.__reserveBound = true;
             detailReserve.addEventListener('click', function() {
                 detailModal.classList.remove('active');
-                var car = CARS.find(function(c) { return c.id === this.dataset.id; });
+                var car = allCars.find(function(c) { return c.id === this.dataset.id; });
                 if (car) openReservationModal(car, 'voiture');
             });
         }
@@ -181,15 +177,13 @@
         modal.querySelector('.modal-product-image').src = item.image;
         modal.querySelector('.modal-product-image').alt = item.name;
         modal.querySelector('.modal-product-image').title = item.name;
-        modal.querySelector('.modal-product-price').textContent = formatPrice(type === 'voiture' || type === 'moto' ? item.pricePerDay : item.pricePerNight || item.price);
+        modal.querySelector('.modal-product-price').textContent = formatPrice(item.pricePerDay);
         modal.querySelector('.modal-product-type').value = type;
         modal.querySelector('.modal-product-id').value = item.id;
         modal.querySelector('.modal-product-name-input').value = item.name;
         modal.classList.add('active');
         document.body.classList.add('no-scroll');
     }
-
-    renderCars();
 
     [detailModal, document.getElementById('reservation-modal')].forEach(function(m) {
         if (m) {
@@ -229,19 +223,8 @@
                 pricePerDay: 0
             };
 
-            if (data.productType === 'voiture') {
-                var car = CARS.find(function(c) { return c.id === data.productId; });
-                if (car) reservation.pricePerDay = car.pricePerDay;
-            } else if (data.productType === 'moto') {
-                var moto = MOTOS.find(function(m) { return m.id === data.productId; });
-                if (moto) reservation.pricePerDay = moto.pricePerDay;
-            } else if (data.productType === 'maison') {
-                var house = HOUSES.find(function(h) { return h.id === data.productId; });
-                if (house) reservation.pricePerDay = house.pricePerNight;
-            } else if (data.productType === 'excursion') {
-                var exc = EXCURSIONS.find(function(e) { return e.id === data.productId; });
-                if (exc) reservation.pricePerDay = exc.price;
-            }
+            var product = allCars.find(function(c) { return c.id === data.productId; });
+            if (product) reservation.pricePerDay = product.pricePerDay;
 
             var reservations = getReservationData();
             reservations.push(reservation);
@@ -265,4 +248,19 @@
         });
     }
 
+    function loadFromAPI() {
+        if (!grid) return;
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i><p style="margin-top:0.5rem;color:var(--gray-500);">Chargement des voitures...</p></div>';
+
+        VelaroAPI.getCars()
+            .then(function(cars) {
+                allCars = cars.sort(function(a, b) { return b.rating - a.rating; });
+                renderCars();
+            })
+            .catch(function() {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des voitures. Veuillez réessayer plus tard.</div>';
+            });
+    }
+
+    loadFromAPI();
 })();

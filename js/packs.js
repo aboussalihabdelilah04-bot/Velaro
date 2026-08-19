@@ -6,172 +6,11 @@
 (function() {
     'use strict';
 
-    /* --- If data.js failed to load, skip rendering instead of throwing --- */
     if (typeof formatPrice !== 'function' || typeof getReservationData !== 'function') {
         return;
     }
 
-    var PACKS = [
-        {
-            id: 'pck-01',
-            name: 'Pack City Escape',
-            badge: 'Best-seller',
-            tagline: 'Parfait pour un court s\u00e9jour.',
-            description: 'Id\u00e9al pour un week-end ou un court s\u00e9jour \u00e0 Marrakech : votre voiture, votre appartement confortable et votre transfert a\u00e9roport aller / retour, le tout sans aucune organisation.',
-            duration: '3 jours / 2 nuits',
-            durationDays: 3,
-            price: 2490,
-            vehicle: 'Renault Clio 5',
-            accommodation: 'Appartement confortable',
-            image: 'images/packs/city-escape/main.webp',
-            images: ['images/packs/city-escape/main.webp'],
-            rating: 4.9,
-            reviews: 320,
-            includes: [
-                { icon: 'fa-car', label: 'Renault Clio 5' },
-                { icon: 'fa-home', label: 'Appartement confortable' },
-                { icon: 'fa-plane-arrival', label: 'Transfert a\u00e9roport aller / retour' },
-                { icon: 'fa-headset', label: 'Assistance 24h/24' }
-            ]
-        },
-        {
-            id: 'pck-02',
-            name: 'Pack D\u00e9couverte',
-            badge: 'Populaire',
-            tagline: 'D\u00e9couvrez Marrakech en toute libert\u00e9.',
-            description: 'Explorez Marrakech et ses environs \u00e0 votre rythme avec un appartement premium, votre voiture et une excursion dans le d\u00e9sert d\u2019Agafay ou la Palmeraie.',
-            duration: '5 jours / 4 nuits',
-            durationDays: 5,
-            price: 4490,
-            vehicle: 'Renault Clio 5',
-            accommodation: 'Appartement Premium',
-            image: 'images/packs/decouverte/main.webp',
-            images: ['images/packs/decouverte/main.webp'],
-            rating: 4.8,
-            reviews: 410,
-            includes: [
-                { icon: 'fa-car', label: 'Renault Clio 5' },
-                { icon: 'fa-building', label: 'Appartement Premium' },
-                { icon: 'fa-plane-arrival', label: 'Transfert aller / retour' },
-                { icon: 'fa-mountain', label: 'Excursion Agafay ou Palmeraie' },
-                { icon: 'fa-headset', label: 'Assistance 24h/24' }
-            ]
-        },
-        {
-            id: 'pck-03',
-            name: 'Pack Famille',
-            badge: 'Familles',
-            tagline: 'Le meilleur choix pour les familles.',
-            description: 'Tout est pr\u00e9vu pour voyager sereinement en famille : un SUV spacieux, un appartement familial confortable, le transfert a\u00e9roport et un si\u00e8ge b\u00e9b\u00e9 sur demande.',
-            duration: '7 jours / 6 nuits',
-            durationDays: 7,
-            price: 6490,
-            vehicle: 'Dacia Duster ou SUV',
-            accommodation: 'Appartement Familial',
-            image: 'images/packs/famille/main.webp',
-            images: ['images/packs/famille/main.webp'],
-            rating: 4.9,
-            reviews: 265,
-            includes: [
-                { icon: 'fa-car', label: 'Dacia Duster ou SUV' },
-                { icon: 'fa-users', label: 'Appartement Familial' },
-                { icon: 'fa-plane-arrival', label: 'Transfert a\u00e9roport' },
-                { icon: 'fa-child', label: 'Si\u00e8ge b\u00e9b\u00e9 (sur demande)' }
-            ]
-        },
-        {
-            id: 'pck-04',
-            name: 'Pack Premium',
-            badge: 'Confort',
-            tagline: 'Confort et \u00e9l\u00e9gance.',
-            description: 'Une exp\u00e9rience raffin\u00e9e : une Renault Arkana Hybride, un appartement haut standing, un accueil VIP \u00e0 l\u2019a\u00e9roport et la livraison de votre v\u00e9hicule directement \u00e0 votre h\u00e9bergement.',
-            duration: '5 jours',
-            durationDays: 5,
-            price: 7490,
-            vehicle: 'Renault Arkana Hybride',
-            accommodation: 'Appartement Haut Standing',
-            image: 'images/packs/premium/main.webp',
-            images: ['images/packs/premium/main.webp'],
-            rating: 4.9,
-            reviews: 198,
-            includes: [
-                { icon: 'fa-car', label: 'Renault Arkana Hybride' },
-                { icon: 'fa-building', label: 'Appartement Haut Standing' },
-                { icon: 'fa-star', label: 'Accueil VIP' },
-                { icon: 'fa-truck-front', label: 'Livraison du v\u00e9hicule' },
-                { icon: 'fa-headset', label: 'Assistance Premium' }
-            ]
-        },
-        {
-            id: 'pck-05',
-            name: 'Pack Villa Prestige',
-            badge: 'Piscine priv\u00e9e',
-            tagline: 'Pour un s\u00e9jour d\u2019exception.',
-            description: 'Le luxe absolu : un SUV ou une Mercedes Vito, une villa avec piscine priv\u00e9e, le transfert a\u00e9roport, le m\u00e9nage r\u00e9gulier et une assistance premium d\u00e9di\u00e9e.',
-            duration: '5 jours',
-            durationDays: 5,
-            price: 12990,
-            vehicle: 'SUV ou Mercedes Vito',
-            accommodation: 'Villa avec piscine priv\u00e9e',
-            image: 'images/packs/villa-prestige/main.webp',
-            images: ['images/packs/villa-prestige/main.webp'],
-            rating: 5.0,
-            reviews: 124,
-            includes: [
-                { icon: 'fa-car', label: 'SUV ou Mercedes Vito' },
-                { icon: 'fa-water-ladder', label: 'Villa avec piscine priv\u00e9e' },
-                { icon: 'fa-plane-arrival', label: 'Transfert a\u00e9roport' },
-                { icon: 'fa-broom', label: 'M\u00e9nage' },
-                { icon: 'fa-headset', label: 'Assistance Premium' }
-            ]
-        },
-        {
-            id: 'pck-06',
-            name: 'Pack VIP Marrakech',
-            badge: 'Signature',
-            tagline: 'Une exp\u00e9rience compl\u00e8te.',
-            description: 'Le summum du raffinement : v\u00e9hicule premium, villa de luxe, accueil VIP, deux excursions au choix, r\u00e9servations dans les meilleurs restaurants et assistance 24h/24.',
-            duration: '7 jours',
-            durationDays: 7,
-            price: 18990,
-            vehicle: 'V\u00e9hicule Premium',
-            accommodation: 'Villa de Luxe',
-            image: 'images/packs/vip-marrakech/main.webp',
-            images: ['images/packs/vip-marrakech/main.webp'],
-            rating: 5.0,
-            reviews: 87,
-            includes: [
-                { icon: 'fa-car-side', label: 'V\u00e9hicule Premium' },
-                { icon: 'fa-crown', label: 'Villa de Luxe' },
-                { icon: 'fa-star', label: 'Accueil VIP' },
-                { icon: 'fa-mountain', label: 'Deux excursions au choix' },
-                { icon: 'fa-utensils', label: 'R\u00e9servation restaurants' },
-                { icon: 'fa-headset', label: 'Assistance 24h/24' }
-            ]
-        },
-        {
-            id: 'pck-07',
-            name: 'Pack Honeymoon',
-            badge: 'Romantique',
-            tagline: 'Id\u00e9al pour les couples.',
-            description: 'Un s\u00e9jour pens\u00e9 pour deux : une Renault Clio 5 Automatique, un appartement romantique, le transfert a\u00e9roport et une d\u00e9coration romantique \u00e0 votre arriv\u00e9e.',
-            duration: '4 jours',
-            durationDays: 4,
-            price: 4990,
-            vehicle: 'Renault Clio 5 Automatique',
-            accommodation: 'Appartement Romantique',
-            image: 'images/packs/honeymoon/main.webp',
-            images: ['images/packs/honeymoon/main.webp'],
-            rating: 4.9,
-            reviews: 156,
-            includes: [
-                { icon: 'fa-car', label: 'Renault Clio 5 Automatique' },
-                { icon: 'fa-heart', label: 'Appartement Romantique' },
-                { icon: 'fa-plane-arrival', label: 'Transfert a\u00e9roport' },
-                { icon: 'fa-rose', label: 'D\u00e9coration romantique' }
-            ]
-        }
-    ];
+    var PACKS_DATA = [];
 
     var grid = document.getElementById('packs-grid');
     var modal = document.getElementById('reservation-modal');
@@ -210,14 +49,14 @@
 
     function renderPacks() {
         if (!grid) return;
-        grid.innerHTML = PACKS.map(function(p, index) {
+        grid.innerHTML = PACKS_DATA.map(function(p, index) {
             return cardHtml(p, index);
         }).join('');
         initGridEvents();
     }
 
     function findPack(id) {
-        return PACKS.find(function(p) { return p.id === id; }) || null;
+        return PACKS_DATA.find(function(p) { return p.id === id; }) || null;
     }
 
     /* --- Detail modal with gallery --- */
@@ -423,5 +262,19 @@
 
     /* --- FAQ accordion is handled globally in js/main.js --- */
 
-    renderPacks();
+    function loadFromAPI() {
+        if (!grid) return;
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i><p style="margin-top:0.5rem;color:var(--gray-500);">Chargement des packs...</p></div>';
+
+        VelaroAPI.getPacks()
+            .then(function(packs) {
+                PACKS_DATA = packs.sort(function(a, b) { return b.rating - a.rating; });
+                renderPacks();
+            })
+            .catch(function() {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des packs.</div>';
+            });
+    }
+
+    loadFromAPI();
 })();

@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/admin.html",
+      "destination": "/admin/",
+      "permanent": true
+    }
+  ]
+}

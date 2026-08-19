@@ -118,62 +118,78 @@
             return;
         }
 
-        var allItems = [];
-        if (typeof CARS !== 'undefined') {
-            CARS.forEach(function(c) { if (favs.indexOf(c.id) > -1) allItems.push({ item: c, type: 'voiture', page: 'cars.html' }); });
-        }
-        if (typeof MOTOS !== 'undefined') {
-            MOTOS.forEach(function(m) { if (favs.indexOf(m.id) > -1) allItems.push({ item: m, type: 'moto', page: 'motos.html' }); });
-        }
-        if (typeof HOUSES !== 'undefined') {
-            HOUSES.forEach(function(h) { if (favs.indexOf(h.id) > -1) allItems.push({ item: h, type: 'maison', page: 'houses.html' }); });
-        }
-        if (typeof EXCURSIONS !== 'undefined') {
-            EXCURSIONS.forEach(function(e) { if (favs.indexOf(e.id) > -1) allItems.push({ item: e, type: 'excursion', page: 'excursions.html' }); });
-        }
-        if (typeof TRANSFERS !== 'undefined') {
-            TRANSFERS.forEach(function(t) { if (favs.indexOf(t.id) > -1) allItems.push({ item: t, type: 'transfer', page: 'excursions.html' }); });
-        }
-
-        var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain', transfer: 'fa-van-shuttle', chauffeur: 'fa-car-side', pack: 'fa-gem' };
-        var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion', transfer: 'Transfert', chauffeur: 'Chauffeur Privé', pack: 'Pack' };
-
-        list.innerHTML = allItems.map(function(entry) {
-            var price = entry.item.pricePerDay || entry.item.pricePerNight || entry.item.price;
-            var priceLabel = entry.type === 'maison' ? '/ nuit' : (entry.type === 'excursion' ? '/ pers.' : (entry.type === 'transfer' ? '/ transfert' : (entry.type === 'chauffeur' ? '/ forfait' : (entry.type === 'pack' ? '/ pack' : '/ jour'))));
-            return '<div class="product-card" style="margin-bottom:1rem;">' +
-                '<div class="product-card-body" style="display:flex;gap:1rem;align-items:center;">' +
-                    '<img src="' + entry.item.image + '" alt="' + entry.item.name + '" style="width:70px;height:70px;border-radius:12px;object-fit:cover;flex-shrink:0;">' +
-                    '<div style="flex:1;min-width:150px;">' +
-                        '<div style="font-size:0.75rem;color:var(--gray-500);"><i class="fas ' + typeIcon[entry.type] + '"></i> ' + (typeLabel[entry.type] || entry.type) + '</div>' +
-                        '<strong style="font-size:0.95rem;">' + entry.item.name + '</strong>' +
-                    '</div>' +
-                    '<div style="text-align:right;">' +
-                        '<div style="font-weight:800;color:var(--accent);">' + formatPrice(price) + ' <span style="font-size:0.75rem;font-weight:400;color:var(--gray-500);">' + priceLabel + '</span></div>' +
-                    '</div>' +
-                    '<div style="display:flex;gap:0.5rem;">' +
-                        '<a href="' + entry.page + '" class="btn btn-outline-dark btn-sm"><i class="fas fa-eye"></i></a>' +
-                        '<button class="btn btn-sm remove-fav-btn" data-id="' + entry.item.id + '" style="background:rgba(239,68,68,0.1);color:var(--danger);border:none;"><i class="fas fa-trash"></i></button>' +
-                    '</div>' +
-                '</div>' +
-            '</div>';
-        }).join('');
-
-        list.querySelectorAll('.remove-fav-btn').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var id = this.dataset.id;
-                var favs = getFavorites();
-                var idx = favs.indexOf(id);
-                if (idx > -1) favs.splice(idx, 1);
-                saveFavorites(favs);
-                document.querySelectorAll('.fav-count').forEach(function(el) {
-                    el.textContent = favs.length;
-                    el.style.display = favs.length > 0 ? 'flex' : 'none';
-                });
-                VelaroCar.showToast('info', 'Retiré des favoris', 'Le produit a été retiré de vos favoris.');
-                renderFavorites();
+        function buildList(sources) {
+            var allItems = [];
+            var types = [
+                { arr: sources.cars, type: 'voiture', page: 'cars.html' },
+                { arr: sources.motos, type: 'moto', page: 'motos.html' },
+                { arr: sources.houses, type: 'maison', page: 'houses.html' },
+                { arr: sources.excursions, type: 'excursion', page: 'excursions.html' },
+                { arr: sources.transfers, type: 'transfer', page: 'excursions.html' }
+            ];
+            types.forEach(function(t) {
+                if (t.arr && t.arr.length) {
+                    t.arr.forEach(function(item) { if (favs.indexOf(item.id) > -1) allItems.push({ item: item, type: t.type, page: t.page }); });
+                }
             });
-        });
+            return allItems;
+        }
+
+        function renderList(allItems) {
+            var typeIcon = { voiture: 'fa-car', moto: 'fa-motorcycle', maison: 'fa-home', excursion: 'fa-mountain', transfer: 'fa-van-shuttle', chauffeur: 'fa-car-side', pack: 'fa-gem' };
+            var typeLabel = { voiture: 'Voiture', moto: 'Moto', maison: 'Maison', excursion: 'Excursion', transfer: 'Transfert', chauffeur: 'Chauffeur Priv\u00e9', pack: 'Pack' };
+
+            list.innerHTML = allItems.map(function(entry) {
+                var price = entry.item.pricePerDay || entry.item.pricePerNight || entry.item.price;
+                var priceLabel = entry.type === 'maison' ? '/ nuit' : (entry.type === 'excursion' ? '/ pers.' : (entry.type === 'transfer' ? '/ transfert' : (entry.type === 'chauffeur' ? '/ forfait' : (entry.type === 'pack' ? '/ pack' : '/ jour'))));
+                return '<div class="product-card" style="margin-bottom:1rem;">' +
+                    '<div class="product-card-body" style="display:flex;gap:1rem;align-items:center;">' +
+                        '<img src="' + entry.item.image + '" alt="' + entry.item.name + '" style="width:70px;height:70px;border-radius:12px;object-fit:cover;flex-shrink:0;">' +
+                        '<div style="flex:1;min-width:150px;">' +
+                            '<div style="font-size:0.75rem;color:var(--gray-500);"><i class="fas ' + typeIcon[entry.type] + '"></i> ' + (typeLabel[entry.type] || entry.type) + '</div>' +
+                            '<strong style="font-size:0.95rem;">' + entry.item.name + '</strong>' +
+                        '</div>' +
+                        '<div style="text-align:right;">' +
+                            '<div style="font-weight:800;color:var(--accent);">' + formatPrice(price) + ' <span style="font-size:0.75rem;font-weight:400;color:var(--gray-500);">' + priceLabel + '</span></div>' +
+                        '</div>' +
+                        '<div style="display:flex;gap:0.5rem;">' +
+                            '<a href="' + entry.page + '" class="btn btn-outline-dark btn-sm"><i class="fas fa-eye"></i></a>' +
+                            '<button class="btn btn-sm remove-fav-btn" data-id="' + entry.item.id + '" style="background:rgba(239,68,68,0.1);color:var(--danger);border:none;"><i class="fas fa-trash"></i></button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+
+            list.querySelectorAll('.remove-fav-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var id = this.dataset.id;
+                    var favs2 = getFavorites();
+                    var idx = favs2.indexOf(id);
+                    if (idx > -1) favs2.splice(idx, 1);
+                    saveFavorites(favs2);
+                    document.querySelectorAll('.fav-count').forEach(function(el) {
+                        el.textContent = favs2.length;
+                        el.style.display = favs2.length > 0 ? 'flex' : 'none';
+                    });
+                    VelaroCar.showToast('info', 'Retir\u00e9 des favoris', 'Le produit a \u00e9t\u00e9 retir\u00e9 de vos favoris.');
+                    renderFavorites();
+                });
+            });
+        }
+
+        if (window.VelaroAPI) {
+            Promise.all([
+                VelaroAPI.getCars().catch(function() { return []; }),
+                VelaroAPI.getMotorcycles().catch(function() { return []; }),
+                VelaroAPI.getVillas().catch(function() { return []; }),
+                VelaroAPI.getExcursions().catch(function() { return []; }),
+                VelaroAPI.getTransfers().catch(function() { return []; })
+            ]).then(function(r) {
+                renderList(buildList({ cars: r[0], motos: r[1], houses: r[2], excursions: r[3], transfers: r[4] }));
+            }).catch(function() {
+                list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--gray-500);"><i class="fas fa-exclamation-triangle" style="font-size:24px;margin-bottom:0.5rem;display:block;"></i><p>Erreur de chargement des favoris.</p></div>';
+            });
+        }
     }
 
     /* --- Profile --- */

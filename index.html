@@ -758,112 +758,149 @@
     </footer>
 
     <!-- SCRIPTS -->
-    <script src="js/data.js?v=e6d19c0"></script>
+    <script src="js/api.js"></script>
+<script src="js/data.js?v=e6d19c0"></script>
     <script src="js/main.js?v=e6d19c0"></script>
     <script>
     (function() {
         'use strict';
 
-        /* --- If data.js failed to load, keep static content and skip data rendering --- */
-        if (typeof CARS === 'undefined' || typeof HOUSES === 'undefined' || typeof EXCURSIONS === 'undefined' ||
-            typeof REVIEWS === 'undefined' || typeof FAQ === 'undefined' || typeof formatPrice !== 'function') {
-            return;
+        if (typeof formatPrice !== 'function') return;
+
+        function getFavs() {
+            try { return JSON.parse(localStorage.getItem('favorites') || '[]'); } catch(e) { return []; }
         }
 
-        /* --- Popular Cars (top 3 rated) --- */
-        var popularCars = CARS.sort(function(a, b) { return b.rating - a.rating; }).slice(0, 3);
-        var carsGrid = document.getElementById('popular-cars-grid');
-        if (carsGrid) {
-            carsGrid.innerHTML = popularCars.map(function(car) {
-                var favs = getFavorites();
-                var isFav = favs.indexOf(car.id) > -1;
-                return '<div class="product-card">' +
-                    '<div class="product-card-image">' +
-                        '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" title="' + car.name + ' - location de voiture Marrakech" loading="lazy">' +
-                        '<span class="product-card-badge">' + car.category + '</span>' +
-                        '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + car.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
+        function carCard(car) {
+            var favs = getFavs();
+            var isFav = favs.indexOf(car.id) > -1;
+            return '<div class="product-card">' +
+                '<div class="product-card-image">' +
+                    '<img src="' + car.image + '" alt="' + car.name + ' - ' + car.brand + '" title="' + car.name + ' - location de voiture Marrakech" loading="lazy">' +
+                    '<span class="product-card-badge">' + car.category + '</span>' +
+                    '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + car.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
+                '</div>' +
+                '<div class="product-card-body">' +
+                    '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> Marrakech</div>' +
+                    '<h3 class="product-card-title">' + car.name + '</h3>' +
+                    '<div class="product-card-features">' +
+                        '<span class="product-feature-tag"><i class="fas fa-gas-pump"></i> ' + car.fuel + '</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-cogs"></i> ' + car.transmission + '</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-users"></i> ' + car.seats + ' places</span>' +
                     '</div>' +
-                    '<div class="product-card-body">' +
-                        '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> Marrakech</div>' +
-                        '<h3 class="product-card-title">' + car.name + '</h3>' +
-                        '<div class="product-card-features">' +
-                            '<span class="product-feature-tag"><i class="fas fa-gas-pump"></i> ' + car.fuel + '</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-cogs"></i> ' + car.transmission + '</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-users"></i> ' + car.seats + ' places</span>' +
-                        '</div>' +
-                        '<div class="product-card-footer">' +
-                            '<div class="product-card-price">' + formatPrice(car.pricePerDay) + ' <span>/ jour</span></div>' +
-                            '<div class="product-card-rating"><i class="fas fa-star"></i> ' + car.rating + ' <span>(' + car.reviews + ')</span></div>' +
-                        '</div>' +
+                    '<div class="product-card-footer">' +
+                        '<div class="product-card-price">' + formatPrice(car.pricePerDay) + ' <span>/ jour</span></div>' +
+                        '<div class="product-card-rating"><i class="fas fa-star"></i> ' + car.rating + ' <span>(' + car.reviews + ')</span></div>' +
                     '</div>' +
-                '</div>';
-            }).join('');
+                '</div>' +
+            '</div>';
         }
 
-        /* --- Popular Houses (top 3 rated) --- */
-        var popularHouses = HOUSES.sort(function(a, b) { return b.rating - a.rating; }).slice(0, 3);
-        var housesGrid = document.getElementById('popular-houses-grid');
-        if (housesGrid) {
-            housesGrid.innerHTML = popularHouses.map(function(house) {
-                var favs = getFavorites();
-                var isFav = favs.indexOf(house.id) > -1;
-                return '<div class="product-card">' +
-                    '<div class="product-card-image">' +
-                        '<img src="' + house.image + '" alt="' + house.name + '" title="' + house.name + ' - location villa Marrakech" loading="lazy">' +
-                        '<span class="product-card-badge">' + house.location + '</span>' +
-                        '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + house.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
+        function houseCard(house) {
+            var favs = getFavs();
+            var isFav = favs.indexOf(house.id) > -1;
+            return '<div class="product-card">' +
+                '<div class="product-card-image">' +
+                    '<img src="' + house.image + '" alt="' + house.name + '" title="' + house.name + ' - location villa Marrakech" loading="lazy">' +
+                    '<span class="product-card-badge">' + house.location + '</span>' +
+                    '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + house.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
+                '</div>' +
+                '<div class="product-card-body">' +
+                    '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> ' + house.location + '</div>' +
+                    '<h3 class="product-card-title">' + house.name + '</h3>' +
+                    '<div class="product-card-features">' +
+                        '<span class="product-feature-tag"><i class="fas fa-bed"></i> ' + house.bedrooms + ' ch.</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-bath"></i> ' + house.bathrooms + ' sdb</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-swimming-pool"></i> Piscine</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-wifi"></i> WiFi</span>' +
                     '</div>' +
-                    '<div class="product-card-body">' +
-                        '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> ' + house.location + '</div>' +
-                        '<h3 class="product-card-title">' + house.name + '</h3>' +
-                        '<div class="product-card-features">' +
-                            '<span class="product-feature-tag"><i class="fas fa-bed"></i> ' + house.bedrooms + ' ch.</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-bath"></i> ' + house.bathrooms + ' sdb</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-swimming-pool"></i> Piscine</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-wifi"></i> WiFi</span>' +
-                        '</div>' +
-                        '<div class="product-card-footer">' +
-                            '<div class="product-card-price">' + formatPrice(house.pricePerNight) + ' <span>/ nuit</span></div>' +
-                            '<div class="product-card-rating"><i class="fas fa-star"></i> ' + house.rating + ' <span>(' + house.reviews + ')</span></div>' +
-                        '</div>' +
+                    '<div class="product-card-footer">' +
+                        '<div class="product-card-price">' + formatPrice(house.pricePerNight) + ' <span>/ nuit</span></div>' +
+                        '<div class="product-card-rating"><i class="fas fa-star"></i> ' + house.rating + ' <span>(' + house.reviews + ')</span></div>' +
                     '</div>' +
-                '</div>';
-            }).join('');
+                '</div>' +
+            '</div>';
         }
 
-        /* --- Popular Excursions (top 3 rated) --- */
-        var popularExcursions = EXCURSIONS.sort(function(a, b) { return b.rating - a.rating; }).slice(0, 3);
-        var excursionsGrid = document.getElementById('popular-excursions-grid');
-        if (excursionsGrid) {
-            excursionsGrid.innerHTML = popularExcursions.map(function(exc) {
-                var favs = getFavorites();
-                var isFav = favs.indexOf(exc.id) > -1;
-                return '<div class="product-card">' +
-                    '<div class="product-card-image">' +
-                        '<img src="' + exc.image + '" alt="' + exc.name + '" title="' + exc.name + ' - excursion Marrakech" loading="lazy">' +
-                        '<span class="product-card-badge">' + exc.city + '</span>' +
-                        '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + exc.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
+        function excursionCard(exc) {
+            var favs = getFavs();
+            var isFav = favs.indexOf(exc.id) > -1;
+            return '<div class="product-card">' +
+                '<div class="product-card-image">' +
+                    '<img src="' + exc.image + '" alt="' + exc.name + '" title="' + exc.name + ' - excursion Marrakech" loading="lazy">' +
+                    '<span class="product-card-badge">' + exc.city + '</span>' +
+                    '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + exc.id + '">' + (isFav ? '\u2764\uFE0F' : '\uD83E\uDD1D') + '</button>' +
+                '</div>' +
+                '<div class="product-card-body">' +
+                    '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> ' + exc.city + '</div>' +
+                    '<h3 class="product-card-title">' + exc.name + '</h3>' +
+                    '<div class="product-card-features">' +
+                        '<span class="product-feature-tag"><i class="fas fa-clock"></i> ' + exc.duration + '</span>' +
+                        '<span class="product-feature-tag"><i class="fas fa-signal"></i> ' + exc.difficulty + '</span>' +
                     '</div>' +
-                    '<div class="product-card-body">' +
-                        '<div class="product-card-location"><i class="fas fa-map-marker-alt"></i> ' + exc.city + '</div>' +
-                        '<h3 class="product-card-title">' + exc.name + '</h3>' +
-                        '<div class="product-card-features">' +
-                            '<span class="product-feature-tag"><i class="fas fa-clock"></i> ' + exc.duration + '</span>' +
-                            '<span class="product-feature-tag"><i class="fas fa-signal"></i> ' + exc.difficulty + '</span>' +
-                        '</div>' +
-                        '<div class="product-card-footer">' +
-                            '<div class="product-card-price">' + formatPrice(exc.price) + ' <span>/ personne</span></div>' +
-                            '<div class="product-card-rating"><i class="fas fa-star"></i> ' + exc.rating + ' <span>(' + exc.reviews + ')</span></div>' +
-                        '</div>' +
+                    '<div class="product-card-footer">' +
+                        '<div class="product-card-price">' + formatPrice(exc.price) + ' <span>/ personne</span></div>' +
+                        '<div class="product-card-rating"><i class="fas fa-star"></i> ' + exc.rating + ' <span>(' + exc.reviews + ')</span></div>' +
                     '</div>' +
-                '</div>';
-            }).join('');
+                '</div>' +
+            '</div>';
+        }
+
+        function renderPopular(list, gridId, cardFn) {
+            var grid = document.getElementById(gridId);
+            if (grid && list && list.length) {
+                var top3 = list.slice().sort(function(a, b) { return b.rating - a.rating; }).slice(0, 3);
+                grid.innerHTML = top3.map(cardFn).join('');
+            }
+        }
+
+        function loadProducts() {
+            Promise.all([
+                VelaroAPI.getCars().catch(function() { return []; }),
+                VelaroAPI.getVillas().catch(function() { return []; }),
+                VelaroAPI.getExcursions().catch(function() { return []; })
+            ]).then(function(r) {
+                renderPopular(r[0], 'popular-cars-grid', carCard);
+                renderPopular(r[1], 'popular-houses-grid', houseCard);
+                renderPopular(r[2], 'popular-excursions-grid', excursionCard);
+                initFavBtns();
+            });
+        }
+
+        function initFavBtns() {
+            document.querySelectorAll('.product-card-fav').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var id = this.dataset.id;
+                    var favs = getFavs();
+                    var idx = favs.indexOf(id);
+                    if (idx > -1) favs.splice(idx, 1); else favs.push(id);
+                    try { localStorage.setItem('favorites', JSON.stringify(favs)); } catch(e) {}
+                    document.querySelectorAll('.fav-count').forEach(function(el) {
+                        el.textContent = favs.length;
+                        el.style.display = favs.length > 0 ? 'flex' : 'none';
+                    });
+                    document.querySelectorAll('.product-card-fav[data-id="' + id + '"]').forEach(function(b) {
+                        var f = favs.indexOf(id) > -1;
+                        b.classList.toggle('active', f);
+                        b.innerHTML = f ? '\u2764\uFE0F' : '\uD83E\uDD1D';
+                    });
+                });
+            });
         }
 
         /* --- Reviews --- */
-        var reviewsGrid = document.getElementById('reviews-grid');
-        if (reviewsGrid) {
-            reviewsGrid.innerHTML = REVIEWS.slice(0, 3).map(function(review) {
+        if (window.VelaroAPI) {
+            VelaroAPI.getReviews().then(function(r) {
+                renderReviews(r);
+            }).catch(function() {});
+        }
+
+        function renderReviews(list) {
+            var reviewsGrid = document.getElementById('reviews-grid');
+            if (!reviewsGrid || !list || !list.length) return;
+            reviewsGrid.innerHTML = list.slice(0, 3).map(function(review) {
                 return '<div class="review-card">' +
                     '<div class="review-card-quote">"</div>' +
                     '<p class="review-card-text">' + review.text + '</p>' +
@@ -872,38 +909,33 @@
                         '<img src="' + review.avatar + '" alt="Avis client - ' + review.name + '" title="' + review.name + ' - avis VelaroCar" class="review-card-avatar" loading="lazy">' +
                         '<div>' +
                             '<div class="review-card-name">' + review.name + '</div>' +
-                            '<div class="review-card-location">' + review.location + ' · ' + review.service + '</div>' +
+                            '<div class="review-card-location">' + review.location + ' \u00b7 ' + review.service + '</div>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
             }).join('');
         }
 
-        /* --- FAQ --- */
-        var faqList = document.getElementById('faq-list');
-        if (faqList) {
-            faqList.innerHTML = FAQ.map(function(item, index) {
-                return '<div class="faq-item">' +
-                    '<div class="faq-question">' +
-                        '<span>' + item.question + '</span>' +
-                        '<i class="fas fa-chevron-down"></i>' +
-                    '</div>' +
-                    '<div class="faq-answer">' +
-                        '<div class="faq-answer-content">' + item.answer + '</div>' +
-                    '</div>' +
-                '</div>';
-            }).join('');
-            initFAQ();
+        function getStars(n) {
+            var s = '';
+            for (var i = 0; i < 5; i++) s += '<i class="fas fa-star" style="color:' + (i < n ? 'var(--gold)' : 'var(--gray-300)') + '"></i>';
+            return s;
         }
 
-        /* --- Init fav buttons on dynamically created cards --- */
-        document.querySelectorAll('.product-card-fav').forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleFavorite(this.dataset.id);
-            });
-        });
+        /* --- FAQ --- */
+        var faq = (typeof FAQ !== 'undefined') ? FAQ : null;
+        if (faq) {
+            var faqList = document.getElementById('faq-list');
+            if (faqList) {
+                faqList.innerHTML = faq.map(function(item) {
+                    return '<div class="faq-item">' +
+                        '<div class="faq-question"><span>' + item.question + '</span><i class="fas fa-chevron-down"></i></div>' +
+                        '<div class="faq-answer"><div class="faq-answer-content">' + item.answer + '</div></div>' +
+                    '</div>';
+                }).join('');
+                initFAQ();
+            }
+        }
 
         function initFAQ() {
             document.querySelectorAll('.faq-item').forEach(function(item) {
@@ -927,25 +959,7 @@
             });
         }
 
-        function toggleFavorite(id) {
-            var favs = getFavorites();
-            var index = favs.indexOf(id);
-            if (index > -1) {
-                favs.splice(index, 1);
-            } else {
-                favs.push(id);
-            }
-            saveFavorites(favs);
-            document.querySelectorAll('.fav-count').forEach(function(el) {
-                el.textContent = favs.length;
-                el.style.display = favs.length > 0 ? 'flex' : 'none';
-            });
-            document.querySelectorAll('.product-card-fav[data-id="' + id + '"]').forEach(function(btn) {
-                var isFav = favs.indexOf(id) > -1;
-                btn.classList.toggle('active', isFav);
-                btn.innerHTML = isFav ? '❤️' : '🤍';
-            });
-        }
+        loadProducts();
 
     })();
     </script>

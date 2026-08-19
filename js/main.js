@@ -195,7 +195,8 @@
         });
     }
 
-    // Search logic
+    // Search logic - fetches from API on first input
+    var searchCache = null;
     if (searchInput) {
         searchInput.addEventListener('input', function() {
             var query = this.value.trim().toLowerCase();
@@ -204,89 +205,75 @@
                 return;
             }
 
-            var allItems = [];
-            if (typeof CARS !== 'undefined') {
-                CARS.forEach(function(item) {
-                    allItems.push({
-                        type: 'Voiture',
-                        page: 'cars.html',
-                        name: item.name + ' ' + item.brand,
-                        detail: item.year + ' · ' + item.fuel + ' · ' + formatPrice(item.pricePerDay) + '/jour',
-                        image: item.image,
-                        price: formatPrice(item.pricePerDay)
-                    });
-                });
-            }
-            if (typeof MOTOS !== 'undefined') {
-                MOTOS.forEach(function(item) {
-                    allItems.push({
-                        type: 'Moto',
-                        page: 'motos.html',
-                        name: item.name,
-                        detail: item.engine + ' · ' + item.type + ' · ' + formatPrice(item.pricePerDay) + '/jour',
-                        image: item.image,
-                        price: formatPrice(item.pricePerDay)
-                    });
-                });
-            }
-            if (typeof HOUSES !== 'undefined') {
-                HOUSES.forEach(function(item) {
-                    allItems.push({
-                        type: 'Maison',
-                        page: 'houses.html',
-                        name: item.name,
-                        detail: item.location + ' · ' + item.bedrooms + ' ch. · ' + formatPrice(item.pricePerNight) + '/nuit',
-                        image: item.image,
-                        price: formatPrice(item.pricePerNight)
-                    });
-                });
-            }
-            if (typeof EXCURSIONS !== 'undefined') {
-                EXCURSIONS.forEach(function(item) {
-                    allItems.push({
-                        type: 'Excursion',
-                        page: 'excursions.html',
-                        name: item.name,
-                        detail: item.city + ' · ' + item.duration + ' · ' + formatPrice(item.price),
-                        image: item.image,
-                        price: formatPrice(item.price)
-                    });
-                });
-            }
-            if (typeof TRANSFERS !== 'undefined') {
-                TRANSFERS.forEach(function(item) {
-                    allItems.push({
-                        type: 'Transfert',
-                        page: 'excursions.html',
-                        name: item.name,
-                        detail: item.city + ' · ' + item.duration + ' · ' + formatPrice(item.price),
-                        image: item.image,
-                        price: formatPrice(item.price)
-                    });
-                });
-            }
+            function doSearch(allItems) {
+                var results = allItems.filter(function(item) {
+                    return item.name.toLowerCase().includes(query) ||
+                           item.type.toLowerCase().includes(query) ||
+                           item.detail.toLowerCase().includes(query);
+                }).slice(0, 8);
 
-            var results = allItems.filter(function(item) {
-                return item.name.toLowerCase().includes(query) ||
-                       item.type.toLowerCase().includes(query) ||
-                       item.detail.toLowerCase().includes(query);
-            }).slice(0, 8);
-
-            if (searchResults) {
-                if (results.length === 0) {
-                    searchResults.innerHTML = '<div style="padding: 2rem; text-align: center; color: #64748b;">Aucun résultat trouvé</div>';
-                } else {
-                    searchResults.innerHTML = results.map(function(item) {
-                        return '<a href="' + item.page + '" class="search-result-item">' +
-                            '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - VelaroCar Marrakech" loading="lazy">' +
-                            '<div class="search-result-info">' +
-                                '<h4>' + item.name + '</h4>' +
-                                '<p>' + item.detail + '</p>' +
-                            '</div>' +
-                            '<span class="search-result-price">' + item.price + '</span>' +
-                        '</a>';
-                    }).join('');
+                if (searchResults) {
+                    if (results.length === 0) {
+                        searchResults.innerHTML = '<div style="padding: 2rem; text-align: center; color: #64748b;">Aucun r\u00e9sultat trouv\u00e9</div>';
+                    } else {
+                        searchResults.innerHTML = results.map(function(item) {
+                            return '<a href="' + item.page + '" class="search-result-item">' +
+                                '<img src="' + item.image + '" alt="' + item.name + '" title="' + item.name + ' - VelaroCar Marrakech" loading="lazy">' +
+                                '<div class="search-result-info">' +
+                                    '<h4>' + item.name + '</h4>' +
+                                    '<p>' + item.detail + '</p>' +
+                                '</div>' +
+                                '<span class="search-result-price">' + item.price + '</span>' +
+                            '</a>';
+                        }).join('');
+                    }
                 }
+            }
+
+            function buildSearchItems() {
+                var allItems = [];
+                var sources = [
+                    { arr: (typeof CARS !== 'undefined') ? CARS : [], type: 'Voiture', page: 'cars.html', priceFn: function(i) { return formatPrice(i.pricePerDay) + '/jour'; }, detailFn: function(i) { return i.year + ' \u00b7 ' + i.fuel + ' \u00b7 ' + formatPrice(i.pricePerDay) + '/jour'; }, nameFn: function(i) { return i.name + ' ' + i.brand; } },
+                    { arr: (typeof MOTOS !== 'undefined') ? MOTOS : [], type: 'Moto', page: 'motos.html', detailFn: function(i) { return i.engine + ' \u00b7 ' + i.type + ' \u00b7 ' + formatPrice(i.pricePerDay) + '/jour'; }, nameFn: function(i) { return i.name; } },
+                    { arr: (typeof HOUSES !== 'undefined') ? HOUSES : [], type: 'Maison', page: 'houses.html', detailFn: function(i) { return i.location + ' \u00b7 ' + i.bedrooms + ' ch. \u00b7 ' + formatPrice(i.pricePerNight) + '/nuit'; }, nameFn: function(i) { return i.name; } },
+                    { arr: (typeof EXCURSIONS !== 'undefined') ? EXCURSIONS : [], type: 'Excursion', page: 'excursions.html', detailFn: function(i) { return i.city + ' \u00b7 ' + i.duration + ' \u00b7 ' + formatPrice(i.price); }, nameFn: function(i) { return i.name; } },
+                    { arr: (typeof TRANSFERS !== 'undefined') ? TRANSFERS : [], type: 'Transfert', page: 'excursions.html', detailFn: function(i) { return i.city + ' \u00b7 ' + i.duration + ' \u00b7 ' + formatPrice(i.price); }, nameFn: function(i) { return i.name; } }
+                ];
+                sources.forEach(function(s) {
+                    if (s.arr && s.arr.length) {
+                        s.arr.forEach(function(item) {
+                            allItems.push({
+                                type: s.type,
+                                page: s.page,
+                                name: s.nameFn(item),
+                                detail: s.detailFn(item),
+                                image: item.image,
+                                price: (s.priceFn ? s.priceFn(item) : s.detailFn(item).split('\u00b7').pop().trim())
+                            });
+                        });
+                    }
+                });
+                return allItems;
+            }
+
+            if (searchCache) {
+                doSearch(searchCache);
+            } else if (window.VelaroAPI) {
+                Promise.all([
+                    VelaroAPI.getCars().catch(function() { return []; }),
+                    VelaroAPI.getMotorcycles().catch(function() { return []; }),
+                    VelaroAPI.getVillas().catch(function() { return []; }),
+                    VelaroAPI.getExcursions().catch(function() { return []; }),
+                    VelaroAPI.getTransfers().catch(function() { return []; })
+                ]).then(function(r) {
+                    window.CARS = r[0];
+                    window.MOTOS = r[1];
+                    window.HOUSES = r[2];
+                    window.EXCURSIONS = r[3];
+                    window.TRANSFERS = r[4];
+                    searchCache = buildSearchItems();
+                    doSearch(searchCache);
+                });
             }
         });
     }

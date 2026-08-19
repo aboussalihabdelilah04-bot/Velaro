@@ -5,16 +5,12 @@
 (function() {
     'use strict';
 
-    /* --- If data.js failed to load, skip rendering instead of throwing --- */
-    if (typeof HOUSES === 'undefined' || typeof formatPrice !== 'function') {
-        return;
-    }
+    if (typeof formatPrice !== 'function') return;
 
     var grid = document.getElementById('houses-grid');
     var countEl = document.getElementById('houses-count');
     var detailModal = document.getElementById('house-detail-modal');
-
-    var allHouses = HOUSES.slice().sort(function(a, b) { return b.rating - a.rating; });
+    var allHouses = [];
 
     function renderHouses() {
         if (!grid) return;
@@ -90,7 +86,7 @@
         document.querySelectorAll('.detail-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                var house = HOUSES.find(function(h) { return h.id === btn.dataset.id; });
+                var house = allHouses.find(function(h) { return h.id === btn.dataset.id; });
                 if (house) showHouseDetail(house);
             });
         });
@@ -183,16 +179,17 @@
         document.querySelectorAll('.reserve-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                var house = HOUSES.find(function(h) { return h.id === btn.dataset.id; });
+                var house = allHouses.find(function(h) { return h.id === btn.dataset.id; });
                 if (house) openReservationModal(house);
             });
         });
 
         var detailReserve = detailModal ? detailModal.querySelector('.detail-reserve-btn') : null;
-        if (detailReserve) {
+        if (detailReserve && !detailReserve.__bound) {
+            detailReserve.__bound = true;
             detailReserve.addEventListener('click', function() {
                 detailModal.classList.remove('active');
-                var house = HOUSES.find(function(h) { return h.id === this.dataset.id; });
+                var house = allHouses.find(function(h) { return h.id === this.dataset.id; });
                 if (house) openReservationModal(house);
             });
         }
@@ -212,8 +209,6 @@
         modal.classList.add('active');
         document.body.classList.add('no-scroll');
     }
-
-    renderHouses();
 
     [detailModal, document.getElementById('reservation-modal')].forEach(function(modal) {
         if (modal) {
@@ -236,7 +231,7 @@
                 return;
             }
 
-            var house = HOUSES.find(function(h) { return h.id === data.productId; });
+            var house = allHouses.find(function(h) { return h.id === data.productId; });
             var reservation = {
                 id: generateId(),
                 type: 'maison',
@@ -272,4 +267,19 @@
         });
     }
 
+    function loadFromAPI() {
+        if (!grid) return;
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i><p style="margin-top:0.5rem;color:var(--gray-500);">Chargement des hébergements...</p></div>';
+
+        VelaroAPI.getVillas()
+            .then(function(houses) {
+                allHouses = houses.sort(function(a, b) { return b.rating - a.rating; });
+                renderHouses();
+            })
+            .catch(function() {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des hébergements.</div>';
+            });
+    }
+
+    loadFromAPI();
 })();

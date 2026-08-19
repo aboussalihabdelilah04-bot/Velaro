@@ -5,16 +5,12 @@
 (function() {
     'use strict';
 
-    /* --- If data.js failed to load, skip rendering instead of throwing --- */
-    if (typeof MOTOS === 'undefined' || typeof formatPrice !== 'function') {
-        return;
-    }
+    if (typeof formatPrice !== 'function') return;
 
     var grid = document.getElementById('motos-grid');
     var countEl = document.getElementById('motos-count');
     var detailModal = document.getElementById('moto-detail-modal');
-
-    var allMotos = MOTOS.slice().sort(function(a, b) { return b.rating - a.rating; });
+    var allMotos = [];
 
     function renderMotos() {
         if (!grid) return;
@@ -26,7 +22,7 @@
             var imgAttrs = index < 3 ? 'loading="eager" decoding="async" fetchpriority="high"' : 'loading="lazy" decoding="async"';
             return '<div class="product-card" data-id="' + m.id + '">' +
                 '<div class="product-card-image">' +
-                    '<img src="' + m.image + '" alt="' + m.name + '" title="' + m.name + ' - location de moto Marrakech" width="800" height="533" ' + imgAttrs + '">' +
+                    '<img src="' + m.image + '" alt="' + m.name + '" title="' + m.name + ' - location de moto Marrakech" width="800" height="533" ' + imgAttrs + '>' +
                     '<span class="product-card-badge">' + m.type + '</span>' +
                     '<button class="product-card-fav ' + (isFav ? 'active' : '') + '" data-id="' + m.id + '">' + (isFav ? '❤️' : '🤍') + '</button>' +
                 '</div>' +
@@ -81,15 +77,16 @@
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 var id = this.dataset.id;
-                var moto = MOTOS.find(function(m) { return m.id === id; });
+                var moto = allMotos.find(function(m) { return m.id === id; });
                 if (moto) openReservationModal(moto);
             });
         });
         var detailReserve = detailModal ? detailModal.querySelector('.detail-reserve-btn') : null;
-        if (detailReserve) {
+        if (detailReserve && !detailReserve.__bound) {
+            detailReserve.__bound = true;
             detailReserve.addEventListener('click', function() {
                 detailModal.classList.remove('active');
-                var moto = MOTOS.find(function(m) { return m.id === this.dataset.id; });
+                var moto = allMotos.find(function(m) { return m.id === this.dataset.id; });
                 if (moto) openReservationModal(moto);
             });
         }
@@ -99,7 +96,7 @@
         document.querySelectorAll('.detail-btn').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                var moto = MOTOS.find(function(m) { return m.id === btn.dataset.id; });
+                var moto = allMotos.find(function(m) { return m.id === btn.dataset.id; });
                 if (moto) showMotoDetail(moto);
             });
         });
@@ -178,8 +175,6 @@
         document.body.classList.add('no-scroll');
     }
 
-    renderMotos();
-
     [detailModal, document.getElementById('reservation-modal')].forEach(function(m) {
         if (m) {
             var closeBtn = m.querySelector('.modal-close');
@@ -201,7 +196,7 @@
                 return;
             }
 
-            var moto = MOTOS.find(function(m) { return m.id === data.productId; });
+            var moto = allMotos.find(function(m) { return m.id === data.productId; });
             var reservation = {
                 id: generateId(),
                 type: 'moto',
@@ -240,4 +235,19 @@
         });
     }
 
+    function loadFromAPI() {
+        if (!grid) return;
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i><p style="margin-top:0.5rem;color:var(--gray-500);">Chargement des motos...</p></div>';
+
+        VelaroAPI.getMotorcycles()
+            .then(function(motos) {
+                allMotos = motos.sort(function(a, b) { return b.rating - a.rating; });
+                renderMotos();
+            })
+            .catch(function() {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des motos.</div>';
+            });
+    }
+
+    loadFromAPI();
 })();

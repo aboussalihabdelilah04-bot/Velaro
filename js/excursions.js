@@ -5,10 +5,7 @@
 (function() {
     'use strict';
 
-    /* --- If data.js failed to load, skip rendering instead of throwing --- */
-    if (typeof EXCURSIONS === 'undefined' || typeof formatPrice !== 'function') {
-        return;
-    }
+    if (typeof formatPrice !== 'function') return;
 
     var grid = document.getElementById('excursions-grid');
     var countEl = document.getElementById('excursions-count');
@@ -16,8 +13,8 @@
     var transfersCountEl = document.getElementById('transfers-count');
     var detailModal = document.getElementById('excursion-detail-modal');
 
-    var allExcursions = EXCURSIONS.slice().sort(function(a, b) { return b.rating - a.rating; });
-    var allTransfers = (typeof TRANSFERS !== 'undefined') ? TRANSFERS.slice().sort(function(a, b) { return b.rating - a.rating; }) : [];
+    var allExcursions = [];
+    var allTransfers = [];
 
     var detailImage = detailModal ? detailModal.querySelector('.detail-image') : null;
     var resImage = document.getElementById('reservation-modal');
@@ -26,15 +23,13 @@
     if (resImage) resImage.decoding = 'async';
 
     function isTransfer(id) {
-        return (typeof TRANSFERS !== 'undefined') && TRANSFERS.some(function(t) { return t.id === id; });
+        return allTransfers.some(function(t) { return t.id === id; });
     }
 
     function findProduct(id) {
-        var p = EXCURSIONS.find(function(x) { return x.id === id; });
+        var p = allExcursions.find(function(x) { return x.id === id; });
         if (p) return p;
-        if (typeof TRANSFERS !== 'undefined') {
-            p = TRANSFERS.find(function(x) { return x.id === id; });
-        }
+        p = allTransfers.find(function(x) { return x.id === id; });
         return p || null;
     }
 
@@ -243,10 +238,29 @@
         document.body.classList.add('no-scroll');
     }
 
-    renderExcursions();
-    renderTransfers();
+    function loadFromAPI() {
+        var excGridEl = grid;
+        var trfGridEl = transfersGrid;
 
-    initModalReserveButton();
+        if (excGridEl) excGridEl.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i><p style="margin-top:0.5rem;color:var(--gray-500);">Chargement...</p></div>';
+        if (trfGridEl) trfGridEl.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;color:var(--accent);"></i></div>';
+
+        Promise.all([
+            VelaroAPI.getExcursions().catch(function() { return []; }),
+            VelaroAPI.getTransfers().catch(function() { return []; })
+        ]).then(function(results) {
+            allExcursions = results[0].sort(function(a, b) { return b.rating - a.rating; });
+            allTransfers = results[1].sort(function(a, b) { return b.rating - a.rating; });
+            renderExcursions();
+            renderTransfers();
+            initModalReserveButton();
+        }).catch(function() {
+            if (grid) grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des excursions.</div>';
+            if (transfersGrid) transfersGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement des transferts.</div>';
+        });
+    }
+
+    loadFromAPI();
 
     [detailModal, document.getElementById('reservation-modal')].forEach(function(modal) {
         if (modal) {
@@ -269,10 +283,7 @@
                 return;
             }
 
-            var product = EXCURSIONS.find(function(x) { return x.id === data.productId; });
-            if (!product && typeof TRANSFERS !== 'undefined') {
-                product = TRANSFERS.find(function(x) { return x.id === data.productId; });
-            }
+            var product = findProduct(data.productId);
             var reservation = {
                 id: generateId(),
                 type: data.productType || 'excursion',
