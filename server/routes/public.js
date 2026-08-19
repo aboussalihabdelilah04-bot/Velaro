@@ -95,7 +95,12 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
 
 router.get('/bookings/:id', async (req, res) => {
   try {
-    let booking = await Booking.findById(req.params.id);
+    let booking = null;
+    try {
+      booking = await Booking.findById(req.params.id);
+    } catch (e) {
+      // Not a valid ObjectId, try reference lookup
+    }
     if (!booking) {
       booking = await Booking.findOne({ reference: req.params.id });
     }
