@@ -68,7 +68,7 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
       clientEmail: clientEmail.toLowerCase().trim(),
       clientPhone: clientPhone.trim(),
       productType,
-      productId: productId || undefined,
+      productId: (productId && /^[0-9a-fA-F]{24}$/.test(productId)) ? productId : undefined,
       productModel: productModelMap[productType] || 'Car',
       productName: productName || '',
       productImage: productImage || '',
