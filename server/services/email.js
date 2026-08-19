@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const EmailLog = require('../models/EmailLog');
 
 let transporter = null;
 
@@ -31,6 +32,7 @@ async function sendMail(options) {
   const transport = getTransporter();
   if (!transport) {
     console.warn('[Email] No transport available. Skipping email:', options.subject);
+    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'failed', error: 'SMTP not configured' }).catch(() => {});
     return { sent: false, reason: 'smtp_not_configured' };
   }
 
@@ -43,10 +45,23 @@ async function sendMail(options) {
       text: options.text
     });
     console.log('[Email] Sent:', info.messageId);
+    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'sent', metadata: { messageId: info.messageId } }).catch(() => {});
     return { sent: true, messageId: info.messageId };
   } catch (err) {
     console.error('[Email] Send failed:', err.message);
+    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'failed', error: err.message }).catch(() => {});
     return { sent: false, reason: err.message };
+  }
+}
+
+async function testConnection() {
+  const transport = getTransporter();
+  if (!transport) return { ok: false, error: 'SMTP not configured' };
+  try {
+    await transport.verify();
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
   }
 }
 
@@ -149,7 +164,8 @@ async function notifyAdminNewBooking(booking) {
   return sendMail({
     to: ADMIN_EMAIL,
     subject: `[${SITE_NAME}] Nouvelle réservation #${booking.reference}`,
-    html: bookingCreatedAdminHtml(booking)
+    html: bookingCreatedAdminHtml(booking),
+    type: 'booking_notification'
   });
 }
 
@@ -159,7 +175,8 @@ async function notifyCustomerBookingStatus(booking, newStatus) {
   return sendMail({
     to: booking.clientEmail,
     subject: `[${SITE_NAME}] Votre réservation #${booking.reference} est ${statusLabels[newStatus] || newStatus}`,
-    html: bookingStatusCustomerHtml(booking, newStatus)
+    html: bookingStatusCustomerHtml(booking, newStatus),
+    type: 'booking_status'
   });
 }
 
@@ -167,12 +184,14 @@ async function notifyAdminNewMessage(msg) {
   return sendMail({
     to: ADMIN_EMAIL,
     subject: `[${SITE_NAME}] Nouveau message de ${msg.name}`,
-    html: contactMessageAdminHtml(msg)
+    html: contactMessageAdminHtml(msg),
+    type: 'contact_notification'
   });
 }
 
 module.exports = {
   sendMail,
+  testConnection,
   notifyAdminNewBooking,
   notifyCustomerBookingStatus,
   notifyAdminNewMessage
