@@ -3,10 +3,8 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const AdminUser = require('../models/AdminUser');
 const auth = require('../middleware/auth');
-const { generateTokens, saveRefreshToken, verifyRefreshToken, removeRefreshToken, removeAllRefreshTokens } = require('../utils/tokens');
+const { generateTokens, saveRefreshToken, verifyRefreshToken, removeRefreshToken, removeAllRefreshTokens, JWT_SECRET } = require('../utils/tokens');
 const { logActivity } = require('../utils/activityLogger');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 router.post('/login', async (req, res) => {
   try {
@@ -39,7 +37,7 @@ router.post('/login', async (req, res) => {
 
     res.json({ accessToken, refreshToken, user: user.toJSON() });
   } catch (err) {
-    console.error('Login error:', err.message, err.stack);
+    console.error('Login error:', err.message);
     res.status(500).json({ error: 'Erreur lors de la connexion.' });
   }
 });
@@ -67,20 +65,27 @@ router.post('/refresh', async (req, res) => {
   }
 });
 
-router.post('/logout', auth, async (req, res) => {
+router.post('/logout', async (req, res) => {
   try {
     const { refreshToken } = req.body;
-    if (refreshToken) {
-      await removeRefreshToken(refreshToken);
+    if (!refreshToken) {
+      return res.status(400).json({ error: 'Refresh token requis.' });
     }
-    await logActivity({
-      user: req.user.name,
-      userId: req.user._id,
-      action: 'logout',
-      resource: 'auth',
-      details: 'Deconnexion',
-      ip: req.ip
-    });
+    const decoded = await verifyRefreshToken(refreshToken);
+    await removeRefreshToken(refreshToken);
+    if (decoded) {
+      const user = await AdminUser.findById(decoded.id).select('-password');
+      if (user) {
+        await logActivity({
+          user: user.name,
+          userId: user._id,
+          action: 'logout',
+          resource: 'auth',
+          details: 'Deconnexion',
+          ip: req.ip
+        });
+      }
+    }
     res.json({ message: 'Deconnexion reussie.' });
   } catch (err) {
     res.status(500).json({ error: 'Erreur lors de la deconnexion.' });

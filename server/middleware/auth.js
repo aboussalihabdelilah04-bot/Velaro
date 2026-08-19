@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const AdminUser = require('../models/AdminUser');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const { JWT_SECRET } = require('../utils/tokens');
 
 const auth = async (req, res, next) => {
   try {

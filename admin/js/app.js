@@ -109,5 +109,5 @@ function getFormData2(type,item){if(type==='car')return carForm(item);if(type===
 
 function v(id){var el=document.getElementById(id);return el?el.value:'';}
 
-if(AdminAPI.isAuthenticated()){showApp();}else{$('#login-page').style.display='flex';}
+if(AdminAPI.isAuthenticated()){AdminAPI.getMe().then(function(d){AdminAPI.setUser(d.user);showApp();}).catch(function(){AdminAPI.clearAuth();$('#login-page').style.display='flex';});}else{$('#login-page').style.display='flex';}
 })();

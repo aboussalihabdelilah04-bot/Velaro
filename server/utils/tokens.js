@@ -1,8 +1,11 @@
 const jwt = require('jsonwebtoken');
 const RefreshToken = require('../models/RefreshToken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'fallback_refresh_secret';
+if (!process.env.JWT_SECRET) { throw new Error('JWT_SECRET environment variable is required'); }
+if (!process.env.JWT_REFRESH_SECRET) { throw new Error('JWT_REFRESH_SECRET environment variable is required'); }
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
 
@@ -63,6 +66,8 @@ async function removeAllRefreshTokens(userId) {
 }
 
 module.exports = {
+  JWT_SECRET,
+  JWT_REFRESH_SECRET,
   generateTokens,
   saveRefreshToken,
   verifyRefreshToken,
