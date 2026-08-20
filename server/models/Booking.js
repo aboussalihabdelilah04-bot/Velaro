@@ -12,7 +12,7 @@ const bookingSchema = new mongoose.Schema({
   },
   productId: { type: mongoose.Schema.Types.ObjectId, refPath: 'productModel' },
   productModel: { type: String, required: true, enum: ['Car', 'Motorcycle', 'Villa', 'Excursion', 'Transfer', 'Pack'] },
-  productName: { type: String, required: true },
+  productName: { type: String, required: true, default: 'Réservation' },
   productImage: { type: String, default: '' },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },

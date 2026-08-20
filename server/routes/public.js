@@ -71,7 +71,7 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
       productType,
       productId: (productId && /^[0-9a-fA-F]{24}$/.test(productId)) ? productId : undefined,
       productModel: productModelMap[productType] || 'Car',
-      productName: productName || '',
+      productName: productName || 'Réservation',
       productImage: productImage || '',
       startDate: new Date(startDate),
       endDate: new Date(endDate),
