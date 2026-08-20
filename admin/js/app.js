@@ -1,6 +1,6 @@
 (function(){'use strict';
 var state={page:''};
-var pollState={timer:null,prev:{pending:0,unread:0,reviews:0},lastCheck:0};
+var pollState={timer:null,visHandler:null,prev:{pending:0,unread:0,reviews:0},lastCheck:0};
 var M=10.2;
 function fM(p){return Math.round(p/M).toLocaleString('fr-FR')+' EUR';}
 function fD(d){if(!d)return'-';return new Date(d).toLocaleDateString('fr-FR');}
@@ -44,14 +44,13 @@ function startPolling(){
     if(!AdminAPI.isAuthenticated()){stopPolling();return;}
     pollCheck();
   },10000);
-  document.addEventListener('visibilitychange',function onVis(){
-    if(!pollState.timer){document.removeEventListener('visibilitychange',onVis);return;}
-    if(!document.hidden&&AdminAPI.isAuthenticated()){pollCheck();}
-  });
+  pollState.visHandler=function(){if(!document.hidden&&AdminAPI.isAuthenticated()){pollCheck();}};
+  document.addEventListener('visibilitychange',pollState.visHandler);
 }
 
 function stopPolling(){
   if(pollState.timer){clearInterval(pollState.timer);pollState.timer=null;}
+  if(pollState.visHandler){document.removeEventListener('visibilitychange',pollState.visHandler);pollState.visHandler=null;}
 }
 
 async function pollCheck(){
@@ -63,7 +62,6 @@ async function pollCheck(){
     var newUnread=m.unreadCount||0;
     var newReviews=r.pendingCount||0;
     var prev=pollState.prev;
-    var changed=(newPending!==prev.pending)||(newUnread!==prev.unread)||(newReviews!==prev.reviews);
     if(newPending>prev.pending)toast('info','Nouvelle reservation',newPending-prev.pending+' reservation(s) en attente');
     if(newUnread>prev.unread)toast('info','Nouveau message',newUnread-prev.unread+' message(s) non lu(s)');
     if(newReviews>prev.reviews)toast('info','Nouvel avis',newReviews-prev.reviews+' avis en attente');
@@ -73,7 +71,6 @@ async function pollCheck(){
     if($('#badge-reviews')){if(newReviews>0){$('#badge-reviews').textContent=newReviews;$('#badge-reviews').style.display='';}else $('#badge-reviews').style.display='none';}
     var tot=newPending+newUnread+newReviews;
     if($('#notif-badge')){if(tot>0){$('#notif-badge').textContent=tot;$('#notif-badge').style.display='';}else $('#notif-badge').style.display='none';}
-    if(changed&&state.page&&pages[state.page]){pages[state.page]();}
   }catch(e){}
 }
 
