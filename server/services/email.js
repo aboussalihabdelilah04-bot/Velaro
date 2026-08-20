@@ -1,52 +1,41 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const EmailLog = require('../models/EmailLog');
 
-let transporter = null;
+let resendClient = null;
 
-function getTransporter() {
-  if (transporter) return transporter;
-  
-  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
-    console.warn('[Email] SMTP not configured. Emails will not be sent. Set SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_PORT env vars.');
+function getClient() {
+  if (resendClient) return resendClient;
+  if (!process.env.RESEND_API_KEY) {
+    console.warn('[Email] RESEND_API_KEY not set. Emails will not be sent.');
     return null;
   }
-
-  transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT) || 587,
-    secure: (parseInt(process.env.SMTP_PORT) || 587) === 465,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  });
-
-  return transporter;
+  resendClient = new Resend(process.env.RESEND_API_KEY);
+  return resendClient;
 }
 
+const FROM_EMAIL = process.env.EMAIL_FROM || 'VelaroCar <notifications@velarocars.com>';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'velarocars26@gmail.com';
 const SITE_NAME = 'VelaroCar';
 const SITE_URL = 'https://www.velarocars.com';
 
 async function sendMail(options) {
-  const transport = getTransporter();
-  if (!transport) {
-    console.warn('[Email] No transport available. Skipping email:', options.subject);
-    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'failed', error: 'SMTP not configured' }).catch(() => {});
-    return { sent: false, reason: 'smtp_not_configured' };
+  const client = getClient();
+  if (!client) {
+    console.warn('[Email] No client. Skipping:', options.subject);
+    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'failed', error: 'RESEND_API_KEY not configured' }).catch(() => {});
+    return { sent: false, reason: 'api_key_not_configured' };
   }
 
   try {
-    const info = await transport.sendMail({
-      from: process.env.SMTP_FROM || `"${SITE_NAME}" <${process.env.SMTP_USER || ADMIN_EMAIL}>`,
-      to: options.to,
+    const result = await client.emails.send({
+      from: FROM_EMAIL,
+      to: [options.to],
       subject: options.subject,
-      html: options.html,
-      text: options.text
+      html: options.html
     });
-    console.log('[Email] Sent:', info.messageId);
-    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'sent', metadata: { messageId: info.messageId } }).catch(() => {});
-    return { sent: true, messageId: info.messageId };
+    console.log('[Email] Sent:', result.data ? result.data.id : 'ok');
+    await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'sent', metadata: { resendId: result.data ? result.data.id : null } }).catch(e => console.error('[Email] Log failed:', e.message));
+    return { sent: true, messageId: result.data ? result.data.id : null };
   } catch (err) {
     console.error('[Email] Send failed:', err.message);
     await EmailLog.create({ to: options.to, type: options.type || 'system', subject: options.subject || '', status: 'failed', error: err.message }).catch(() => {});
@@ -55,11 +44,17 @@ async function sendMail(options) {
 }
 
 async function testConnection() {
-  const transport = getTransporter();
-  if (!transport) return { ok: false, error: 'SMTP not configured' };
+  const client = getClient();
+  if (!client) return { ok: false, error: 'RESEND_API_KEY not configured' };
   try {
-    await transport.verify();
-    return { ok: true };
+    const result = await client.emails.send({
+      from: FROM_EMAIL,
+      to: [ADMIN_EMAIL],
+      subject: `[${SITE_NAME}] Test email`,
+      html: '<h2>Email configuration test</h2><p>If you receive this email, Resend is configured correctly.</p><p>You will receive notifications here when:</p><ul><li>A new reservation is made</li><li>A reservation status changes</li><li>A new contact message is received</li></ul>'
+    });
+    await EmailLog.create({ to: ADMIN_EMAIL, type: 'test', subject: `[${SITE_NAME}] Test email`, status: 'sent', metadata: { resendId: result.data ? result.data.id : null } }).catch(() => {});
+    return { ok: true, messageId: result.data ? result.data.id : null };
   } catch (err) {
     return { ok: false, error: err.message };
   }
