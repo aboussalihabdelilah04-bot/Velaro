@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bookingSchema = new mongoose.Schema({
   reference: { type: String, required: true, unique: true },
   clientName: { type: String, required: true, trim: true },
-  clientEmail: { type: String, required: true, lowercase: true, trim: true },
+  clientEmail: { type: String, required: false, default: '', lowercase: true, trim: true },
   clientPhone: { type: String, required: true },
   productType: {
     type: String,

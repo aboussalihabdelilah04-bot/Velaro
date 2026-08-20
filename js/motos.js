@@ -191,8 +191,13 @@
             var data = {};
             fd.forEach(function(v, k) { data[k] = v; });
 
-            if (!data.firstName || !data.lastName || !data.phone || !data.email || !data.startDate || !data.endDate) {
+            if (!data.firstName || !data.lastName || !data.phone || !data.startDate || !data.endDate) {
                 VelaroCar.showToast('error', 'Erreur', 'Veuillez remplir tous les champs obligatoires.');
+                return;
+            }
+
+            if (data.email && data.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+                VelaroCar.showToast('error', 'Erreur', 'Adresse email invalide.');
                 return;
             }
 

@@ -54,8 +54,12 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
       duration, pricePerDay, totalPrice, message: notes
     } = req.body;
 
-    if (!clientName || !clientEmail || !clientPhone || !productType || !startDate || !endDate) {
+    if (!clientName || !clientPhone || !productType || !startDate || !endDate) {
       return res.status(400).json({ error: 'Champs obligatoires manquants.' });
+    }
+
+    if (clientEmail && clientEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail.trim())) {
+      return res.status(400).json({ error: 'Adresse email invalide.' });
     }
 
     const validTypes = ['car', 'motorcycle', 'villa', 'excursion', 'transfer', 'pack'];
@@ -66,7 +70,7 @@ router.post('/bookings', publicBookingLimiter, async (req, res) => {
     const booking = await Booking.create({
       reference: generateReference(),
       clientName: clientName.trim(),
-      clientEmail: clientEmail.toLowerCase().trim(),
+      clientEmail: clientEmail ? clientEmail.toLowerCase().trim() : '',
       clientPhone: clientPhone.trim(),
       productType,
       productId: (productId && /^[0-9a-fA-F]{24}$/.test(productId)) ? productId : undefined,
