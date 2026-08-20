@@ -1,5 +1,6 @@
 (function(){'use strict';
 var state={page:''};
+var pollState={timer:null,prev:{pending:0,unread:0,reviews:0},lastCheck:0};
 var M=10.2;
 function fM(p){return Math.round(p/M).toLocaleString('fr-FR')+' EUR';}
 function fD(d){if(!d)return'-';return new Date(d).toLocaleDateString('fr-FR');}
@@ -29,11 +30,52 @@ $$('.sidebar-nav-item').forEach(function(el){el.addEventListener('click',functio
 
 $('#login-form').addEventListener('submit',async function(e){e.preventDefault();var email=$('#login-email').value;var pw=$('#login-password').value;var btn=$('#login-btn');var err=$('#login-error');btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Connexion...';err.style.display='none';try{var d=await AdminAPI.login(email,pw);AdminAPI.setToken(d.accessToken);AdminAPI.setRefresh(d.refreshToken);AdminAPI.setUser(d.user);showApp();toast('success','Bienvenue','Connexion reussie, '+d.user.name);}catch(e2){err.textContent=e2.message;err.style.display='block';}btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> Se connecter';});
 
-function showApp(){$('#login-page').style.display='none';$('#admin-app').style.display='flex';var u=AdminAPI.getUser();if(u){$('#admin-name').textContent=u.name;$('#admin-role').textContent={super_admin:'Super Admin',manager:'Manager',reservations_manager:'Gestion Reservations',content_manager:'Gestion Contenu'}[u.role]||u.role;$('#admin-avatar').textContent=u.name.charAt(0).toUpperCase();}handleHash();loadBadges();}
+function showApp(){$('#login-page').style.display='none';$('#admin-app').style.display='flex';var u=AdminAPI.getUser();if(u){$('#admin-name').textContent=u.name;$('#admin-role').textContent={super_admin:'Super Admin',manager:'Manager',reservations_manager:'Gestion Reservations',content_manager:'Gestion Contenu'}[u.role]||u.role;$('#admin-avatar').textContent=u.name.charAt(0).toUpperCase();}handleHash();loadBadges();startPolling();}
 
-$('#logout-btn').addEventListener('click',async function(){try{await AdminAPI.logout();}catch(e){}AdminAPI.clearAuth();$('#login-page').style.display='flex';$('#admin-app').style.display='none';toast('info','Deconnexion','Vous etes deconnecte.');});
+$('#logout-btn').addEventListener('click',async function(){stopPolling();try{await AdminAPI.logout();}catch(e){}AdminAPI.clearAuth();$('#login-page').style.display='flex';$('#admin-app').style.display='none';toast('info','Deconnexion','Vous etes deconnecte.');});
 
-async function loadBadges(){try{var s=await AdminAPI.getBookingStats();if(s.pendingCount>0){$('#badge-bookings').textContent=s.pendingCount;$('#badge-bookings').style.display='';}var m=await AdminAPI.getMessages('limit=1');if(m.unreadCount>0){$('#badge-messages').textContent=m.unreadCount;$('#badge-messages').style.display='';}var tot=(s.pendingCount||0)+(m.unreadCount||0);$('#notif-badge').textContent=tot;if(tot>0)$('#notif-badge').style.display='';}catch(e){}}
+async function loadBadges(){try{var s=await AdminAPI.getBookingStats();if(s.pendingCount>0){$('#badge-bookings').textContent=s.pendingCount;$('#badge-bookings').style.display='';}var m=await AdminAPI.getMessages('limit=1');if(m.unreadCount>0){$('#badge-messages').textContent=m.unreadCount;$('#badge-messages').style.display='';}var r=await AdminAPI.getReviews('limit=1');if(r.pendingCount>0){$('#badge-reviews').textContent=r.pendingCount;$('#badge-reviews').style.display='';}var tot=(s.pendingCount||0)+(m.unreadCount||0)+(r.pendingCount||0);$('#notif-badge').textContent=tot;if(tot>0)$('#notif-badge').style.display='';pollState.prev={pending:s.pendingCount||0,unread:m.unreadCount||0,reviews:r.pendingCount||0};}catch(e){}}
+
+function startPolling(){
+  if(pollState.timer)return;
+  pollState.lastCheck=Date.now();
+  pollState.timer=setInterval(function(){
+    if(document.hidden)return;
+    if(!AdminAPI.isAuthenticated()){stopPolling();return;}
+    pollCheck();
+  },10000);
+  document.addEventListener('visibilitychange',function onVis(){
+    if(!pollState.timer){document.removeEventListener('visibilitychange',onVis);return;}
+    if(!document.hidden&&AdminAPI.isAuthenticated()){pollCheck();}
+  });
+}
+
+function stopPolling(){
+  if(pollState.timer){clearInterval(pollState.timer);pollState.timer=null;}
+}
+
+async function pollCheck(){
+  try{
+    var s=await AdminAPI.getBookingStats();
+    var m=await AdminAPI.getMessages('limit=1');
+    var r=await AdminAPI.getReviews('limit=1');
+    var newPending=s.pendingCount||0;
+    var newUnread=m.unreadCount||0;
+    var newReviews=r.pendingCount||0;
+    var prev=pollState.prev;
+    if(newPending>prev.pending)toast('info','Nouvelle reservation',newPending-prev.pending+' reservation(s) en attente');
+    if(newUnread>prev.unread)toast('info','Nouveau message',newUnread-prev.unread+' message(s) non lu(s)');
+    if(newReviews>prev.reviews)toast('info','Nouvel avis',newReviews-prev.reviews+' avis en attente');
+    pollState.prev={pending:newPending,unread:newUnread,reviews:newReviews};
+    if($('#badge-bookings')){if(newPending>0){$('#badge-bookings').textContent=newPending;$('#badge-bookings').style.display='';}else $('#badge-bookings').style.display='none';}
+    if($('#badge-messages')){if(newUnread>0){$('#badge-messages').textContent=newUnread;$('#badge-messages').style.display='';}else $('#badge-messages').style.display='none';}
+    if($('#badge-reviews')){if(newReviews>0){$('#badge-reviews').textContent=newReviews;$('#badge-reviews').style.display='';}else $('#badge-reviews').style.display='none';}
+    var tot=newPending+newUnread+newReviews;
+    if($('#notif-badge')){if(tot>0){$('#notif-badge').textContent=tot;$('#notif-badge').style.display='';}else $('#notif-badge').style.display='none';}
+    var changed=(newPending!==prev.pending)||(newUnread!==prev.unread)||(newReviews!==prev.reviews);
+    if(changed&&state.page&&pages[state.page]){pages[state.page]();}
+  }catch(e){}
+}
 
 function navigate(page){state.page=page;$$('.sidebar-nav-item').forEach(function(el){el.classList.toggle('active',el.dataset.page===page);});var t={dashboard:'Dashboard',bookings:'Reservations',cars:'Voitures',motorcycles:'Motos',villas:'Villas',excursions:'Excursions',transfers:'Transferts',packs:'Packs',clients:'Clients',messages:'Messages',reviews:'Avis',gallery:'Galerie',finance:'Finance',analytics:'Analytics',emails:'Emails',content:'Contenu Web',languages:'Langues',settings:'Parametres',users:'Utilisateurs','activity-logs':"Journal d'activite",profile:'Mon Profil'};$('#page-title').textContent=t[page]||'Dashboard';$('#sidebar').classList.remove('open');$('#sidebar-overlay').classList.remove('active');renderPage(page);}
 
